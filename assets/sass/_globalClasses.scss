@@ -1,0 +1,22 @@
+.MAIN_GRID {
+  background: rgb(245, 161, 161);
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: auto;
+  gap: 10px;
+
+}
+
+.btnGlobal {
+  background: $turkys;
+  border-radius: 10px;
+  width: min-content;
+  white-space: nowrap;
+  margin: auto;
+  padding: 0px 20px 0px 20px;
+  justify-self: center;
+  color: $white1;
+  font-weight: bold;
+  border: 0px;
+  text-decoration: none;
+}

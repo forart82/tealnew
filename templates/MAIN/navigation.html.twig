@@ -1,0 +1,32 @@
+<div id="navBurger">
+	{% for nav in navigation.navigation %}
+		{% if nav.name == "burger" %}
+			<a href="{{nav.link|raw}}" class="navMainBurger">
+				{{nav.image.svg|raw}}
+			</a>
+		{% endif %}
+
+	{% endfor %}
+</div>
+<div id="navMain" class="MAIN_GRID">
+	{% set navigationCounter = 0 %}
+	<div class="navMainButtons">
+		{% for nav in navigation.navigation %}
+			{% if nav.position % 1000 == 0 %}
+				{% set navigationCounter = navigationCounter + 1 %}
+				<a href="{{nav.link|raw}}" class="navMainButton btnGlobal" name="navMainButton{{nav.position|slice(0,2)}}">{{nav.name}}</a>
+			{% endif %}
+			{% if nav.name == "burger" %}{% endif %}
+
+		{% endfor %}
+	</div>
+	{% for counter in 1..navigationCounter %}
+		<div class="navSubButtons">
+			{% for nav in navigation.navigation %}
+				{% if nav.position|slice(0,1) == counter %}
+					<a href="{{nav.link|raw}}" class="navSubButton navMainButton{{nav.position|slice(0,2)}}">{{nav.name}}</a>
+				{% endif %}
+			{% endfor %}
+		</div>
+	{% endfor %}
+</div>
