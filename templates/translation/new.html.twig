@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+
+<title>New Translation</title>
+
+{% block body %}
+    <h1>Create new Translation</h1>
+
+    {{ include('translation/_form.html.twig') }}
+
+    <a href="{{ path('translation_index') }}">back to list</a>
+{% endblock %}

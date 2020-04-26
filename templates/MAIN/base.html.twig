@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>
-			{% block title %}Welcome!
+			{% block title %}Tealfinder
 			{% endblock %}
 		</title>
 		{% block stylesheets %}
@@ -11,8 +11,12 @@
 		{% endblock %}
 	</head>
 	<body>
-	{% include "MAIN/navigation.html.twig" %}
-		{% block body %}{% endblock %}
+		<div id="MAIN">
+			<div id="CONTAINER">
+				{% include "MAIN/navigation.html.twig" %}
+				{% block body %}{% endblock %}
+			</div>
+		</div>
 		{% block javascripts %}
 			{{ encore_entry_script_tags('app') }}
 		{% endblock %}

@@ -1,0 +1,24 @@
+.list-teal {
+  grid-column: 1 / span all;
+  grid-row: 1/1;
+  margin: 40px;
+  display: flex;
+  flex-flow: column nowrap;
+  // grid-template-rows: repeat(auto-fill, minmax(10px,150px));
+  // justify-items: center;
+  .list-teal-title {
+    margin: 20px;
+  }
+  .list-teal-logo {
+    width: 30vw;
+    margin: 20px;
+  }
+  .list-teal-btnline {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: right;
+    a {
+      margin-right: 20px;
+    }
+  }
+}

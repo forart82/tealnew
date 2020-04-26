@@ -1,0 +1,258 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="file.ext">
+        <body><trans-unit id="5e9b17f91ca61">
+                <source>btSignIn</source>
+                <target>Sign in</target>
+            </trans-unit><trans-unit id="5e9b17f91ca72">
+                <source>SignInWelcome</source>
+                <target>Please sign in</target>
+            </trans-unit><trans-unit id="5e9b17f91ca7a">
+                <source>SignInEmail</source>
+                <target>Email</target>
+            </trans-unit><trans-unit id="5e9b17f91ca81">
+                <source>SignInPassword</source>
+                <target>Password</target>
+            </trans-unit><trans-unit id="5e9b17f91ca89">
+                <source>IntroTitle</source>
+                <target>Introduction</target>
+            </trans-unit><trans-unit id="5e9b17f91ca92">
+                <source>WelcomeUser</source>
+                <target>Welcome</target>
+            </trans-unit><trans-unit id="5e9b17f91ca99">
+                <source>WelcomeMessagePara1</source>
+                <target>Tealfinder is a tool which allow you to assess the way you see your organization, and your work ambition. For each theme, Tealfinder is offering 5 evolutionary stages of your organization. Our model is based on Spiral Dynamics as well as on the book ”Reinventing Organisations”.</target>
+            </trans-unit><trans-unit id="5e9b17f91caa1">
+                <source>WelcomeMessagePara2</source>
+                <target>Discover new visions and start a change in your organization! Share and discuss with your colleagues your feelings and your work ambition!</target>
+            </trans-unit><trans-unit id="5e9b17f91caa8">
+                <source>btStart</source>
+                <target>Start the assessment</target>
+            </trans-unit><trans-unit id="5e9b17f91caaf">
+                <source>EvaluationTitle</source>
+                <target>The 5 assessment stages of your organization</target>
+            </trans-unit><trans-unit id="5e9b17f91cab6">
+                <source>EvaluationMessage</source>
+                <target>There is nothing inherently "better" being at a higher stage of development, as an adolescent is not "better" than a young infant. However, the fact remains that a teenager is able to do more because he or she can think in a more sophisticated way than a young infant. All stages of development are "ok". The question is rather knowing if the stage of development matches with the requested task.</target>
+            </trans-unit><trans-unit id="5e9b17f91cabe">
+                <source>Evolutionnaire_keyword</source>
+                <target>Evolutionary</target>
+            </trans-unit><trans-unit id="5e9b17f91cac4">
+                <source>Pluraliste_keyword</source>
+                <target>Pluralistic</target>
+            </trans-unit><trans-unit id="5e9b17f91cacb">
+                <source>OrientéRéussite_keyword</source>
+                <target>Achievement</target>
+            </trans-unit><trans-unit id="5e9b17f91cad2">
+                <source>Conformiste_keyword</source>
+                <target>Conformist</target>
+            </trans-unit><trans-unit id="5e9b17f91cad9">
+                <source>Impulsif_keyword</source>
+                <target>Impulsive</target>
+            </trans-unit><trans-unit id="5e9b17f91cae0">
+                <source>Metaphore_Title</source>
+                <target>Metaphor</target>
+            </trans-unit><trans-unit id="5e9b17f91cae7">
+                <source>Evol_Metaphore_Text</source>
+                <target>Living Organism</target>
+            </trans-unit><trans-unit id="5e9b17f91caee">
+                <source>Percees_Title</source>
+                <target>Breakthroughs</target>
+            </trans-unit><trans-unit id="5e9b17f91cb02">
+                <source>Evol_Percees_Text1</source>
+                <target>Self-organization</target>
+            </trans-unit><trans-unit id="5e9b17f91cb09">
+                <source>Evol_Percees_Text2</source>
+                <target>Wholeness</target>
+            </trans-unit><trans-unit id="5e9b17f91cb26">
+                <source>Evol_Percees_Text3</source>
+                <target>Evolutionary purpose</target>
+            </trans-unit><trans-unit id="5e9b17f91cb2f">
+                <source>Paradigme_Title</source>
+                <target>The paradigm is well adapted to</target>
+            </trans-unit><trans-unit id="5e9b17f91cb38">
+                <source>Evol_Paradigme_Text</source>
+                <target>Well adapted to uncertain environments where self-organization and wholeness are sources of personal achievement, adaptability and evolutionary developments.</target>
+            </trans-unit><trans-unit id="5e9b17f91cb40">
+                <source>Plur_Metaphore_Text</source>
+                <target>Family</target>
+            </trans-unit><trans-unit id="5e9b17f91cb6a">
+                <source>Plur_Percees_Text1</source>
+                <target>Empowerment</target>
+            </trans-unit><trans-unit id="5e9b17f91cb7a">
+                <source>Plur_Percees_Text2</source>
+                <target>Values-driven culture</target>
+            </trans-unit><trans-unit id="5e9b17f91cb82">
+                <source>Plur_Percees_Text3</source>
+                <target>Stakeholder model</target>
+            </trans-unit><trans-unit id="5e9b17f91cb89">
+                <source>Plur_Paradigme_Text</source>
+                <target>Well adapted to environments in which honesty, equality, cooperation and consensus are sources of harmony between colleagues and external partners.</target>
+            </trans-unit><trans-unit id="5e9b17f91cb90">
+                <source>Achiev_Metaphore_Text</source>
+                <target>Machine</target>
+            </trans-unit><trans-unit id="5e9b17f91cb98">
+                <source>Achiev_Percees_Text1</source>
+                <target>Innovation</target>
+            </trans-unit><trans-unit id="5e9b17f91cb9f">
+                <source>Achiev_Percees_Text2</source>
+                <target>Accountability</target>
+            </trans-unit><trans-unit id="5e9b17f91cba6">
+                <source>Achiev_Percees_Text3</source>
+                <target>Meritocracy</target>
+            </trans-unit><trans-unit id="5e9b17f91cbad">
+                <source>Achiev_Paradigme_Text</source>
+                <target>Well adapted to competitive environments in which innovation and new business ideas allow increased financial performance.</target>
+            </trans-unit><trans-unit id="5e9b17f91cbb4">
+                <source>Conf_Metaphore_Text</source>
+                <target>Church/Army</target>
+            </trans-unit><trans-unit id="5e9b17f91cbbb">
+                <source>Conf_Percees_Text1</source>
+                <target>Processes(long term perspectives)</target>
+            </trans-unit><trans-unit id="5e9b17f91cbc3">
+                <source>Conf_Percees_Text2</source>
+                <target>Formal roles(stable and scalable hierarchies)</target>
+            </trans-unit><trans-unit id="5e9b17f91cbca">
+                <source>Conf_Paradigme_Text</source>
+                <target>Well adapted to stable environments where things can be planned for the long-term. The organization sets up structures and processes that allow it to scale up and carry out large projects.</target>
+            </trans-unit><trans-unit id="5e9b17f91cbde">
+                <source>Impulsif_Metaphore_Text</source>
+                <target>Wolf pack</target>
+            </trans-unit><trans-unit id="5e9b17f91cbef">
+                <source>Impulsif_Percees_Text1</source>
+                <target>Division of labor</target>
+            </trans-unit><trans-unit id="5e9b17f91cbfb">
+                <source>Impulsif_Percees_Text2</source>
+                <target>Command authority</target>
+            </trans-unit><trans-unit id="5e9b17f91cc02">
+                <source>Impulsif_Paradigme_Text</source>
+                <target>Well adapted to chaotic environments, but poorly suited to achieve complex results in environments where planning and strategic thinking are possible.</target>
+            </trans-unit><trans-unit id="5e9b17f91cc0c">
+                <source>Link_click_stages</source>
+                <target>Click to discover the stages</target>
+            </trans-unit><trans-unit id="5e9b17f91cc14">
+                <source>profil_firstname</source>
+                <target>Firstname</target>
+            </trans-unit><trans-unit id="5e9b17f91cc1b">
+                <source>profil_lastname</source>
+                <target>Lastname</target>
+            </trans-unit><trans-unit id="5e9b17f91cc22">
+                <source>profil_password</source>
+                <target>Password</target>
+            </trans-unit><trans-unit id="5e9b17f91cc29">
+                <source>profil_retype</source>
+                <target>Retype password</target>
+            </trans-unit><trans-unit id="5e9b17f91cc31">
+                <source>btSubmit</source>
+                <target>Submit</target>
+            </trans-unit><trans-unit id="5e9b17f91cc38">
+                <source>user_list_firstname</source>
+                <target>Firstname</target>
+            </trans-unit><trans-unit id="5e9b17f91cc40">
+                <source>user_list_lastname</source>
+                <target>Lastname</target>
+            </trans-unit><trans-unit id="5e9b17f91cc47">
+                <source>user_list_email</source>
+                <target>Email</target>
+            </trans-unit><trans-unit id="5e9b17f91cc4e">
+                <source>user_list_bt_Import</source>
+                <target>Import CSV</target>
+            </trans-unit><trans-unit id="5e9b17f91cc55">
+                <source>user_first_company</source>
+                <target>Company</target>
+            </trans-unit><trans-unit id="5e9b17f91cc5c">
+                <source>user_first_language</source>
+                <target>Language</target>
+            </trans-unit><trans-unit id="5e9b17f91cc63">
+                <source>user_first_title</source>
+                <target>First member</target>
+            </trans-unit><trans-unit id="5e9b17f91cc6a">
+                <source>user_choose_file</source>
+                <target>Choose file</target>
+            </trans-unit><trans-unit id="5e9b17f91cc71">
+                <source>user_admin</source>
+                <target>Profile</target>
+            </trans-unit><trans-unit id="5e9b17f91cc79">
+                <source>bt_Browse</source>
+                <target>Browse</target>
+            </trans-unit><trans-unit id="5e9b17f91cc80">
+                <source>result_title</source>
+                <target>My results</target>
+            </trans-unit><trans-unit id="5e9b17f91cc87">
+                <source>result_bt_compare</source>
+                <target>Compare</target>
+            </trans-unit><trans-unit id="5e9b17f91cc8e">
+                <source>result_compare_title</source>
+                <target>Comparison of results</target>
+            </trans-unit><trans-unit id="5e9b17f91cc95">
+                <source>bt_back_to_results</source>
+                <target>Back to my results</target>
+            </trans-unit><trans-unit id="5e9b17f91cc9c">
+                <source>nav_settings</source>
+                <target>Settings</target>
+            </trans-unit><trans-unit id="5e9b17f91cca3">
+                <source>nav_results</source>
+                <target>Results</target>
+            </trans-unit><trans-unit id="5e9b17f91ccab">
+                <source>nav_assessment</source>
+                <target>Assessment</target>
+            </trans-unit><trans-unit id="5e9b17f91ccb2">
+                <source>user_first_company</source>
+                <target>Company</target>
+            </trans-unit><trans-unit id="5e9b17f91ccb9">
+                <source>user_first_language</source>
+                <target>Language</target>
+            </trans-unit><trans-unit id="5e9b17f91ccc0">
+                <source>menu_intro</source>
+                <target>Introduction</target>
+            </trans-unit><trans-unit id="5e9b17f91ccc7">
+                <source>menu_my_profile</source>
+                <target>My account</target>
+            </trans-unit><trans-unit id="5e9b17f91cccf">
+                <source>menu_user_management</source>
+                <target>User Management</target>
+            </trans-unit><trans-unit id="5e9b17f91ccd8">
+                <source>menu_create_client_account</source>
+                <target>Create a user account</target>
+            </trans-unit><trans-unit id="5e9b17f91ccdf">
+                <source>menu_subject_management</source>
+                <target>Subject management</target>
+            </trans-unit><trans-unit id="5e9b17f91cce6">
+                <source>menu_translation_management</source>
+                <target>Translation management</target>
+            </trans-unit><trans-unit id="5e9b17f91cced">
+                <source>menu_company_management</source>
+                <target>Company management</target>
+            </trans-unit><trans-unit id="5e9b17f91ccf4">
+                <source>menu_email_management</source>
+                <target>Email management</target>
+            </trans-unit><trans-unit id="5e9b17f91ccfc">
+                <source>menu_image_management</source>
+                <target>Icon management</target>
+            </trans-unit><trans-unit id="5e9b17f91cd03">
+                <source>menu_list_users</source>
+                <target>Users list</target>
+            </trans-unit><trans-unit id="5e9b17f91cd0b">
+                <source>menu_logout</source>
+                <target>Logout</target>
+            </trans-unit><trans-unit id="5e9b17f91cd12">
+                <source>notation_title</source>
+                <target>Questions notation</target>
+            </trans-unit><trans-unit id="5e9b17f91cd1b">
+                <source>btBackToList</source>
+                <target>Back to list</target>
+            </trans-unit><trans-unit id="5e9b17f91cd21">
+                <source>Csv_import_title</source>
+                <target>New File Import</target>
+            </trans-unit><trans-unit id="5e9b17f91cd28">
+                <source>notation_bt_compare</source>
+                <target>Compare</target>
+            </trans-unit><trans-unit id="5e9b17f91cd2f">
+                <source>bt_back_to_notation</source>
+                <target>Back to notation</target>
+            </trans-unit><trans-unit id="5e9b17f91cd37">
+                <source>txt_notation</source>
+                <target>Is this theme important to you and deserves to be discussed within</target>
+            </trans-unit></body>
+    </file>
+</xliff>

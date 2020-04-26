@@ -17,6 +17,7 @@ import $ from 'jquery';
  // ./ (or ../) means to look for a local file
 //  import greet from './greet';
 
- import greet from './navigation';
+import './navigation';
+import './introduction';
 
 

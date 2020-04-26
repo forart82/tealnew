@@ -1,5 +1,33 @@
 @import "~bootstrap/scss/bootstrap";
+@import "./globalFonts";
 @import "./globalColors";
 @import "./globalClasses";
 @import "./navigation.scss";
+@import "./introduction.scss";
+@import "./login.scss";
+@import "./LIST.scss";
 
+body {
+  font-family: $catamaran;
+  color: $turkys;
+  font-size: 15px;
+}
+#MAIN {
+  display: grid;
+  grid-template-columns: 1fr 10fr 1fr;
+  grid-template-rows: auto;
+  background-image: linear-gradient($turkys 5%, $white1 90%);
+  width: 100vw;
+  height: 100vh;
+  #CONTAINER {
+    grid-column: 2 / 2;
+    grid-row: 1 / 1;
+    background: $white1;
+    width: 80vw;
+    height: 100vh;
+    justify-self: center;
+    display: grid;
+    grid-template-columns: 1fr 8fr 1fr;
+    grid-template-rows: auto;
+  }
+}

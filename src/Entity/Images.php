@@ -24,11 +24,6 @@ class Images
     private $name;
 
     /**
-     * @ORM\Column(type="blob", nullable=true)
-     */
-    private $imageblob;
-
-    /**
      * @ORM\Column(type="text", nullable=true)
      */
     private $svg;
@@ -66,18 +61,6 @@ class Images
     public function setName(string $name): self
     {
         $this->name = $name;
-
-        return $this;
-    }
-
-    public function getImageblob()
-    {
-        return $this->imageblob;
-    }
-
-    public function setImageblob($imageblob): self
-    {
-        $this->imageblob = $imageblob;
 
         return $this;
     }

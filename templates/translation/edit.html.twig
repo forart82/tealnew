@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+
+<title>Edit Translation</title>
+
+{% block body %}
+    <h1>Edit Translation</h1>
+
+    {{ include('translation/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('translation_index') }}">back to list</a>
+
+    {{ include('translation/_delete_form.html.twig') }}
+{% endblock %}

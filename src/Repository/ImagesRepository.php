@@ -19,6 +19,17 @@ class ImagesRepository extends ServiceEntityRepository
         parent::__construct($registry, Images::class);
     }
 
+    public function findOneByNameAndDirectory($name, $dir): ?Images
+    {
+        return $this->createQueryBuilder('i')
+            ->andWhere('i.name = :name')
+            ->andWhere('i.category = :dir')
+            ->setParameter('name', $name)
+            ->setParameter('dir', $dir)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
     // /**
     //  * @return Images[] Returns an array of Images objects
     //  */

@@ -1,0 +1,128 @@
+.introMainElements {
+  grid-column: 1 / span all;
+  justify-self: center;
+}
+#introLogo {
+  grid-row: 1/1;
+}
+#introWelcomeUser {
+}
+#introWelcome {
+  width: 70vw;
+  text-align: center;
+}
+#introBox {
+  grid-column: 1 / 1;
+  grid-row: 6/6;
+  margin: 0 20px;
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: auto;
+  justify-items: left;
+  align-items: flex-end;
+  color: $white1;
+  height: 180px;
+  .introBoxes {
+    border: 2px solid $white1;
+    border-radius: 15px;
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: 1fr;
+    cursor: help;
+    &:hover{
+      box-shadow: 10px -10px 10px $orangeMain;
+    }
+    div:nth-child(1) {
+      grid-column: 1/1;
+      grid-row: 1/1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: 100%;
+      padding-left: 5px;
+    }
+    div:nth-child(2) {
+      grid-column: 2/2;
+      grid-row: 1/1;
+      justify-self: flex-end;
+      padding-right: 5px;
+      fill: $white1;
+    }
+  }
+  #introEvolution {
+    grid-column: 1 / span 5;
+    grid-row: 1 / span 5;
+    background-image: radial-gradient($white1 5%, $turkys 70%);
+    width: 185px;
+    height: 180px;
+  }
+  #introPluraliste {
+    grid-column: 1 / span 4;
+    grid-row: 2 / span 4;
+    background-image: radial-gradient($white1 5%, $green 70%);
+    width: 171px;
+    height: 146px;
+  }
+  #introReussite {
+    grid-column: 1 / span 4;
+    grid-row: 3 / span 3;
+    background-image: radial-gradient($white1 5%, $orangeMain 70%);
+    width: 155px;
+    height: 114px;
+  }
+  #introConformiste {
+    grid-column: 1 / span 2;
+    grid-row: 4 / span 2;
+    background-image: radial-gradient($white1 5%, $orangeSub1 70%);
+    width: 137px;
+    height: 83px;
+  }
+  #introImpulsif {
+    grid-column: 1/1;
+    grid-row: 5/5;
+    background-image: radial-gradient($white1 5%, $orangeSub2 70%);
+    width: 124px;
+    height: 50px;
+  }
+}
+
+#introBoxMessage {
+  grid-row: 6/6;
+}
+.introMessages {
+  grid-column: 2/span 2;
+  grid-row: 6/6;
+  margin:0px 50px 0px 50px;
+  display: grid;
+  grid-template-areas:
+    "meta meta pre pre"
+    "svg text  pretext pretext"
+    "parati parati parati parati"
+    "parate parate parate parate";
+  grid-template-columns: 50px 3fr 3fr 50px;
+  grid-template-rows: repeat(auto-fill,25px);
+
+  .introMessageMetaTitle {
+    grid-area: meta;
+  }
+  .introMessagePreTitle {
+    grid-area: pre;
+  }
+  .introMessageSvg {
+    grid-area: svg;
+    fill:$turkys;
+  }
+  .introMessageMetaText {
+    grid-area: text;
+    color: $turkys;
+  }
+  .introMessagePreText {
+    grid-area: pretext;
+  }
+  .introMessageParaTile {
+    grid-area: parati;
+  }
+  .introMessageParaText {
+    grid-area: parate;
+  }
+}

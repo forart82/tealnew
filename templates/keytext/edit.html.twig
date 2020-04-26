@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+
+<title>Edit Keytext</title>
+
+{% block body %}
+    <h1>Edit Keytext</h1>
+
+    {{ include('keytext/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('keytext_index') }}">back to list</a>
+
+    {{ include('keytext/_delete_form.html.twig') }}
+{% endblock %}

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+
+<title>Language index</title>
+
+{% block body %}
+    <h1>Language index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Code</th>
+                <th>Denomination</th>
+                <th>Active</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for language in languages %}
+            <tr>
+                <td>{{ language.id }}</td>
+                <td>{{ language.code }}</td>
+                <td>{{ language.denomination }}</td>
+                <td>{{ language.active ? 'Yes' : 'No' }}</td>
+                <td>
+                    <a href="{{ path('language_show', {'id': language.id}) }}">show</a>
+                    <a href="{{ path('language_edit', {'id': language.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('language_new') }}">Create new</a>
+{% endblock %}

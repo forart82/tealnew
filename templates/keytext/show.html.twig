@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+
+<title>Keytext</title>
+
+{% block body %}
+    <h1>Keytext</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ keytext.id }}</td>
+            </tr>
+            <tr>
+                <th>Keytext</th>
+                <td>{{ keytext.keytext }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('keytext_index') }}">back to list</a>
+
+    <a href="{{ path('keytext_edit', {'id': keytext.id}) }}">edit</a>
+
+    {{ include('keytext/_delete_form.html.twig') }}
+{% endblock %}

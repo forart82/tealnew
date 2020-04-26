@@ -1,0 +1,13 @@
+{% block body %}
+	<div class="list-teal">
+		<img class="list-teal-logo" src="/contents/images/logos/tlb.png" alt="logo tlb">
+		<h1 class="h1 list-teal-title">Company index</h1>
+
+
+		{{ include('MAIN/_form.html.twig', {'button_label': 'Update'}) }}
+
+		<a href="{{ path('company_index') }}">back to list</a>
+
+		{{ include('MAIN/_delete_form.html.twig') }}
+	</div>
+{% endblock %}

@@ -25,22 +25,17 @@ class ImagesFixtures extends Fixture implements OrderedFixtureInterface
     {
         // $product = new Product();
         // $manager->persist($product);
-        $dirs = $this->container->getParameter('images_directory');
+        $dirs = $this->container->getParameter('images_directory').'/svgs';
         $this->currentDirectory = "images";
 
         $this->loadImageFiles($dirs);
         foreach ($this->listOfFiles as $file) {
             $image = new Images();
             $fileData = file_get_contents($file['path'], "r");
+            $fileData = preg_replace('/fill="[#0-9a-zA-z]+"/', '', $fileData);
             $fileName = $file['dir'] . '_' . $file['name'];
             $image->setName($fileName);
-            if($file['type']=="svg")
-            {
-                $image->setSvg($fileData);
-            }
-            else{
-                $image->setImageblob($fileData);
-            }
+            $image->setSvg($fileData);
             $image->setCategory($file['dir']);
             $manager->persist($image);
         }
@@ -61,7 +56,7 @@ class ImagesFixtures extends Fixture implements OrderedFixtureInterface
                     'file' => $item,
                     'name' => preg_split('/[.][a-zA-Z0-9]+/', $item)[0],
                     'path' => $path . '/' . $item,
-                    'type' => preg_split('/[a-zA-Z0-9\/]+[.]/',$item)[1],
+                    'type' => preg_split('/[a-zA-Z0-9\/]+[.]/', $item)[1],
                 ];
             }
         }
@@ -69,6 +64,6 @@ class ImagesFixtures extends Fixture implements OrderedFixtureInterface
 
     public function getOrder()
     {
-        return 10;
+        return 1;
     }
 }

@@ -4,7 +4,6 @@
   grid-template-columns: auto;
   grid-template-rows: auto;
   gap: 10px;
-
 }
 
 .btnGlobal {
@@ -16,7 +15,51 @@
   padding: 0px 20px 0px 20px;
   justify-self: center;
   color: $white1;
-  font-weight: bold;
+  font-weight: 400;
   border: 0px;
   text-decoration: none;
+  &:link {
+    text-decoration: none;
+    color: $white1;
+  }
+  &:hover {
+    text-decoration: none;
+    color: $white1;
+    text-shadow:$orangeMain 0 0 2px, $orangeMain 0 0 20px, $orangeMain 0 0 2px;
+  }
+}
+
+.btnGlobalSmall {
+  width: min-content;
+  white-space: nowrap;
+  margin: 0px;
+  color: $orangeMain;
+  font-weight: 400;
+  border: 0px;
+  text-decoration: none;
+  &:link {
+    text-decoration: none;
+    color: $orangeMain;
+  }
+  &:hover {
+    text-decoration: none;
+    color: $orangeMain;
+    text-shadow:$turkys 0 0 2px;
+  }
+}
+
+.h1 {
+  font-size: 30px;
+  color: $orangeMain;
+  font-weight: 200;
+}
+
+.h2 {
+  font-size: 15px;
+  color: $orangeMain;
+  font-weight: 200;
+}
+
+.p1{
+  font-size: 12px;
 }

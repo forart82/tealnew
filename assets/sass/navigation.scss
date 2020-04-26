@@ -1,14 +1,17 @@
 #navBurger {
+  grid-column: 1/span all;
+  grid-row: 1/1;
+  justify-self: right;
   display: flex;
   flex-flow: row-reverse nowrap;
   padding: 10px;
   fill: $gray3;
-  z-index: 70;
+  z-index: 90;
 }
 #navMain {
   position: absolute;
   top: 10px;
-  right: 50px;
+  right: 20px;
   z-index: 80;
   display: grid;
   grid-template-columns: auto;
@@ -22,18 +25,4 @@
     display: flex;
     flex-flow: column nowrap;
   }
-  // $element: 10;
-  // @for $i from 0 to $element {
-  //   div:nth-child(#{$i}) {
-  //     @if $i !=1
-  //     {
-  //       grid-column: #{$i - 1}/#{$i - 1};
-  //       grid-row: 2/2;
-  //       display: grid;
-  //       grid-template-columns: 1fr;
-  //       grid-template-rows: 1fr;
-  //       justify-items: left;
-  //     }
-  //   }
-  // }
 }

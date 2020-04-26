@@ -1,0 +1,95 @@
+{% extends 'MAIN/base.html.twig' %}
+
+{% block body %}
+
+	<div id="introLogo" class="introMainElements">
+		<img src="/contents/images/logos/tlb.png" alt="logo tlb">
+	</div>
+	<div id="introWelcomeUser" class="introMainElements h1">
+		{{ 'WelcomeUser'|trans|raw }}
+		{# {{ user.firstname }}
+								{{ user.lastname }}, #}
+	</div>
+	<div id="introWelcome" class="introMainElements">
+		<p>{{ 'WelcomeMessagePara1'|trans|raw }}</p>
+		<p>{{ 'WelcomeMessagePara2'|trans|raw }}</p>
+	</div>
+	<div class="introMainElements">
+		<a class="btnGlobal" href="">{{ 'btStart'|trans|raw }}</a>
+	</div>
+	<div class="introMainElements h1">
+		{{ 'EvaluationTitle'|trans|raw }}
+	</div>
+	<div id="introBox">
+		<div id="introEvolution" class="introBoxes">
+			<div>{{'Evolutionnaire_keyword'|trans|raw }}</div>
+			<div>{{ images.answers.0.svg|raw }}</div>
+		</div>
+		<div id="introPluraliste" class="introBoxes">
+			<div>{{'Pluraliste_keyword'|trans|raw }}</div>
+			<div>{{ images.answers.1.svg|raw }}</div>
+		</div>
+		<div id="introReussite" class="introBoxes">
+			<div>{{ 'OrientéRéussite_keyword'|trans|raw }}</div>
+			<div>{{ images.answers.2.svg|raw }}</div>
+		</div>
+		<div id="introConformiste" class="introBoxes">
+			<div>{{'Conformiste_keyword'|trans|raw }}</div>
+			<div>{{ images.answers.3.svg|raw }}</div>
+		</div>
+		<div id="introImpulsif" class="introBoxes">
+			<div>{{'Impulsif_keyword'|trans|raw }}</div>
+			<div class="logo">{{ images.answers.4.svg|raw }}</div>
+		</div>
+	</div>
+	<div id="introBoxMessage">
+		<div class="introMessage">
+			{{ 'EvaluationMessage'|trans|raw }}
+		</div>
+	</div>
+	<div class="introEvolution introMessages introEvolution">
+		<p class="introMessageMetaTitle h2">{{'Metaphore_Title'|trans|raw }}</p>
+		<p class="introMessagePreTitle h2">{{ 'Percees_Title'|trans|raw }}</p>
+		<p class="introMessageSvg">{{ images.answers.0.svg|raw }}</p>
+		<p class="introMessageMetaText h2">{{'Evol_Metaphore_Text'|trans|raw }}</p>
+		<p class="introMessagePreText p1">{{'Evol_Percees_Text'|trans|raw }}</p>
+		<p class="introMessageParaTile h2">{{'Paradigme_Title'|trans|raw }}</p>
+		<p class="introMessageParaText p1">{{'Evol_Paradigme_Text'|trans|raw }}</p>
+	</div>
+	<div class="introPluraliste introMessages">
+		<p class="introMessageMetaTitle h2">{{'Metaphore_Title'|trans|raw }}</p>
+		<p class="introMessagePreTitle h2">{{ 'Percees_Title'|trans|raw }}</p>
+		<p class="introMessageSvg">{{ images.answers.0.svg|raw }}</p>
+		<p class="introMessageMetaText h2">{{'Plur_Metaphore_Text'|trans|raw }}</p>
+		<p class="introMessagePreText p1">{{'Plur_Percees_Text'|trans|raw }}</p>
+		<p class="introMessageParaTile h2">{{'Paradigme_Title'|trans|raw }}</p>
+		<p class="introMessageParaText p1">{{'Plur_Paradigme_Text'|trans|raw }}</p>
+	</div>
+	<div class="introReussite introMessages">
+		<p class="introMessageMetaTitle h2">{{'Metaphore_Title'|trans|raw }}</p>
+		<p class="introMessagePreTitle h2">{{ 'Percees_Title'|trans|raw }}</p>
+		<p class="introMessageSvg">{{ images.answers.0.svg|raw }}</p>
+		<p class="introMessageMetaText h2">{{'Achiev_Metaphore_Text'|trans|raw }}</p>
+		<p class="introMessagePreText p1">{{'Achiev_Percees_Text'|trans|raw }}</p>
+		<p class="introMessageParaTile h2">{{'Paradigme_Title'|trans|raw }}</p>
+		<p class="introMessageParaText p1">{{'Achiev_Paradigme_Text'|trans|raw }}</p>
+	</div>
+	<div class="introConformiste introMessages">
+		<p class="introMessageMetaTitle h2">{{'Metaphore_Title'|trans|raw }}</p>
+		<p class="introMessagePreTitle h2">{{ 'Percees_Title'|trans|raw }}</p>
+		<p class="introMessageSvg">{{ images.answers.0.svg|raw }}</p>
+		<p class="introMessageMetaText h2">{{'Conf_Metaphore_Text'|trans|raw }}</p>
+		<p class="introMessagePreText p1">{{'Conf_Percees_Text'|trans|raw }}</p>
+		<p class="introMessageParaTile h2">{{'Paradigme_Title'|trans|raw }}</p>
+		<p class="introMessageParaText p1">{{'Conf_Paradigme_Text'|trans|raw }}</p>
+	</div>
+	<div class="introImpulsif introMessages">
+		<p class="introMessageMetaTitle h2">{{'Metaphore_Title'|trans|raw }}</p>
+		<p class="introMessagePreTitle h2">{{ 'Percees_Title'|trans|raw }}</p>
+		<p class="introMessageSvg">{{ images.answers.0.svg|raw }}</p>
+		<p class="introMessageMetaText h2">{{'Evol_Metaphore_Text'|trans|raw }}</p>
+		<p class="introMessagePreText p1">{{'Evol_Percees_Text'|trans|raw }}</p>
+		<p class="introMessageParaTile h2">{{'Paradigme_Title'|trans|raw }}</p>
+		<p class="introMessageParaText p1">{{'Evol_Paradigme_Text'|trans|raw }}</p>
+	</div>
+{% endblock %}

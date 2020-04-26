@@ -5,7 +5,6 @@
 				{{nav.image.svg|raw}}
 			</a>
 		{% endif %}
-
 	{% endfor %}
 </div>
 <div id="navMain" class="MAIN_GRID">
@@ -14,17 +13,17 @@
 		{% for nav in navigation.navigation %}
 			{% if nav.position % 1000 == 0 %}
 				{% set navigationCounter = navigationCounter + 1 %}
-				<a href="{{nav.link|raw}}" class="navMainButton btnGlobal" name="navMainButton{{nav.position|slice(0,2)}}">{{nav.name}}</a>
+<a href="{{nav.link|raw}}" class="navMainButton btnGlobal" name="navMainButton{{nav.position|slice(0,2)}}">{{nav.translation|trans|raw}}</a>
+
 			{% endif %}
 			{% if nav.name == "burger" %}{% endif %}
-
 		{% endfor %}
 	</div>
 	{% for counter in 1..navigationCounter %}
-		<div class="navSubButtons">
+		<div class="navSubButtons navMainButton{{counter}}0">
 			{% for nav in navigation.navigation %}
 				{% if nav.position|slice(0,1) == counter %}
-					<a href="{{nav.link|raw}}" class="navSubButton navMainButton{{nav.position|slice(0,2)}}">{{nav.name}}</a>
+					<a href="{{nav.link|raw}}" class="navSubButton navMainButton{{nav.position|slice(0,2)}}">{{nav.translation|trans|raw}}</a>
 				{% endif %}
 			{% endfor %}
 		</div>

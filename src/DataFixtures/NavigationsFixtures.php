@@ -48,47 +48,47 @@ class NavigationsFixtures extends Fixture implements OrderedFixtureInterface
             ],
             'translation' => [
                 // Menu Principal
-                "{{'nav_settings'|trans|raw }}",
-                "{{'nav_results'|trans|raw }}",
+                "nav_settings",
+                "nav_results",
                 // Menu Paramèters
-                "{{'menu_intro'|trans|raw }}",
-                "{{'menu_my_profile'|trans|raw }}",
-                "{{'menu_user_management'|trans|raw }}",
-                "{{'menu_create_client_account'|trans|raw }}",
-                "{{'menu_subject_management'|trans|raw }}",
-                "{{'menu_translation_management'|trans|raw }}",
-                "{{'menu_company_management'|trans|raw }}",
-                "{{'menu_email_management'|trans|raw }}",
-                "{{'menu_image_management'|trans|raw }}",
-                "{{'menu_list_users'|trans|raw }}",
-                "{{'menu_csv_key_values'|trans|raw }}",
-                "{{'menu_logout'|trans|raw }}",
+                "menu_intro",
+                "menu_my_profile",
+                "menu_user_management",
+                "menu_create_client_account",
+                "menu_subject_management",
+                "menu_translation_management",
+                "menu_company_management",
+                "menu_email_management",
+                "menu_image_management",
+                "menu_list_users",
+                "menu_csv_key_values",
+                "menu_logout",
                 // Menu Résultats
-                "{{'result_title'|trans|raw }}",
-                "{{'notation_title'|trans|raw }}",
+                "result_title",
+                "notation_title",
                 // Menu special
                 "",
             ],
             'link' => [
                 // Menu Principal
-                "{{path('introduction')}}",
-                "{{path('introduction')}}",
+                "path('introduction')",
+                "path('introduction')",
                 // Menu Paramèters
-                "{{path('introduction')}}",
-                "{{path('introduction')}}",
-                "{{path('introduction')}}",
-                "{{path('introduction')}}",
-                "{{path('introduction')}}",
-                "{{path('introduction')}}",
-                "{{path('introduction')}}",
-                "{{path('introduction')}}",
-                "{{path('introduction')}}",
-                "{{path('introduction')}}",
-                "{{path('introduction')}}",
-                "{{path('introduction')}}",
+                "path('introduction')",
+                "path('introduction')",
+                "path('introduction')",
+                "path('introduction')",
+                "path('introduction')",
+                "path('introduction')",
+                "path('introduction')",
+                "path('introduction')",
+                "path('introduction')",
+                "path('introduction')",
+                "path('introduction')",
+                "path('introduction')",
                 // Menu Résultats
-                "{{path('introduction')}}",
-                "{{path('introduction')}}",
+                "path('introduction')",
+                "path('introduction')",
                 // Menu special
                 "",
             ],
@@ -185,6 +185,6 @@ class NavigationsFixtures extends Fixture implements OrderedFixtureInterface
 
     public function getOrder()
     {
-        return 20;
+        return 2;
     }
 }
