@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20200426120601 extends AbstractMigration
+final class Version20200427070143 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -25,7 +25,6 @@ final class Version20200426120601 extends AbstractMigration
         $this->addSql('CREATE TABLE company (id INT AUTO_INCREMENT NOT NULL, name VARCHAR(255) NOT NULL, matricule VARCHAR(255) NOT NULL, logo LONGBLOB NOT NULL, language VARCHAR(255) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE csv_key_values (id INT AUTO_INCREMENT NOT NULL, name VARCHAR(255) NOT NULL, as_value VARCHAR(255) NOT NULL, type VARCHAR(255) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE emails (id INT AUTO_INCREMENT NOT NULL, message LONGTEXT NOT NULL, language VARCHAR(255) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
-        $this->addSql('CREATE TABLE file_import (id INT AUTO_INCREMENT NOT NULL, filename VARCHAR(255) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE images (id INT AUTO_INCREMENT NOT NULL, name VARCHAR(255) NOT NULL, svg LONGTEXT DEFAULT NULL, svg_color LONGTEXT DEFAULT NULL, category VARCHAR(255) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE keytext (id INT AUTO_INCREMENT NOT NULL, keytext VARCHAR(255) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE language (id INT AUTO_INCREMENT NOT NULL, code VARCHAR(255) NOT NULL, denomination VARCHAR(255) NOT NULL, active TINYINT(1) DEFAULT \'1\' NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
@@ -58,7 +57,6 @@ final class Version20200426120601 extends AbstractMigration
         $this->addSql('DROP TABLE company');
         $this->addSql('DROP TABLE csv_key_values');
         $this->addSql('DROP TABLE emails');
-        $this->addSql('DROP TABLE file_import');
         $this->addSql('DROP TABLE images');
         $this->addSql('DROP TABLE keytext');
         $this->addSql('DROP TABLE language');

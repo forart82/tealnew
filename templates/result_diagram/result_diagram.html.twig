@@ -3,7 +3,7 @@
 {% block body %}
 
 
-<div style="position:absolute; top:30px; left:30px; width:800px; height:800px; background:gray;">
+<div id="diagramMain">
 
 <div style="position:absolute; top:7px; left:7px; z-index:90;">
 
@@ -11,13 +11,18 @@
 </div>
 
 
+<div style="position:absolute; top:100px; left:100px; z-index:100;">
+{% for dia in diagram %}
 
-{# {% for dia in diagram %}
-	<div style="position:absolute; top:{{dia.x}}px; left:{{dia.y}}px; width:15px; height:15px; border-radius:15px; background:black;"></div>
+	<div style="position:absolute; top:{{dia.x}}px; left:{{dia.y}}px; width:15px; height:15px; border-radius:15px; background:black;">
+		<span style="display:block; background:white; color:black; width:20px;">{{dia.choice}} {{dia.id}}</span></div>
 {% endfor %}
-</div> #}
+</div>
+</div>
 
 
+<div style="width:800px; heigh:800px">
+</div>
 
 
 

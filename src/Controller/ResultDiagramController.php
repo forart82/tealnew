@@ -30,11 +30,17 @@ class ResultDiagramController extends AbstractController
      */
     public function index()
     {
+        $user=$this->userRepository->findOneById(3);
 
-        $test = new TestResult($this->userRepository, $this->resultRepository);
+        $test = new TestResult(
+            $this->resultRepository,
+            $user
+        );
+
+
         $string = '<svg height="1000" width="1000">';
-        $diagram = $test->doDiagramm();
-        $rectCorp = 100;
+        $diagram = $test->doDiagram();
+        $rectCorp = 45;
         $first = $diagram[0];
         $first['x']+=$rectCorp;
         $first['y']+=$rectCorp;
