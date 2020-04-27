@@ -39,24 +39,25 @@ class TestResult
     }
     $x = 0;
     $alpha = 360 / $counter;
-    $doArray[] = 0;
+    $radius=250;
+    $doArray = [];
     $x = $alpha;
     for ($i = 0; $i < $counter; $i++) {
-      $distance = 2 * 90 * (sin(deg2rad($x / 2)));
-      $a = (180 - (sqrt(4 * pow(90, 2) - (pow($distance, 2))))) / 2;
+      $distance = 2 * $radius * (sin(deg2rad($x / 2)));
+      $a = (180 - (sqrt(4 * pow($radius, 2) - (pow($distance, 2))))) / 2;
       $doArray[] = [
         'distance' => $distance,
         'a' => $a,
         'alpha' => $x,
-        'x' => cos(deg2rad($x)) * 90,
-        'y' => sin(deg2rad($x)) * 90,
+        'x' => $radius + cos(deg2rad($x)) * $radius,
+        'y' => $radius + sin(deg2rad($x)) * $radius,
       ];
       $x += $alpha;
       dump($doArray, $x);
     }
 
 
-
+    return $doArray;
 
 
     dd(array_pop($doArray), $counter, $quantity, $doArray);
