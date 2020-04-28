@@ -37,32 +37,36 @@ class ResultDiagramController extends AbstractController
             $user
         );
 
-        $offset = 45;
 
-        $svgDiagram = '<svg height="1000" width="1000">';
-        $diagram = $resultsToSvgDiagram->doDiagram();
-        $color="blue";
-        $stroke=5;
-        $firstX = $diagram[0]['x'] + $offset;
-        $firstY = $diagram[0]['y'] + $offset;
+        imagesetthickness($im, 4);
 
         foreach ($diagram as $key => $point) {
-            $bunt=$key*10;
-            $pointX = $point['x'] + $offset;
-            $pointY = $point['y'] + $offset;
-            $svgDiagram .= "<line x1={$pointX} y1={$pointY} x2={$firstX} y2={$firstY} style='stroke:rgb({$bunt},0,0);stroke-width:{$stroke}' />";
-            $firstX=$pointX;
+            $bunt = $key * 10;
+            $pointX = $point['offsetX'] + $offset;
+            $pointY = $point['offsetY'] + $offset;
+            imageline($im, $pointX, $pointY, $firstX, $firstY, $bunt);
+
+            $firstX = $pointX;
             $firstY = $pointY;
         }
-        $firstX = $diagram[0]['x'] + $offset;
-        $firstY = $diagram[0]['y'] + $offset;
-        $svgDiagram .= "<line x1={$pointX} y1={$pointY} x2={$firstX} y2={$firstY} style='stroke:{$color};stroke-width:{$stroke}' />";
+        $firstX = $diagram[0]['offsetX'] + $offset;
+        $firstY = $diagram[0]['offsetY'] + $offset;
 
-
+        imageline($im, $pointX, $pointY, $firstX, $firstY, $bunt);
 
         foreach ($diagram as $key => $dia) {
-            $rectX1 = $diagram[$key]['x'] + $offset;
-            $rectY1 = $diagram[$key]['y'] + $offset;
+            $rectX1 = $diagram[$key]['offsetX'] + $offset;
+            $rectY1 = $diagram[$key]['offsetY'] + $offset;
+            $color = $key * 20;
+            imagefilledellipse($im, $rectX1, $rectY1, 20, 20, 255255255);
+        }
+
+        imagepng($im, 'contents/images/site/diagram3.png');
+        imagedestroy($im);
+
+        foreach ($diagram as $key => $dia) {
+            $rectX1 = $diagram[$key]['offsetX'] + $offset;
+            $rectY1 = $diagram[$key]['offsetY'] + $offset;
             $color = $key * 20;
             $svgDiagram .= "<circle cx={$rectX1} cy={$rectY1} r=10 style='fill:rgb(0,{$color},{$color});' />";
         }
@@ -96,7 +100,8 @@ class ResultDiagramController extends AbstractController
         $svgDiagram .= '<use id="use" xlink:href="#circle2" /></svg>';
         return $this->render('result_diagram/result_diagram.html.twig', [
             'diagram' => $diagram,
-            'svgDiagram' => $svgDiagram
+            'svgDiagram' => $svgDiagram,
+
         ]);
     }
 }

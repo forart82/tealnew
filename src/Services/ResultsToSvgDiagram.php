@@ -28,7 +28,7 @@ class ResultsToSvgDiagram
     $this->alpha = 360;
     $this->next = -90;
     $this->resutls = [];
-    $this->offset = 0;
+    $this->offset = 250;
   }
 
   public function doDiagram()
@@ -38,8 +38,11 @@ class ResultsToSvgDiagram
     $this->getAlpha();
     // Get Coordinates.
     $this->getCoordinates();
+
+    $this->createSvgDiagram();
+
     // Do choice offset.
-    $this->doChoiceOffset();
+    // $this->doChoiceOffset();
     // dump($this->results);
 
     return $this->results;
@@ -54,8 +57,6 @@ class ResultsToSvgDiagram
         $counter++;
         $this->results[$key]['choice'] = $result->getChoice();
         $this->results[$key]['id'] = $result->getId();
-        $this->results[$key]['offsetx'] = 0;
-        $this->results[$key]['offsety'] = 0;
       }
     }
     $this->alpha = $this->alpha / $counter;
@@ -64,56 +65,45 @@ class ResultsToSvgDiagram
   public function getCoordinates(): void
   {
     for ($i = 0; $i < count($this->results); $i++) {
-      $s = 2 * $this->radius * (sin(deg2rad($this->next / 2)));
-      $a = (180 - (sqrt(4 * pow($this->radius, 2) - (pow($s, 2))))) / 2;
-
+      $radiusOffset = 50 * ($this->results[$i]['choice']+1);
       $this->results[$i] += [
-        's' => $s,
-        'a' => $a,
         'alpha' => $this->next,
-        'y' => $this->radius + $this->getY() * $this->radius,
-        'x' => $this->radius + $this->getX() * $this->radius,
+        'x' => $this->radius + cos(deg2rad($this->next)) * $this->radius,
+        'y' => $this->radius + sin(deg2rad($this->next)) * $this->radius,
+        'offsetX' => $this->radius + cos(deg2rad($this->next))* $radiusOffset,
+        'offsetY' => $this->radius + sin(deg2rad($this->next))* $radiusOffset,
       ];
       $this->next += $this->alpha;
     }
   }
 
-  public function doChoiceOffset(): void
-  {
-    for ($i = 0; $i < count($this->results); $i++) {
-      if($this->results[$i]['choice']==5)
-      {
-        $this->offset=0;
 
-      }
-      else
-      {
-        $this->next=$this->results[$i]['alpha'];
-        $this->offset = -20 * $this->results[$i]['choice'];
-        $this->results[$i]['y'] -= $this->getA();
-        $this->results[$i]['x'] -= $this->getB();
-      }
+  public function createSvgDiagram()
+  {
+    $offset = 50;
+    $svgDiagram = '<svg height="100vh" width="100vw">';
+    $diagram = $resultsToSvgDiagram->doDiagram();
+    $im = imagecreatefrompng('contents/images/site/diagramBack.png');
+    $color = "blue";
+    $stroke = 5;
+    $firstX = $diagram[0]['offsetX'] + $offset;
+    $firstY = $diagram[0]['offsetY'] + $offset;
+
+
+    $firstX = $diagram[0]['offsetX'] + $offset;
+    $firstY = $diagram[0]['offsetY'] + $offset;
+    foreach ($diagram as $key => $point) {
+        $bunt = $key * 10;
+        $pointX = $point['offsetX'] + $offset;
+        $pointY = $point['offsetY'] + $offset;
+        $svgDiagram .= "<line x1={$pointX} y1={$pointY} x2={$firstX} y2={$firstY} style='stroke:rgb({$bunt},0,0);stroke-width:{$stroke}' />";
+        $firstX = $pointX;
+        $firstY = $pointY;
     }
-    dump($this->results);
+    $firstX = $diagram[0]['offsetX'] + $offset;
+    $firstY = $diagram[0]['offsetY'] + $offset;
+    $svgDiagram .= "<line x1={$pointX} y1={$pointY} x2={$firstX} y2={$firstY} style='stroke:{$color};stroke-width:{$stroke}' />";
+
   }
 
-  public function getX(): float
-  {
-    return cos(deg2rad($this->next));
-  }
-
-  public function getY(): float
-  {
-    return sin(deg2rad($this->next));
-  }
-
-  public function getA(): float
-  {
-    return $this->offset * cos(90 - $this->next);
-  }
-
-  public function getB(): float
-  {
-    return sqrt(pow($this->offset,2)-pow($this->getA(),2));
-  }
 }
