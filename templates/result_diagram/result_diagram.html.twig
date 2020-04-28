@@ -1,11 +1,13 @@
 {% extends "MAIN/base.html.twig" %}
 
 {% block body %}
-
-<img style="grid-column:1/span all; grid-row:1/span all; width:20vw; justifiy-self:center;"src="/contents/images/site/diagram3.png">
 <div id="diagramMain">
 
 
+
+{# <img id="diagramImage" src="/contents/images/site/diagram3.png" alt="diagram"> #}
+
+<div id="diagramSvg">
 {{svgDiagram|raw}}
 
 

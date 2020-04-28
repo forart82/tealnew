@@ -1,11 +1,19 @@
-#diagramMain{
-  background: url('/contents/images/site/diagramBack.png');
+#diagramMain {
+  grid-column: 1 / span all;
+  grid-row: 1 / span all;
+}
+
+#diagramSvg {
+  display: flex;
+  margin: 80px auto;
+  justify-self: center;
+  background: url("/contents/images/site/diagramBack.png");
   background-repeat: no-repeat;
   background-position: center;
-  background-size: cover;
-  width:600px;
-  height:600px;
-  position:absolute;
-  top:145px;
-  left:145px;
+  width: 650px;
+  height: 650px;
+}
+
+#diagramPng {
+  width: 20vw;
 }
