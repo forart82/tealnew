@@ -43,7 +43,7 @@ class CompanyController extends AbstractController
         }
 
         return $this->render('company/new.html.twig', [
-            'company' => $company,
+            'element_teal' => $company,
             'form' => $form->createView(),
         ]);
     }
@@ -54,7 +54,7 @@ class CompanyController extends AbstractController
     public function show(Company $company): Response
     {
         return $this->render('company/show.html.twig', [
-            'company' => $company,
+            'element_teal' => $company,
         ]);
     }
 

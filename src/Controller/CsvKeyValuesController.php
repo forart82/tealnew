@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/csv/key/values")
+ * @Route("/csvkeyvalues")
  */
 class CsvKeyValuesController extends AbstractController
 {
@@ -20,8 +20,8 @@ class CsvKeyValuesController extends AbstractController
      */
     public function index(CsvKeyValuesRepository $csvKeyValuesRepository): Response
     {
-        return $this->render('csv_key_values/index.html.twig', [
-            'csv_key_values' => $csvKeyValuesRepository->findAll(),
+        return $this->render('csv_key_values/csv_key_values.html.twig', [
+            'element_teal' => $csvKeyValuesRepository->findAll(),
         ]);
     }
 
@@ -43,7 +43,7 @@ class CsvKeyValuesController extends AbstractController
         }
 
         return $this->render('csv_key_values/new.html.twig', [
-            'csv_key_value' => $csvKeyValue,
+            'element_teal' => $csvKeyValue,
             'form' => $form->createView(),
         ]);
     }
@@ -53,8 +53,8 @@ class CsvKeyValuesController extends AbstractController
      */
     public function show(CsvKeyValues $csvKeyValue): Response
     {
-        return $this->render('csv_key_values/show.html.twig', [
-            'csv_key_value' => $csvKeyValue,
+        return $this->render('element_teal/show.html.twig', [
+            'element_teal' => $csvKeyValue,
         ]);
     }
 
@@ -73,7 +73,7 @@ class CsvKeyValuesController extends AbstractController
         }
 
         return $this->render('csv_key_values/edit.html.twig', [
-            'csv_key_value' => $csvKeyValue,
+            'element_teal' => $csvKeyValue,
             'form' => $form->createView(),
         ]);
     }
