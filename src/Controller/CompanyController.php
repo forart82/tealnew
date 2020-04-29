@@ -18,7 +18,7 @@ class CompanyController extends AbstractController
     /**
      * @Route("/", name="company_index", methods={"GET"})
      */
-    public function index(CompanyRepository $companyRepository): Response
+    public function company(CompanyRepository $companyRepository): Response
     {
         return $this->render('company/company.html.twig', [
             'companies' => $companyRepository->findAll(),
@@ -72,9 +72,13 @@ class CompanyController extends AbstractController
             return $this->redirectToRoute('company_index');
         }
 
+
+      $companyImage = base64_encode(stream_get_contents($company->getLogo()));
+
         return $this->render('company/edit.html.twig', [
-            'company' => $company,
+            'element_teal' => $company,
             'form' => $form->createView(),
+            'companyImage' => $companyImage,
         ]);
     }
 

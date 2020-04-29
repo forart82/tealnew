@@ -1,13 +1,18 @@
+{% extends 'MAIN/base.html.twig' %}
 {% block body %}
 	<div class="list-teal">
 		<img class="list-teal-logo" src="/contents/images/logos/tlb.png" alt="logo tlb">
-		<h1 class="h1 list-teal-title">Company index</h1>
-
-
+		{% if element_teal is defined %}
+		<div class="list-teal-title-block">
+			<h1 class="h1 list-teal-title">{{element_teal.name}}</h1>
+			<img calss="list-teal-company-logo" alt="Company Logo" src="data:image/png;base64,{{ companyImage }}"/>
+		</div>
+		{% endif %}
 		{{ include('MAIN/_form.html.twig', {'button_label': 'Update'}) }}
-
-		<a href="{{ path('company_index') }}">back to list</a>
-
-		{{ include('MAIN/_delete_form.html.twig') }}
+		<div class="list-teal-btnline">
+			<button form="MAINFORM" class="btnGlobal">{{ button_label|default('Save') }}</button>
+			<a class="btnGlobal" href="{{ path('company_index') }}">back to list</a>
+			{{ include('MAIN/_delete_form.html.twig') }}
+		</div>
 	</div>
 {% endblock %}

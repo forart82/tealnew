@@ -6,12 +6,22 @@
   flex-flow: column nowrap;
   // grid-template-rows: repeat(auto-fill, minmax(10px,150px));
   // justify-items: center;
-  .list-teal-title {
-    margin: 20px;
-  }
   .list-teal-logo {
     width: 30vw;
     margin: 20px;
+  }
+  .list-teal-title-block {
+    display: flex;
+    flex-flow: row nowrap;
+    margin: 0px;
+    justify-content: space-between;
+    .list-teal-title {
+      align-self: center;
+    }
+    .list-teal-company-logo {
+      width: 150px;
+      height: auto;
+    }
   }
   .list-teal-btnline {
     display: flex;

@@ -41,7 +41,6 @@ class ResultDiagramController extends AbstractController
 
         return $this->render('result_diagram/result_diagram.html.twig', [
             'svgDiagram' => $resultsDiagram->getSvgDiagram(),
-
         ]);
     }
 }
