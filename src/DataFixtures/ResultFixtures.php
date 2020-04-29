@@ -30,8 +30,8 @@ class ResultFixtures extends Fixture implements OrderedFixtureInterface
                 $result = new Result();
                 $result->setChoice(mt_rand(0, 5))
                     ->setNotation(mt_rand(0, 5))
-                    ->setIdSubject($this->subjectRepository->findOneById($j))
-                    ->setIdUser($this->userRepository->findOneById($i));
+                    ->setSubject($this->subjectRepository->findOneById($j))
+                    ->setUser($this->userRepository->findOneById($i));
                 $manager->persist($result);
             }
         }

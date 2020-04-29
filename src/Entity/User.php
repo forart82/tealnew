@@ -62,7 +62,7 @@ class User implements UserInterface
     private $token;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Result", mappedBy="idUser", fetch="EAGER")
+     * @ORM\OneToMany(targetEntity="App\Entity\Result", mappedBy="User", fetch="EAGER")
      */
     private $userResult;
 
@@ -226,7 +226,7 @@ class User implements UserInterface
     {
         if (!$this->userResult->contains($userResult)) {
             $this->userResult[] = $userResult;
-            $userResult->setIdUser($this);
+            $userResult->setUser($this);
         }
 
         return $this;
@@ -237,8 +237,8 @@ class User implements UserInterface
         if ($this->userResult->contains($userResult)) {
             $this->userResult->removeElement($userResult);
             // set the owning side to null (unless already changed)
-            if ($userResult->getIdUser() === $this) {
-                $userResult->setIdUser(null);
+            if ($userResult->getUser() === $this) {
+                $userResult->setUser(null);
             }
         }
 

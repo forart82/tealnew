@@ -38,7 +38,7 @@ class ResultsDiagram
     int $cpGreen = 100,
     int $cpBlue = 255,
     int $stroke = 5,
-    int $center = 120
+    int $center = 45
   ) {
     $this->resultRepository = $resultRepository;
     $this->user = $user;
@@ -54,23 +54,23 @@ class ResultsDiagram
     $this->svgDiagram = "";
     $this->alpha = 360;
     $this->next = -90;
-    $this->resutls = [];
+    $this->results = [];
     $this->offset = 250;
   }
 
-  public function doDiagram()
+  public function doDiagram(): ?array
   {
 
     // Get Results with user language.
     $this->getAlpha();
     // Get Coordinates.
     $this->getCoordinates();
-
+    // Add bakcground to svg.
+    $this->getSvgDiagramFile();
+    // Add lines and pooints to svg.
     $this->createSvgDiagram();
-
-    // Do choice offset.
-    // $this->doChoiceOffset();
-    // dump($this->results);
+    // Create png file diagram.
+    $this->createPngDiagram();
 
     return $this->results;
   }
@@ -80,7 +80,7 @@ class ResultsDiagram
     $resultRepository = $this->resultRepository->allResultNotZero($this->user);
     $counter = 0;
     foreach ($resultRepository as $key => $result) {
-      if ($result->getIdSubject()->getLanguage() == $this->user->getLanguage()) {
+      if ($result->getSubject()->getLanguage() == $this->user->getLanguage()) {
         $counter++;
         $this->results[$key]['choice'] = $result->getChoice();
         $this->results[$key]['id'] = $result->getId();
@@ -107,10 +107,8 @@ class ResultsDiagram
 
   public function createSvgDiagram(): void
   {
-    // maybe another offset
-
-    $this->svgDiagram = '<svg height="750px" width="750px">';
-
+    $pointX=0;
+    $pointY=0;
     $firstX = $this->results[0]['offsetX'] + $this->center;
     $firstY = $this->results[0]['offsetY'] + $this->center;
     // Creation of lines
@@ -135,13 +133,14 @@ class ResultsDiagram
     $this->svgDiagram .= '<use id="use" xlink:href="#circle2" /></svg>';
   }
 
-  public function createPngDiagram()
+  public function createPngDiagram(): void
   {
     $png = imagecreatefrompng('contents/images/results/diagramBack.png');
     imagesetthickness($png, 4);
     $lineColor=imagecolorallocate($png,$this->clRed,$this->clGreen,$this->clBlue);
     $pointColor = imagecolorallocate($png, $this->cpRed, $this->cpGreen, $this->cpBlue);
-
+    $pointX=0;
+    $pointY=0;
     $firstX = $this->results[0]['offsetX'] + $this->center;
     $firstY = $this->results[0]['offsetY'] + $this->center;
     foreach ($this->results as $key => $point) {
@@ -170,6 +169,12 @@ class ResultsDiagram
   public function getSvgDiagram(): string
   {
     return $this->svgDiagram;
+  }
+
+  public function getSvgDiagramFile(): void
+  {
+    $this->svgDiagram=file_get_contents('contents/images/results/diagramBack.svg');
+    $this->svgDiagram=substr($this->svgDiagram,0,-6);
   }
 
 }

@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20200428195408 extends AbstractMigration
+final class Version20200429054149 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -29,13 +29,13 @@ final class Version20200428195408 extends AbstractMigration
         $this->addSql('CREATE TABLE keytext (id INT AUTO_INCREMENT NOT NULL, keytext VARCHAR(255) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE language (id INT AUTO_INCREMENT NOT NULL, code VARCHAR(255) NOT NULL, denomination VARCHAR(255) NOT NULL, active TINYINT(1) DEFAULT \'1\' NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE navigations (id INT AUTO_INCREMENT NOT NULL, image_id INT NOT NULL, name VARCHAR(255) NOT NULL, link VARCHAR(255) NOT NULL, position INT NOT NULL, sub_position INT DEFAULT NULL, authorisation VARCHAR(10) NOT NULL, translation VARCHAR(255) NOT NULL, INDEX IDX_AD21D8F33DA5256D (image_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
-        $this->addSql('CREATE TABLE result (id INT AUTO_INCREMENT NOT NULL, id_subject_id INT NOT NULL, id_user_id INT DEFAULT NULL, choice INT NOT NULL, notation INT DEFAULT 0 NOT NULL, INDEX IDX_136AC113A7B45C50 (id_subject_id), INDEX IDX_136AC11379F37AE5 (id_user_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE result (id INT AUTO_INCREMENT NOT NULL, subject_id INT NOT NULL, user_id INT DEFAULT NULL, choice INT NOT NULL, notation INT DEFAULT 0 NOT NULL, INDEX IDX_136AC11323EDC87 (subject_id), INDEX IDX_136AC113A76ED395 (user_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE subject (id INT AUTO_INCREMENT NOT NULL, image_id INT DEFAULT NULL, question LONGTEXT NOT NULL, answer_one LONGTEXT NOT NULL, answer_two LONGTEXT NOT NULL, answer_three LONGTEXT NOT NULL, answer_four LONGTEXT NOT NULL, answer_five LONGTEXT NOT NULL, position INT NOT NULL, user_notation INT NOT NULL, title VARCHAR(255) NOT NULL, is_respond TINYINT(1) DEFAULT \'0\' NOT NULL, language VARCHAR(255) NOT NULL, INDEX IDX_FBCE3E7A3DA5256D (image_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE translation (id INT AUTO_INCREMENT NOT NULL, language_id INT NOT NULL, keytext_id INT DEFAULT NULL, text LONGTEXT NOT NULL, INDEX IDX_B469456F82F1BAF4 (language_id), INDEX IDX_B469456F9B873397 (keytext_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE user (id INT AUTO_INCREMENT NOT NULL, company_id INT DEFAULT NULL, email VARCHAR(180) NOT NULL, roles JSON NOT NULL, password VARCHAR(255) NOT NULL, firstname VARCHAR(255) NOT NULL, lastname VARCHAR(255) NOT NULL, language VARCHAR(255) NOT NULL, is_new TINYINT(1) DEFAULT \'1\' NOT NULL, token VARCHAR(255) DEFAULT NULL, UNIQUE INDEX UNIQ_8D93D649E7927C74 (email), INDEX IDX_8D93D649979B1AD6 (company_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('ALTER TABLE navigations ADD CONSTRAINT FK_AD21D8F33DA5256D FOREIGN KEY (image_id) REFERENCES images (id)');
-        $this->addSql('ALTER TABLE result ADD CONSTRAINT FK_136AC113A7B45C50 FOREIGN KEY (id_subject_id) REFERENCES subject (id)');
-        $this->addSql('ALTER TABLE result ADD CONSTRAINT FK_136AC11379F37AE5 FOREIGN KEY (id_user_id) REFERENCES user (id)');
+        $this->addSql('ALTER TABLE result ADD CONSTRAINT FK_136AC11323EDC87 FOREIGN KEY (subject_id) REFERENCES subject (id)');
+        $this->addSql('ALTER TABLE result ADD CONSTRAINT FK_136AC113A76ED395 FOREIGN KEY (user_id) REFERENCES user (id)');
         $this->addSql('ALTER TABLE subject ADD CONSTRAINT FK_FBCE3E7A3DA5256D FOREIGN KEY (image_id) REFERENCES images (id) ON DELETE SET NULL');
         $this->addSql('ALTER TABLE translation ADD CONSTRAINT FK_B469456F82F1BAF4 FOREIGN KEY (language_id) REFERENCES language (id)');
         $this->addSql('ALTER TABLE translation ADD CONSTRAINT FK_B469456F9B873397 FOREIGN KEY (keytext_id) REFERENCES keytext (id)');
@@ -52,8 +52,8 @@ final class Version20200428195408 extends AbstractMigration
         $this->addSql('ALTER TABLE subject DROP FOREIGN KEY FK_FBCE3E7A3DA5256D');
         $this->addSql('ALTER TABLE translation DROP FOREIGN KEY FK_B469456F9B873397');
         $this->addSql('ALTER TABLE translation DROP FOREIGN KEY FK_B469456F82F1BAF4');
-        $this->addSql('ALTER TABLE result DROP FOREIGN KEY FK_136AC113A7B45C50');
-        $this->addSql('ALTER TABLE result DROP FOREIGN KEY FK_136AC11379F37AE5');
+        $this->addSql('ALTER TABLE result DROP FOREIGN KEY FK_136AC11323EDC87');
+        $this->addSql('ALTER TABLE result DROP FOREIGN KEY FK_136AC113A76ED395');
         $this->addSql('DROP TABLE company');
         $this->addSql('DROP TABLE csv_key_values');
         $this->addSql('DROP TABLE emails');

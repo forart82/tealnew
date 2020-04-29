@@ -66,7 +66,7 @@ class Subject
     private $userNotation;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Result", mappedBy="idSubject")
+     * @ORM\OneToMany(targetEntity="App\Entity\Result", mappedBy="Subject")
      */
     private $subjectResult;
 
@@ -210,7 +210,7 @@ class Subject
     {
         if (!$this->subjectResult->contains($subjectResult)) {
             $this->subjectResult[] = $subjectResult;
-            $subjectResult->setIdSubject($this);
+            $subjectResult->setSubject($this);
         }
 
         return $this;
@@ -221,8 +221,8 @@ class Subject
         if ($this->subjectResult->contains($subjectResult)) {
             $this->subjectResult->removeElement($subjectResult);
             // set the owning side to null (unless already changed)
-            if ($subjectResult->getIdSubject() === $this) {
-                $subjectResult->setIdSubject(null);
+            if ($subjectResult->getSubject() === $this) {
+                $subjectResult->setSubject(null);
             }
         }
 

@@ -11,3 +11,4 @@ parameters:
         - src/DataFixtures
         - src/Migration
         - src/Security
+        - src/Repository

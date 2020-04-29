@@ -22,7 +22,7 @@ class ResultRepository extends ServiceEntityRepository
     public function allResultsCompany(int $id)
     {
         return $this->createQueryBuilder('r')
-            ->join('r.idUser', 'u')
+            ->join('r.User', 'u')
             ->join('u.company', 'c')
             ->where('c.id=:id')
             ->setParameter('id', $id)
@@ -34,13 +34,13 @@ class ResultRepository extends ServiceEntityRepository
     public function allResultsCompanyAscSubject(int $id)
     {
         return $this->createQueryBuilder('r')
-            ->join('r.idUser', 'u')
+            ->join('r.User', 'u')
             ->join('u.company', 'c')
             ->where('c.id=:id')
             ->setParameter('id', $id)
             ->andWhere('r.choice > :val')
             ->setParameter('val', 0)
-            ->orderBy('r.idSubject', 'ASC')
+            ->orderBy('r.Subject', 'ASC')
             ->getQuery()
             ->getResult();
     }
@@ -50,7 +50,7 @@ class ResultRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('r')
         ->where('r.choice > :val')
         ->setParameter('val', 0)
-        ->andWhere('r.idUser=:user')
+        ->andWhere('r.User=:user')
         ->setParameter('user', $user)
         ->getQuery()
         ->getResult();
@@ -59,7 +59,7 @@ class ResultRepository extends ServiceEntityRepository
     public function allNotationsCompany(int $id)
     {
         return $this->createQueryBuilder('r')
-            ->join('r.idUser', 'u')
+            ->join('r.User', 'u')
             ->join('u.company', 'c')
             ->where('c.id=:id')
             ->setParameter('id', $id)
@@ -74,7 +74,7 @@ class ResultRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('r')
         ->where('r.notation > :val')
         ->setParameter('val', 0)
-        ->andWhere('r.idUser=:user')
+        ->andWhere('r.User=:user')
         ->setParameter('user', $user)
         ->getQuery()
         ->getResult();

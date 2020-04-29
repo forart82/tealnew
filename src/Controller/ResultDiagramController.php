@@ -7,7 +7,7 @@ use App\Repository\UserRepository;
 use App\Repository\ResultRepository;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @Route("/resultdiagram")
@@ -28,7 +28,7 @@ class ResultDiagramController extends AbstractController
     /**
      * @Route("/", name="result_diagram")
      */
-    public function index()
+    public function diagram(): Response
     {
         $user = $this->userRepository->findOneById(3);
 

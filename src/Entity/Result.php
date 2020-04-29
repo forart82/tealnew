@@ -28,12 +28,12 @@ class Result
      * @ORM\ManyToOne(targetEntity="App\Entity\Subject", inversedBy="subjectResult", fetch="EAGER")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $idSubject;
+    private $Subject;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="userResult", fetch="EAGER")
      */
-    private $idUser;
+    private $User;
 
     /**
      * @ORM\Column(type="integer", options={"default":0})
@@ -42,7 +42,7 @@ class Result
 
     public function __construct()
     {
-        $this->idUser = new ArrayCollection();
+        $this->User = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -63,26 +63,26 @@ class Result
     }
 
 
-    public function getIdSubject(): ?Subject
+    public function getSubject(): ?Subject
     {
-        return $this->idSubject;
+        return $this->Subject;
     }
 
-    public function setIdSubject($idSubject)
+    public function setSubject($Subject)
     {
-        $this->idSubject = $idSubject;
+        $this->Subject = $Subject;
 
         return $this;
     }
 
-    public function getIdUser():User
+    public function getUser():User
     {
-        return $this->idUser;
+        return $this->User;
     }
 
-    public function setIdUser(?User $idUser): self
+    public function setUser(?User $User): self
     {
-        $this->idUser = $idUser;
+        $this->User = $User;
 
         return $this;
     }
