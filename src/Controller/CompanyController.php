@@ -33,7 +33,6 @@ class CompanyController extends AbstractController
         $company = new Company();
         $form = $this->createForm(CompanyType::class, $company);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($company);
@@ -67,15 +66,14 @@ class CompanyController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // dd($_FILES);
-
+            $company->setLogo(file_get_contents($form->get('logo')->getData()));
+            $this->getDoctrine()->getManager()->persist($company);
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('company_index');
         }
 
-
-      $companyImage = base64_encode(stream_get_contents($company->getLogo()));
+        $companyImage = base64_encode(stream_get_contents($company->getLogo()));
 
         return $this->render('MAIN/EDIT.html.twig', [
             'element_teal' => $company,

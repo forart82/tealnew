@@ -344,15 +344,11 @@ class CsvFileImport
       $newUser->setFirstname($this->fields[$this->csvKeyValuePositions['firstname']])
         ->setLastname($this->fields[$this->csvKeyValuePositions['lastname']])
         ->setEmail($this->fields[$this->csvKeyValuePositions['email']])
-        ->setCountry("non")
-        ->setCity("non")
         ->setLanguage($company->getLanguage())
         ->setPassword($password)
         ->setRoles(["ROLE_USER"])
-        ->setLevelUser(0)
         ->setIsNew(1)
-        ->setCompany($company)
-        ->setAdmin(false);
+        ->setCompany($company);
       $this->entityManagerInterface->persist($newUser);
       $this->entityManagerInterface->flush();
       $this->messageType[] = "success";

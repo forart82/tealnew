@@ -54,7 +54,7 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="boolean", options={"default" : 1})
      */
-    private $isNEw;
+    private $isNew;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -190,14 +190,14 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getIsNEw(): ?bool
+    public function getIsNew(): ?bool
     {
-        return $this->isNEw;
+        return $this->isNew;
     }
 
-    public function setIsNEw(bool $isNEw): self
+    public function setIsNew(bool $isNew): self
     {
-        $this->isNEw = $isNEw;
+        $this->isNew = $isNew;
 
         return $this;
     }

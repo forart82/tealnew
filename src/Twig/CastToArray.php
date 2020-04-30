@@ -8,14 +8,27 @@
 namespace App\Twig;
 
 use ReflectionClass;
+use Doctrine\ORM\EntityManagerInterface;
+
+
 use ReflectionProperty;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
+use Symfony\Bridge\Doctrine\PropertyInfo\DoctrineExtractor;
+use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
+use Symfony\Component\PropertyInfo\PropertyInfoExtractor;
 
 class CastToArray extends AbstractExtension
 {
-  public function getFunctions():array
-    {
+  public $entityManagerInterface;
+
+  public function __construct(EntityManagerInterface $entityManagerInterface)
+  {
+    $this->entityManagerInterface=$entityManagerInterface;
+  }
+
+  public function getFunctions(): array
+  {
     return [
       new TwigFunction('cast_to_array', [$this, 'castToArray']),
     ];
@@ -23,20 +36,28 @@ class CastToArray extends AbstractExtension
   /**
    * @param mixed $object
    */
-  public function castToArray($object):array
+  public function castToArray($object): array
   {
-    if(gettype($object)=="array")
-    {
-      $reflect = new ReflectionClass($object[0]);
+    $reflectionExtractor = new ReflectionExtractor();
+    $doctrineExtractor = new DoctrineExtractor($this->entityManagerInterface);
+
+    $propertyInfo = new PropertyInfoExtractor(
+      // List extractors
+      [
+        $reflectionExtractor,
+        $doctrineExtractor
+      ],
+      [
+        $doctrineExtractor,
+        $reflectionExtractor
+      ]
+    );
+    if (gettype($object) == "array") {
+      $properties = $propertyInfo->getProperties("App\Entity\\" . (new ReflectionClass($object[0]))->getShortName());
+
+    } else {
+      $properties = $propertyInfo->getProperties("App\Entity\\" . (new ReflectionClass($object))->getShortName());
     }
-    else{
-      $reflect = new ReflectionClass($object);
-    }
-    $props   = $reflect->getProperties();
-    $names=[];
-    foreach ($props as $prop) {
-        $names[]= $prop->getName();
-    }
-    return $names;
+    return $properties;
   }
 }

@@ -2,7 +2,8 @@
 {% block body %}
 	<div class="list-teal">
 		<img class="list-teal-logo" src="/contents/images/logos/tlb.png" alt="logo tlb">
-		<h1 class="h1 list-teal-title">{{className(element_teal.0)}} index</h1>
+		<h1 class="h1 list-teal-title">{{className(element_teal.0)}}
+			index</h1>
 		<table class="table">
 			<thead>
 				<tr>
@@ -16,11 +17,10 @@
 				{% for element in element_teal %}
 					<tr>
 						{% for property in cast_to_array(element_teal) %}
-						{% if attribute(element,property) is iterable  %}
-						<td>n/a</td>
-						{% else %}
-
-							<td>{{ attribute(element,property) }}</td>
+							{% if attribute(element,property) is iterable  %}
+								<td>n/a</td>
+							{% else %}
+								<td>{{ attribute(element,property) }}</td>
 							{% endif %}
 						{% endfor %}
 						<td>
