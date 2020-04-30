@@ -1,0 +1,40 @@
+{% extends "MAIN/BASE.html.twig" %}
+{% block body %}
+	<div class="list-teal">
+		<img class="list-teal-logo" src="/contents/images/logos/tlb.png" alt="logo tlb">
+		<h1 class="h1 list-teal-title">{{className(element_teal.0)}} index</h1>
+		<table class="table">
+			<thead>
+				<tr>
+					{% for property in cast_to_array(element_teal) %}
+						<th>{{property|capitalize}}</th>
+					{% endfor %}
+					<th>actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for element in element_teal %}
+					<tr>
+						{% for property in cast_to_array(element_teal) %}
+						{% if attribute(element,property) is iterable  %}
+						<td>n/a</td>
+						{% else %}
+
+							<td>{{ attribute(element,property) }}</td>
+							{% endif %}
+						{% endfor %}
+						<td>
+							<a class="btnGlobalSmall" href="{{ path(className(element_teal.0)|lower~'_show', {'id': element.id}) }}">show</a>
+							<a class="btnGlobalSmall" href="{{ path(className(element_teal.0)|lower~'_edit', {'id': element.id}) }}">edit</a>
+						</td>
+					</tr>
+				{% else %}
+					<tr>
+						<td colspan="6">no records found</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+		<a class="btnGlobal" href="{{ path(className(element_teal.0)|lower~'_new') }}">Create new</a>
+	</div>
+{% endblock %}

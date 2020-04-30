@@ -12,14 +12,16 @@ use Twig\TwigFunction;
 
 class ClassName extends AbstractExtension
  {
-   public function getFunctions()
+   public function getFunctions(): array
    {
      return [
        new TwigFunction('className',[$this, 'getClassName'])
      ];
    }
-
-   public function getClassName($classObject)
+  /**
+   * @param mixed $classObject
+   */
+   public function getClassName($classObject): string
    {
      return (new \ReflectionClass($classObject))->getShortName();
    }

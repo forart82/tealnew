@@ -8,29 +8,35 @@
 namespace App\Twig;
 
 use ReflectionClass;
+use ReflectionProperty;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
 class CastToArray extends AbstractExtension
 {
-  public function getFunctions()
+  public function getFunctions():array
     {
     return [
       new TwigFunction('cast_to_array', [$this, 'castToArray']),
     ];
   }
-
-  public function castToArray($object)
+  /**
+   * @param mixed $object
+   */
+  public function castToArray($object):array
   {
-    $properties="";
-    $object = new ReflectionClass($object[0]);
-    $reflect=$object->getProperties();
-    foreach($reflect as $key => $name);
+    if(gettype($object)=="array")
     {
-      dump($name);
-      $properties.= $name->getName();
+      $reflect = new ReflectionClass($object[0]);
     }
-    dump($properties, $object->getProperties());
-    // return [];
+    else{
+      $reflect = new ReflectionClass($object);
+    }
+    $props   = $reflect->getProperties();
+    $names=[];
+    foreach ($props as $prop) {
+        $names[]= $prop->getName();
+    }
+    return $names;
   }
 }

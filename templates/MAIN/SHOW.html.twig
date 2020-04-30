@@ -1,0 +1,30 @@
+{% extends "MAIN/BASE.html.twig" %}
+{% block body %}
+	<div class="list-teal">
+		<img class="list-teal-logo" src="/contents/images/logos/tlb.png" alt="logo tlb">
+		<h1 class="h1 list-teal-title">
+			{{attribute(element_teal, "name") ? element_teal.name : attribute(element_teal, "title") ? element_teal.title : ""}}
+		</h1>
+
+		<table class="table">
+			<tbody>
+				{% for property in cast_to_array(element_teal) %}
+					<tr>
+						<th>{{property|capitalize}}</th>
+						{% if attribute(element_teal,property) is iterable  %}
+							<td>n/a</td>
+						{% else %}
+							<td>{{ attribute(element_teal,property) }}</td>
+						{% endif %}
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+
+		<div class="list-teal-btnline">
+			<button form="MAINFORM" class="btnGlobal">{{ button_label|default('Save') }}</button>
+			<a class="btnGlobal" href="{{ path(className(element_teal)|lower~'_index') }}">back to list</a>
+			{{ include('MAIN/_delete_form.html.twig') }}
+		</div>
+	</div>
+{% endblock %}

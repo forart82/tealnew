@@ -16,17 +16,17 @@ use Symfony\Component\Routing\Annotation\Route;
 class CsvKeyValuesController extends AbstractController
 {
     /**
-     * @Route("/", name="csv_key_values_index", methods={"GET"})
+     * @Route("/", name="csvkeyvalues_index", methods={"GET"})
      */
     public function index(CsvKeyValuesRepository $csvKeyValuesRepository): Response
     {
-        return $this->render('csv_key_values/csv_key_values.html.twig', [
+        return $this->render('MAIN/INDEX.html.twig', [
             'element_teal' => $csvKeyValuesRepository->findAll(),
         ]);
     }
 
     /**
-     * @Route("/new", name="csv_key_values_new", methods={"GET","POST"})
+     * @Route("/new", name="csvkeyvalues_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
     {
@@ -39,27 +39,27 @@ class CsvKeyValuesController extends AbstractController
             $entityManager->persist($csvKeyValue);
             $entityManager->flush();
 
-            return $this->redirectToRoute('csv_key_values_index');
+            return $this->redirectToRoute('csvkeyvalues_index');
         }
 
-        return $this->render('csv_key_values/new.html.twig', [
+        return $this->render('MAIN/NEW.html.twig', [
             'element_teal' => $csvKeyValue,
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/{id}", name="csv_key_values_show", methods={"GET"})
+     * @Route("/{id}", name="csvkeyvalues_show", methods={"GET"})
      */
     public function show(CsvKeyValues $csvKeyValue): Response
     {
-        return $this->render('element_teal/show.html.twig', [
+        return $this->render('MAIN/SHOW.html.twig', [
             'element_teal' => $csvKeyValue,
         ]);
     }
 
     /**
-     * @Route("/{id}/edit", name="csv_key_values_edit", methods={"GET","POST"})
+     * @Route("/{id}/edit", name="csvkeyvalues_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, CsvKeyValues $csvKeyValue): Response
     {
@@ -69,17 +69,17 @@ class CsvKeyValuesController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('csv_key_values_index');
+            return $this->redirectToRoute('csvkeyvalues_index');
         }
 
-        return $this->render('csv_key_values/edit.html.twig', [
+        return $this->render('MAIN/EDIT.html.twig', [
             'element_teal' => $csvKeyValue,
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/{id}", name="csv_key_values_delete", methods={"DELETE"})
+     * @Route("/{id}", name="csvkeyvalues_delete", methods={"DELETE"})
      */
     public function delete(Request $request, CsvKeyValues $csvKeyValue): Response
     {
@@ -89,6 +89,6 @@ class CsvKeyValuesController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('csv_key_values_index');
+        return $this->redirectToRoute('csvkeyvalues_index');
     }
 }
