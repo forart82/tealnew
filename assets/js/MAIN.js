@@ -13,11 +13,13 @@ import '../sass/MAIN.scss'
 // import $ from 'jquery';
 import $ from 'jquery';
 
- // import the function from greet.js (the .js extension is optional)
- // ./ (or ../) means to look for a local file
+// import the function from greet.js (the .js extension is optional)
+// ./ (or ../) means to look for a local file
 //  import greet from './greet';
 
-import './navigation';
-import './introduction';
+$(document).ready(function () {
+  require('./navigation');
+  require('./introduction');
+  require('./fielUploadFields');
 
-
+})

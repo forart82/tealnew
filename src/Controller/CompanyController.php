@@ -67,6 +67,8 @@ class CompanyController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // dd($_FILES);
+
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('company_index');
