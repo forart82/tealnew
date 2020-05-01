@@ -23,6 +23,11 @@
       height: auto;
     }
   }
+  table {
+    svg {
+      width: 25px;
+    }
+  }
   .list-teal-btnline {
     display: flex;
     flex-flow: row nowrap;
@@ -34,7 +39,10 @@
     }
   }
 }
-
+#list-teal-email {
+  grid-column: 2/2;
+  grid-row: 2 / span 4;
+}
 .list-teal-company-logo-table {
   width: 50px;
   height: auto;

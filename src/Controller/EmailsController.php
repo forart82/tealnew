@@ -20,8 +20,8 @@ class EmailsController extends AbstractController
      */
     public function index(EmailsRepository $emailsRepository): Response
     {
-        return $this->render('emails/index.html.twig', [
-            'emails' => $emailsRepository->findAll(),
+        return $this->render('MAIN/INDEX.html.twig', [
+            'element_teal' => $emailsRepository->findAll(),
         ]);
     }
 
@@ -42,8 +42,8 @@ class EmailsController extends AbstractController
             return $this->redirectToRoute('emails_index');
         }
 
-        return $this->render('emails/new.html.twig', [
-            'email' => $email,
+        return $this->render('MAIN/NEW.html.twig', [
+            'element_teal' => $email,
             'form' => $form->createView(),
         ]);
     }
@@ -53,8 +53,8 @@ class EmailsController extends AbstractController
      */
     public function show(Emails $email): Response
     {
-        return $this->render('emails/show.html.twig', [
-            'email' => $email,
+        return $this->render('MAIN/SHOW.html.twig', [
+            'element_teal' => $email,
         ]);
     }
 
@@ -72,8 +72,8 @@ class EmailsController extends AbstractController
             return $this->redirectToRoute('emails_index');
         }
 
-        return $this->render('emails/edit.html.twig', [
-            'email' => $email,
+        return $this->render('MAIN/EDIT.html.twig', [
+            'element_teal' => $email,
             'form' => $form->createView(),
         ]);
     }

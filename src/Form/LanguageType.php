@@ -6,16 +6,32 @@ use App\Entity\Language;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Contracts\Translation\TranslatorInterface;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class LanguageType extends AbstractType
 {
+    public function __construct(TranslatorInterface $translator)
+    {
+        $this->translator = $translator;
+    }
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('code')
-            ->add('denomination')
-            ->add('active')
-        ;
+            ->add('code', TextType::class, [
+                'label' => $this->translator->trans('tCode')
+            ])
+            ->add('denomination', TextType::class, [
+                'label' => $this->translator->trans('tDenomination')
+            ])
+            ->add('active', ChoiceType::class, [
+                'label' => $this->translator->trans('tActive'),
+                'choices' => [
+                    'yes'=> true,
+                    'no'=> false,
+                ]
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

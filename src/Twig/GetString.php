@@ -52,6 +52,71 @@ class GetString extends AbstractExtension
       case 'getLogo':
         $string = base64_encode(stream_get_contents($object->$property()));
         break;
+      case 'getNavigations':
+        // TODO navigation has problem with Doctrine\ORM\PersistentCollection
+
+        // $navigations=$object->getNavigations();
+        // if(gettype($navigations)=="array")
+        // {
+        //   foreach ($navigations as $key => $navigation) {
+        //     if ($key > $elements) {
+        //       $string .= '...';
+        //       break;
+        //     }
+        //     $string .= $navigation->getName() . $separateur;
+        //   }
+        // }
+        // else{
+        //   $string=$navigations->getName();
+        // }
+        break;
+      case 'getTranslation':
+        // TODO navigation has problem with Doctrine\ORM\PersistentCollection
+
+        // $translations = $object->$property();
+        // if (gettype($translations) == "array") {
+        //   foreach ($translations as $key => $translation) {
+        //     if ($key > $elements) {
+        //       $string .= '...';
+        //       break;
+        //     }
+        //     $string .= $translation->getId() . $separateur;
+        //   }
+        // } else {
+        //   $string = $translations->getId();
+        // }
+        break;
+      case 'getTranslations':
+        // TODO navigation has problem with Doctrine\ORM\PersistentCollection
+
+        // $translations = $object->$property();
+        // if (gettype($translations) == "array") {
+        //   foreach ($translations as $key => $translation) {
+        //     if ($key > $elements) {
+        //       $string .= '...';
+        //       break;
+        //     }
+        //     $string .= $translation->getId() . $separateur;
+        //   }
+        // } else {
+        //   $string = $translations->getId();
+        // }
+        break;
+      case 'getImage':
+        // TODO navigation has problem with Doctrine\ORM\PersistentCollection
+        $images = $object->$property();
+        if (gettype($images) == "array") {
+          foreach ($images as $key => $image) {
+            if ($key > $elements) {
+              $string .= '...';
+              break;
+            }
+            $string .= $image->getId() . $separateur;
+          }
+        } else {
+          $string = $images->getId();
+        }
+        break;
       default:
         $string = $object->$property();
         break;

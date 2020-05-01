@@ -20,8 +20,8 @@ class LanguageController extends AbstractController
      */
     public function index(LanguageRepository $languageRepository): Response
     {
-        return $this->render('language/index.html.twig', [
-            'languages' => $languageRepository->findAll(),
+        return $this->render('MAIN/INDEX.html.twig', [
+            'element_teal' => $languageRepository->findAll(),
         ]);
     }
 
@@ -42,8 +42,8 @@ class LanguageController extends AbstractController
             return $this->redirectToRoute('language_index');
         }
 
-        return $this->render('language/new.html.twig', [
-            'language' => $language,
+        return $this->render('MAIN/NEW.html.twig', [
+            'element_teal' => $language,
             'form' => $form->createView(),
         ]);
     }
@@ -53,8 +53,8 @@ class LanguageController extends AbstractController
      */
     public function show(Language $language): Response
     {
-        return $this->render('language/show.html.twig', [
-            'language' => $language,
+        return $this->render('MAIN/SHOW.html.twig', [
+            'element_teal' => $language,
         ]);
     }
 
@@ -72,8 +72,8 @@ class LanguageController extends AbstractController
             return $this->redirectToRoute('language_index');
         }
 
-        return $this->render('language/edit.html.twig', [
-            'language' => $language,
+        return $this->render('MAIN/EDIT.html.twig', [
+            'element_teal' => $language,
             'form' => $form->createView(),
         ]);
     }

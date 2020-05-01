@@ -13,8 +13,7 @@
 		{% for nav in navigation.navigation %}
 			{% if nav.position % 1000 == 0 %}
 				{% set navigationCounter = navigationCounter + 1 %}
-<a href="{{nav.link|raw}}" class="navMainButton btnGlobal" name="navMainButton{{nav.position|slice(0,2)}}">{{nav.translation|trans|raw}}</a>
-
+				<a href="{{path(nav.link)}}" class="navMainButton btnGlobal" name="navMainButton{{nav.position|slice(0,2)}}">{{nav.translation|trans|raw}}</a>
 			{% endif %}
 			{% if nav.name == "burger" %}{% endif %}
 		{% endfor %}
@@ -23,7 +22,7 @@
 		<div class="navSubButtons navMainButton{{counter}}0">
 			{% for nav in navigation.navigation %}
 				{% if nav.position|slice(0,1) == counter %}
-					<a href="{{nav.link|raw}}" class="navSubButton navMainButton{{nav.position|slice(0,2)}}">{{nav.translation|trans|raw}}</a>
+					<a href="{{path(nav.link)}}" class="navSubButton navMainButton{{nav.position|slice(0,2)}}">{{nav.translation|trans|raw}}</a>
 				{% endif %}
 			{% endfor %}
 		</div>

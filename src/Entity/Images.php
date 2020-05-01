@@ -34,7 +34,7 @@ class Images
     private $svgColor;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Navigations", mappedBy="image", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Navigations", mappedBy="image")
      */
     private $navigations;
 

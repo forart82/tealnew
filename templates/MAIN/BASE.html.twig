@@ -11,6 +11,21 @@
 		{% endblock %}
 	</head>
 	<body>
+		{% for message in app.flashes('success') %}
+			<div class="alert alert-success">
+				{{ message }}
+			</div>
+		{% endfor %}
+		{% for message in app.flashes('danger') %}
+			<div class="alert alert-danger">
+				{{ message }}
+			</div>
+		{% endfor %}
+		{% for message in app.flashes('error') %}
+			<div class="alert alert-danger">
+				{{ message }}
+			</div>
+		{% endfor %}
 		<div id="MAIN">
 			<div id="CONTAINER">
 				{% include "MAIN/navigation.html.twig" %}

@@ -20,8 +20,8 @@ class KeytextController extends AbstractController
      */
     public function index(KeytextRepository $keytextRepository): Response
     {
-        return $this->render('keytext/index.html.twig', [
-            'keytexts' => $keytextRepository->findAll(),
+        return $this->render('MAIN/INDEX.html.twig', [
+            'element_teal' => $keytextRepository->findAll(),
         ]);
     }
 
@@ -42,8 +42,8 @@ class KeytextController extends AbstractController
             return $this->redirectToRoute('keytext_index');
         }
 
-        return $this->render('keytext/new.html.twig', [
-            'keytext' => $keytext,
+        return $this->render('MAIN/NEW.html.twig', [
+            'element_teal' => $keytext,
             'form' => $form->createView(),
         ]);
     }
@@ -53,8 +53,8 @@ class KeytextController extends AbstractController
      */
     public function show(Keytext $keytext): Response
     {
-        return $this->render('keytext/show.html.twig', [
-            'keytext' => $keytext,
+        return $this->render('MAIN/SHOW.html.twig', [
+            'element_teal' => $keytext,
         ]);
     }
 
@@ -72,8 +72,8 @@ class KeytextController extends AbstractController
             return $this->redirectToRoute('keytext_index');
         }
 
-        return $this->render('keytext/edit.html.twig', [
-            'keytext' => $keytext,
+        return $this->render('MAIN/EDIT.html.twig', [
+            'element_teal' => $keytext,
             'form' => $form->createView(),
         ]);
     }

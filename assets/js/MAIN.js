@@ -21,5 +21,6 @@ $(document).ready(function () {
   require('./navigation');
   require('./introduction');
   require('./fielUploadFields');
+  require('./emails');
 
 })

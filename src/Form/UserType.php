@@ -18,7 +18,7 @@ class UserType extends AbstractType
             ->add('firstname')
             ->add('lastname')
             ->add('language')
-            ->add('isNEw')
+            ->add('isNew')
             ->add('token')
             ->add('company')
         ;

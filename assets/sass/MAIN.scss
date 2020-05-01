@@ -29,6 +29,6 @@ body {
     justify-self: center;
     display: grid;
     grid-template-columns: 1fr 8fr 1fr;
-    grid-template-rows: auto;
+    grid-template-rows: repeat(12,1fr);
   }
 }
