@@ -13,9 +13,6 @@
 		</div>
 		{% endif %}
 		{{ include('MAIN/_form.html.twig', {'button_label': 'Update'}) }}
-		<div class="list-teal-btnline">
-			<button form="MAINFORM" class="btnGlobal">{{ button_label|default('Save') }}</button>
-			<a class="btnGlobal" href="{{ path(className(element_teal)|lower~'_index') }}">back to list</a>
-		</div>
+		{% include "MAIN/_button_line.html.twig" %}
 	</div>
 {% endblock %}

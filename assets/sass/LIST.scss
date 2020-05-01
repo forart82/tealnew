@@ -26,9 +26,16 @@
   .list-teal-btnline {
     display: flex;
     flex-flow: row nowrap;
-    justify-content: right;
-    a {
-      margin-right: 20px;
+    justify-content: left;
+    button,
+    a,
+    form {
+      margin-left: 10px;
     }
   }
+}
+
+.list-teal-company-logo-table {
+  width: 50px;
+  height: auto;
 }

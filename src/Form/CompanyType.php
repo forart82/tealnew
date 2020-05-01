@@ -24,8 +24,11 @@ class CompanyType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name', TextType::class, [])
+            ->add('name', TextType::class, [
+                'label' => $this->translator->trans('tName')
+            ])
             ->add('logo', FileType::class, [
+                'label' => $this->translator->trans('tLogo'),
                 'data_class' => null,
                 'attr' => [
                     'placeholder' => 'user_choose_file',
@@ -45,6 +48,7 @@ class CompanyType extends AbstractType
                 ]
             ])
             ->add('language', EntityType::class, [
+                'label' => $this->translator->trans('tLanguage'),
                 'class' => Language::class,
                 'choice_label' => 'denomination',
             ]);

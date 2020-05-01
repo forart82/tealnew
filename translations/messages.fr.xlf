@@ -253,6 +253,23 @@
             </trans-unit><trans-unit id="5e9b17f91aaa4">
                 <source>txt_notation</source>
                 <target>Ce sujet vous tient-il à cœur et mérite-t-il d’être discuté au sein de </target>
-            </trans-unit></body>
+            </trans-unit>
+            <trans-unit id="5e9b17f91aa12">
+                <source>tName</source>
+                <target>Nom</target>
+            </trans-unit>
+            <trans-unit id="5e9b17f91aa22">
+                <source>tname</source>
+                <target>nom</target>
+            </trans-unit>
+            <trans-unit id="5e9b17f91aa32">
+                <source>tShow</source>
+                <target>Afficher</target>
+            </trans-unit>
+            <trans-unit id="5e9b17f91ad32">
+                <source>tSave</source>
+                <target>Sauvegarder</target>
+            </trans-unit>
+            </body>
     </file>
 </xliff>

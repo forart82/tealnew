@@ -20,7 +20,7 @@ use Symfony\Component\PropertyInfo\PropertyInfoExtractor;
 
 class CastToArray extends AbstractExtension
 {
-  public $entityManagerInterface;
+  private $entityManagerInterface;
 
   public function __construct(EntityManagerInterface $entityManagerInterface)
   {
@@ -42,7 +42,6 @@ class CastToArray extends AbstractExtension
     $doctrineExtractor = new DoctrineExtractor($this->entityManagerInterface);
 
     $propertyInfo = new PropertyInfoExtractor(
-      // List extractors
       [
         $reflectionExtractor,
         $doctrineExtractor

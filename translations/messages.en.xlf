@@ -253,6 +253,11 @@
             </trans-unit><trans-unit id="5e9b17f91cd37">
                 <source>txt_notation</source>
                 <target>Is this theme important to you and deserves to be discussed within</target>
-            </trans-unit></body>
+            </trans-unit>
+            <trans-unit id="5e9b17f91ad92">
+                <source>tSave</source>
+                <target>Save</target>
+            </trans-unit>
+            </body>
     </file>
 </xliff>

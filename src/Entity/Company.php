@@ -115,7 +115,6 @@ class Company
             $this->users[] = $user;
             $user->setCompany($this);
         }
-
         return $this;
     }
 
