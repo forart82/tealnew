@@ -40,7 +40,6 @@ class CsvKeyValuesRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('c')
             ->select('c.asValue')
             ->distinct()
-            ->setMaxResults(10)
             ->getQuery()
             ->getResult();
     }

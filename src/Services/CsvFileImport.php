@@ -14,30 +14,107 @@ use App\Services\ReportAndMessage;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
+/**
+ * Class CsvFileImport
+ */
 class CsvFileImport
 {
+
+  /**
+   * @var string
+   */
   private $file;
+  /**
+   * @var CsvKeyValuesRepository
+   */
   private $csvKeyValuesRepository;
+  /**
+   * @var UserRepository
+   */
   private $userRepository;
+  /**
+   * @var User
+   */
   private $user;
+  /**
+   * @var UserPasswordEncoderInterface
+   */
   private $userPasswordEncoderInterface;
+  /**
+   * @var EntityManagerInterface
+   */
   private $entityManagerInterface;
+  /**
+   * @var CsvKeyValues[]
+   */
   private $csvKeyValues;
+  /**
+   * @var array
+   */
   private $csvKeyValuesName;
+  /**
+   * @var array
+   */
   private $csvKeyValuesValue;
+  /**
+   * @var array
+   */
   private $csvKeyValueTypes;
+  /**
+   * @var array
+   */
   private $csvKeyValuePositions;
-  private $report;
+  /**
+   * @var array
+   */
   private $messageType;
+  /**
+   * @var array
+   */
   private $message;
-  private $data;
-  private $handle;
+    /**
+   * @var ReportAndMessage
+   */
+  private $report;
+    /**
+   * @var bool
+   */
   private $handleIsOpen;
+    /**
+   * @var mixed
+   */
+  private $handle;
+  /**
+   * @var string
+   */
+  private $data;
+  /**
+   * @var array
+   */
+  private $columns;
+  /**
+   * @var int
+   */
   private $rows;
+  /**
+   * @var int
+   */
   private $elements;
+  /**
+   * @var array
+   */
   private $emptyField;
+  /**
+   * @var array
+   */
   private $fields;
+  /**
+   * @var array
+   */
   private $functionToCallArray;
+  /**
+   * @var array
+   */
   private $errorTable;
 
   public function __construct(
@@ -71,7 +148,7 @@ class CsvFileImport
     $this->fields = explode(';', $this->data);
     // Must be in reverse order!
     $this->functionToCallArray = [
-      // 'usersuccesInformation',
+      // 'userSuccesInformation',
       // 'sendMail',
       'saveUser',
       'createErrorTable',
@@ -86,13 +163,16 @@ class CsvFileImport
     ];
   }
 
-  public function doCsv()
+  /**
+   * @return bool
+   */
+  public function doCsv():bool
   {
     // Check file type.
     $this->report->reportRecord("checkFileType", $this->checkFileType());
 
     // Check if file is empty.
-    $this->report->reportRecord("checkFileEmpty", $this->checkFileEmpty());
+    $this->report->reportRecord("checkKeyValuesEmpty", $this->checkKeyValuesEmpty());
 
     // Check if csv key name exist.
     $this->report->reportRecord("checkKeyValuesName", $this->checkKeyValuesName());
@@ -115,10 +195,14 @@ class CsvFileImport
       // Call functions.
       $this->callFunctions();
     }
+    return false;
   }
 
-  // Open and close file.
-  public function doHandle()
+  /**
+   * Open and close file.
+   * @return bool
+   */
+  public function doHandle():bool
   {
     if (!$this->handleIsOpen) {
       $this->handle = fopen($this->file, "r");
@@ -135,7 +219,10 @@ class CsvFileImport
     return false;
   }
 
-  // Call all function delclareted in functionToCallArray.
+  /**
+   * Call all function delclareted in functionToCallArray.
+   * @return void
+   */
   public function callFunctions(): void
   {
     $counter = count($this->functionToCallArray);
@@ -146,10 +233,13 @@ class CsvFileImport
     }
   }
 
-  // Check file type (text/plain).
+  /**
+   * Check file type (text/plain).
+   * @return bool
+   */
   public function checkFileType(): bool
   {
-    if (mime_content_type($this->file) == "text/plain") {
+    if (mime_content_type($this->file) == "text/csv") {
       return true;
     }
     $this->messageType[] = "error";
@@ -157,10 +247,13 @@ class CsvFileImport
     return false;
   }
 
-  // Check if file is emtpy.
-  public function checkFileEmpty(): bool
+  /**
+   * Check if file is emtpy.
+   * @return bool
+   */
+  public function checkKeyValuesEmpty(): bool
   {
-    if (preg_match('/[a-z]{3}/', $this->data)) {
+    if (preg_match('/[a-zA-Z]{3,};[a-zA-Z]{3,};[a-zA-Z]{3,}/', $this->data)) {
       return true;
     }
     $this->messageType[] = "error";
@@ -168,7 +261,10 @@ class CsvFileImport
     return false;
   }
 
-  // Check if csv key name exist.
+  /**
+   * Check if csv key name exist.
+   * @return bool
+   */
   public function checkKeyValuesName(): bool
   {
     foreach ($this->fields as $field) {
@@ -181,7 +277,10 @@ class CsvFileImport
     return true;
   }
 
-  // Check all values needed exist.
+  /**
+   * Check all values needed exist.
+   * @return bool
+   */
   public function checkKeyValuesValue(): bool
   {
     $asValues = [];
@@ -206,7 +305,10 @@ class CsvFileImport
     return true;
   }
 
-  // Set key values in all variables.
+  /**
+   * Set key values in all variables.
+   * @return bool
+   */
   public function setKeyValues(): bool
   {
     $name = [];
@@ -224,7 +326,10 @@ class CsvFileImport
     return true;
   }
 
-  // Check if number of fields is ok ex: row*line=fields.
+  /**
+   * Check if number of fields is ok ex: row*line=total fields.
+   * @return bool
+   */
   public function checkFieldQuantity(): bool
   {
     if ($this->rows * $this->columns > $this->elements) {
@@ -240,12 +345,15 @@ class CsvFileImport
     return true;
   }
 
-  // Check if field is empty.
+  /**
+   * Check if field is empty.
+   * @return bool
+   */
   public function checkEmptyField(): bool
   {
     $this->emptyField = [];
     foreach ($this->fields as $key => $field) {
-      if (!preg_match('/[a-z0-9]{2}/', $field)) {
+      if (!preg_match('/\S{3,}/', $field)) {
         $this->emptyField[] = "{$this->csvKeyValuesName[$key]} in Row {$this->rows} is empty.";
       }
     }
@@ -259,7 +367,10 @@ class CsvFileImport
     return true;
   }
 
-  // Check file type (alphabetic, numeric, email, alphanumeric).
+  /**
+   * Check file type (alphabetic, numeric, email, alphanumeric).
+   * @return bool
+   */
   public function checkCsvKeyValueTypes(): bool
   {
     foreach ($this->fields as $key => $field) {
@@ -305,7 +416,10 @@ class CsvFileImport
     return true;
   }
 
-  // Check is email already exist.
+  /**
+   * Check is email already exist.
+   * @return bool
+   */
   public function checkEmailExist(): bool
   {
     if ($this->userRepository->findOneByEmail($this->fields[$this->csvKeyValuePositions['email']])) {
@@ -316,7 +430,10 @@ class CsvFileImport
     return true;
   }
 
-  // Create a table to show user wich field is wrong.
+  /**
+   * Create a table to show user wich field is wrong.
+   * @return bool
+   */
   public function createErrorTable(): bool
   {
     $tmpRow = 0;
@@ -334,7 +451,10 @@ class CsvFileImport
     return true;
   }
 
-  // After check if line is ok save user in database.
+  /**
+   * After check if line is ok save user in database.
+   * @return bool
+   */
   public function saveUser(): bool
   {
     if (!in_array($this->fields, $this->errorTable['fields'])) {
@@ -358,16 +478,27 @@ class CsvFileImport
     return false;
   }
 
+  /**
+   * @return string
+   */
   public function getFile(): string
   {
     return $this->file;
   }
 
-  public function setFile($file)
+  /**
+   * @param mixed $file
+   *
+   * @return void
+   */
+  public function setFile($file):void
   {
     $this->file = $file;
   }
 
+  /**
+   * @return void|array
+   */
   public function getErrorTable(): ?array
   {
     if ($this->errorTable) {
