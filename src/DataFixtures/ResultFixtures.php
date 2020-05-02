@@ -40,6 +40,6 @@ class ResultFixtures extends Fixture implements OrderedFixtureInterface
 
     public function getOrder()
     {
-        return 8;
+        return 11;
     }
 }

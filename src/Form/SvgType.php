@@ -2,7 +2,7 @@
 
 namespace App\Form;
 
-use App\Entity\Images;
+use App\Entity\Svg;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ColorType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -12,7 +12,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
-class ImagesType extends AbstractType
+class SvgType extends AbstractType
 {
     public function __construct(TranslatorInterface $translator)
     {
@@ -41,7 +41,7 @@ class ImagesType extends AbstractType
                         'mimeTypes' => [
                             'image/svg+xml'
                         ],
-                        'mimeTypesMessage' => 'Please upload a valid SVG',
+                        'mimeTypesMessage' => $this->translator->trans('tPlease upload a valid SVG'),
                     ])
                 ]
             ])
@@ -56,7 +56,7 @@ class ImagesType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Images::class,
+            'data_class' => Svg::class,
         ]);
     }
 }

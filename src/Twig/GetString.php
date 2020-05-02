@@ -38,6 +38,7 @@ class GetString extends AbstractExtension
   {
     $string = "";
     $property = 'get' . ucfirst($property);
+    dump($property);
     switch ($property) {
       case 'getUsers':
         $users = $object->$property();
@@ -104,19 +105,55 @@ class GetString extends AbstractExtension
         break;
       case 'getImage':
         // TODO navigation has problem with Doctrine\ORM\PersistentCollection
-        $images = $object->$property();
-        if (gettype($images) == "array") {
-          foreach ($images as $key => $image) {
+        $svgs = $object->$property();
+        if (gettype($svgs) == "array") {
+          foreach ($svgs as $key => $svg) {
             if ($key > $elements) {
               $string .= '...';
               break;
             }
-            $string .= $image->getId() . $separateur;
+            $string .= $svg->getId() . $separateur;
           }
         } else {
-          $string = $images->getId();
+          $string = $svgs->getId();
         }
         break;
+      case 'getRoles':
+        $string .= $object->$property()[0];
+        break;
+      case 'getUserResult':
+        // TODO navigation has problem with Doctrine\ORM\PersistentCollection
+        // $results = $object->$property();
+        // if (gettype($results) == "array") {
+        //   foreach ($results as $key => $image) {
+        //     if ($key > $elements) {
+        //       $string .= '...';
+        //       break;
+        //     }
+        //     $string .= $image->getId() . $separateur;
+        //   }
+        // } else {
+        //   $string = $results->getId();
+        // }
+        break;
+        case 'getSubjectResult':
+          // TODO navigation has problem with Doctrine\ORM\PersistentCollection
+          // $results = $object->$property();
+          // if (gettype($results) == "array") {
+          //   foreach ($results as $key => $image) {
+          //     if ($key > $elements) {
+          //       $string .= '...';
+          //       break;
+          //     }
+          //     $string .= $image->getId() . $separateur;
+          //   }
+          // } else {
+          //   $string = $results->getId();
+          // }
+          break;
+        case 'getCompany':
+          $string.= $object->$property()->getName();
+          break;
       default:
         $string = $object->$property();
         break;

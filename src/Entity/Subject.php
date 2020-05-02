@@ -66,7 +66,7 @@ class Subject
     private $userNotation;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Result", mappedBy="Subject")
+     * @ORM\OneToMany(targetEntity="App\Entity\Result", mappedBy="subject")
      */
     private $subjectResult;
 
@@ -77,10 +77,10 @@ class Subject
     private $title;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Images", inversedBy="subjects")
-     * @ORM\JoinColumn(name="image_id", referencedColumnName="id",  onDelete="SET NULL")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Svg", inversedBy="subjects")
+     * @ORM\JoinColumn(name="svg_id", referencedColumnName="id",  onDelete="SET NULL")
      */
-    private $image;
+    private $svg;
 
     /**
      * @ORM\Column(type="boolean", options={"default" : 0})
@@ -241,14 +241,14 @@ class Subject
         return $this;
     }
 
-    public function getImage(): ?Images
+    public function getSvg(): ?Svg
     {
-        return $this->image;
+        return $this->svg;
     }
 
-    public function setImage(?Images $image): self
+    public function setSvg(?Svg $svg): self
     {
-        $this->image = $image;
+        $this->Svg = $svg;
 
         return $this;
     }

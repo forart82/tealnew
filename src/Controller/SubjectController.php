@@ -20,8 +20,8 @@ class SubjectController extends AbstractController
      */
     public function index(SubjectRepository $subjectRepository): Response
     {
-        return $this->render('subject/index.html.twig', [
-            'subjects' => $subjectRepository->findAll(),
+        return $this->render('MAIN/INDEX.html.twig', [
+            'element_teal' => $subjectRepository->findAll(),
         ]);
     }
 
@@ -42,8 +42,8 @@ class SubjectController extends AbstractController
             return $this->redirectToRoute('subject_index');
         }
 
-        return $this->render('subject/new.html.twig', [
-            'subject' => $subject,
+        return $this->render('MAIN/NEW.html.twig', [
+            'element_teal' => $subject,
             'form' => $form->createView(),
         ]);
     }
@@ -53,8 +53,8 @@ class SubjectController extends AbstractController
      */
     public function show(Subject $subject): Response
     {
-        return $this->render('subject/show.html.twig', [
-            'subject' => $subject,
+        return $this->render('MAIN/SHOW.html.twig', [
+            'element_teal' => $subject,
         ]);
     }
 
@@ -72,8 +72,8 @@ class SubjectController extends AbstractController
             return $this->redirectToRoute('subject_index');
         }
 
-        return $this->render('subject/edit.html.twig', [
-            'subject' => $subject,
+        return $this->render('MAIN/EDIT.html.twig', [
+            'element_teal' => $subject,
             'form' => $form->createView(),
         ]);
     }

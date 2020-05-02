@@ -1,6 +1,5 @@
 security:
-    access_denied_url: /introduction
-
+    access_denied_url: /login
     encoders:
         App\Entity\User:
             algorithm: auto
@@ -39,11 +38,20 @@ security:
         ROLE_ADMIN: ROLE_USER
         ROLE_SUPER_ADMIN: [ROLE_ADMIN,ROLE_ALLOWED_TO_SWITCH]
     access_control:
-        - { path: ^/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
 
-        - { path: /introduction, roles: ROLE_USER }
+        - { path: ^/(%supported_locales%)/introduction, roles: ROLE_USER }
+        - { path: ^/(%supported_locales%)/sondage, roles: ROLE_USER }
 
-        - { path: /company, roles: ROLE_ADMIN }
+        - { path: ^/(%supported_locales%)/company, roles: ROLE_ADMIN }
 
-        - { path: /csvkeyvalues, roles: ROLE_SUPER_ADMIN }
-        - { path: /emails, roles: ROLE_SUPER_ADMIN }
+        - { path: ^/(%supported_locales%)/csvkeyvalues, roles: ROLE_SUPER_ADMIN }
+        - { path: ^/(%supported_locales%)/emails, roles: ROLE_SUPER_ADMIN }
+        - { path: ^/(%supported_locales%)/svg, roles: ROLE_SUPER_ADMIN }
+        - { path: ^/(%supported_locales%)/keytext, roles: ROLE_SUPER_ADMIN }
+        - { path: ^/(%supported_locales%)/language, roles: ROLE_SUPER_ADMIN }
+        - { path: ^/(%supported_locales%)/navigations, roles: ROLE_SUPER_ADMIN }
+        - { path: ^/(%supported_locales%)/result, roles: ROLE_SUPER_ADMIN }
+        - { path: ^/(%supported_locales%)/subject, roles: ROLE_SUPER_ADMIN }
+        - { path: ^/(%supported_locales%)/translation, roles: ROLE_SUPER_ADMIN }
+        - { path: ^/(%supported_locales%)/user, roles: ROLE_SUPER_ADMIN }

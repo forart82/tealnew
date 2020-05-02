@@ -2,24 +2,35 @@
 
 namespace App\Repository;
 
-use App\Entity\Images;
+use App\Entity\Svg;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method Images|null find($id, $lockMode = null, $lockVersion = null)
- * @method Images|null findOneBy(array $criteria, array $orderBy = null)
- * @method Images[]    findAll()
- * @method Images[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Svg|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Svg|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Svg[]    findAll()
+ * @method Svg[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ImagesRepository extends ServiceEntityRepository
+class SvgRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Images::class);
+        parent::__construct($registry, Svg::class);
     }
 
-    public function findOneByNameAndDirectory($name, $dir): ?Images
+    public function findLikeAnswer($answer)
+    {
+        return $this->createQueryBuilder('i')
+        ->andWhere('i.name LIKE :answer')
+        ->setParameter('answer', '%'.$answer.'%')
+        ->orderBy('i.id', 'DESC')
+        ->getQuery()
+        ->getResult()
+        ;
+    }
+
+    public function findOneByNameAndDirectory($name, $dir): ?Svg
     {
         return $this->createQueryBuilder('i')
             ->andWhere('i.name = :name')
@@ -31,7 +42,7 @@ class ImagesRepository extends ServiceEntityRepository
     }
 
     // /**
-    //  * @return Images[] Returns an array of Images objects
+    //  * @return Svg[] Returns an array of Svg objects
     //  */
     /*
     public function findByExampleField($value)
@@ -48,7 +59,7 @@ class ImagesRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?Images
+    public function findOneBySomeField($value): ?Svg
     {
         return $this->createQueryBuilder('i')
             ->andWhere('i.exampleField = :val')

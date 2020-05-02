@@ -20,8 +20,8 @@ class TranslationController extends AbstractController
      */
     public function index(TranslationRepository $translationRepository): Response
     {
-        return $this->render('translation/index.html.twig', [
-            'translations' => $translationRepository->findAll(),
+        return $this->render('MAIN/INDEX.html.twig', [
+            'element_teal' => $translationRepository->findAll(),
         ]);
     }
 
@@ -42,8 +42,8 @@ class TranslationController extends AbstractController
             return $this->redirectToRoute('translation_index');
         }
 
-        return $this->render('translation/new.html.twig', [
-            'translation' => $translation,
+        return $this->render('MAIN/NEW.html.twig', [
+            'element_teal' => $translation,
             'form' => $form->createView(),
         ]);
     }
@@ -53,8 +53,8 @@ class TranslationController extends AbstractController
      */
     public function show(Translation $translation): Response
     {
-        return $this->render('translation/show.html.twig', [
-            'translation' => $translation,
+        return $this->render('MAIN/SHOW.html.twig', [
+            'element_teal' => $translation,
         ]);
     }
 
@@ -72,8 +72,8 @@ class TranslationController extends AbstractController
             return $this->redirectToRoute('translation_index');
         }
 
-        return $this->render('translation/edit.html.twig', [
-            'translation' => $translation,
+        return $this->render('MAIN/EDIT.html.twig', [
+            'element_teal' => $translation,
             'form' => $form->createView(),
         ]);
     }

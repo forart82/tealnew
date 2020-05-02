@@ -3,4 +3,4 @@ twig:
     form_themes: ['bootstrap_4_layout.html.twig']
     globals:
         navigation: '@App\Services\TwigLoad\Navigation'
-        images: '@App\Services\TwigLoad\Images'
+        images: '@App\Services\TwigLoad\Svg'

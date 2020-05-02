@@ -7,6 +7,7 @@
 		<table class="table">
 			<thead>
 				<tr>
+					{# TODO : Find a way to show only specific columns #}
 					{% for property in cast_to_array(element_teal) %}
 						<th>{{('t'~property|capitalize)|trans}}</th>
 					{% endfor %}
@@ -22,6 +23,7 @@
 									<img class="list-teal-company-logo-table" alt="Company Logo" src="data:image/png;base64,{{ get_string(element,property) }}"/>
 								</td>
 							{% else %}
+								{# TODO : Find a way to show only specific columns #}
 								<td>{{ get_string(element,property,0)|raw }}</td>
 							{% endif %}
 						{% endfor %}
@@ -37,7 +39,7 @@
 				{% endfor %}
 			</tbody>
 		</table>
-	<a class="btnGlobal" href="{{ path(className(element_teal.0)|lower~'_new') }}">{{ 'tCreateNew'|trans|raw }}</a>
+		<a class="btnGlobal" href="{{ path(className(element_teal.0)|lower~'_new') }}">{{ 'tCreateNew'|trans|raw }}</a>
 
 	</div>
 {% endblock %}

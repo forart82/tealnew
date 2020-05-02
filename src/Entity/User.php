@@ -62,7 +62,7 @@ class User implements UserInterface
     private $token;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Result", mappedBy="User", fetch="EAGER")
+     * @ORM\OneToMany(targetEntity="App\Entity\Result", mappedBy="user", fetch="EAGER")
      */
     private $userResult;
 

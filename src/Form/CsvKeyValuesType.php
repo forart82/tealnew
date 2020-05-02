@@ -25,18 +25,18 @@ class CsvKeyValuesType extends AbstractType
             ->add('asValue', ChoiceType::class, [
                 'label' => $this->translator->trans('tAsValue'),
                 'choices' => [
-                    'First name' => 'email',
-                    'Last name' => 'lastname',
-                    'Email' => 'email',
+                    $this->translator->trans('tFirstname') => 'firstname',
+                    $this->translator->trans('tLastname') => 'lastname',
+                    $this->translator->trans('tEmail') => 'email',
                 ]
             ])
             ->add('type', ChoiceType::class, [
                 'label' => $this->translator->trans('tType'),
                 'choices' => [
-                    'alphabetic' => 'alpha',
-                    'numeric' => 'num',
-                    'alphanumeric' => 'alphanum',
-                    'email' => 'email'
+                    $this->translator->trans('tAlphabetic') => 'alpha',
+                    $this->translator->trans('tNumeric') => 'num',
+                    $this->translator->trans('tAlphanumeric') => 'alphanum',
+                    $this->translator->trans('tEmail') => 'email'
                 ]
             ]);
     }

@@ -9,7 +9,9 @@ parameters:
 
     csvs_directory: '%kernel.project_dir%/public/contents/csvs'
     images_directory: '%kernel.project_dir%/public/contents/images'
+    svg_directory: '%kernel.project_dir%/public/contents/images/svgs'
     uploads_directory: '%kernel.project_dir%/public/contents/uploads'
+
 
 
 

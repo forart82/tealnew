@@ -1,0 +1,201 @@
+{% extends "MAIN/BASE.html.twig" %}
+
+{% block body %}
+	{% set begin = 0 %}
+	{% set end = 0 %}
+	{% for s in subjects %}
+		{% set end = s.id %}
+		{% if begin == 0  %}
+			{% set begin = s.id %}
+		{% endif %}
+	{% endfor %}
+	<div id="sondageMain">
+		<div id="sondageTealImage">
+			<a href="{{path('introduction')}}">
+				<img class="list-teal-logo" src="/contents/images/logos/tlb.png" alt="logo tlb">
+			</a>
+		</div>
+		<div id="sondageIcon">
+			{% if subject.svg %}
+				<td>{{subject.svg.svg|raw}}</td>
+			{% endif %}
+		</div>
+		<div id="sondageTitle">
+			{{subject.title}}
+		</div>
+		<div id="sondageQuestion">
+			{{subject.question}}
+		</div>
+		<form id="sondageForm" action="{{path('sondage',{'id':subject.id})}}" method="POST">
+			<input type="hidden" name="subjectId" value="{{subject.id}}">
+			{% if result is defined and result.choice is defined %}
+				<input type="hidden" name="choice" id="sondageChoice" value="{{result.choice}}">
+				<input type="hidden" name="resultId" value="{{result.id}}">
+			{% endif %}
+			<div id="answer1">
+				<div id="svgAnsOne" class="sondageAnswersDiv">
+					{% if subject.svg %}
+						{{svg.4.svg|raw}}
+					{% endif %}
+				</div>
+				<button type="submit" id="sondageAnswer1" class="sondageAnswers" name="1">{{subject.answerOne}}</button>
+			</div>
+			<div id="answer2">
+				<div id="svgAnsTwo" class="sondageAnswersDiv">
+					{% if subject.svg %}
+						{{svg.3.svg|raw}}
+					{% endif %}
+				</div>
+				<input type="submit" id="sondageAnswer2" class="sondageAnswers" name="2" value="{{subject.answerTwo}}">
+			</div>
+			<div id="answer3">
+				<div id="svgAnsThree" class="sondageAnswersDiv">
+					{% if subject.svg %}
+						{{svg.2.svg|raw}}
+					{% endif %}
+				</div>
+				<input type="submit" id="sondageAnswer3" class="sondageAnswers" name="3" value="{{subject.answerThree}}">
+			</div>
+			<div id="answer4">
+				<div id="svgAnsFour" class="sondageAnswersDiv">
+					{% if subject.svg %}
+						{{svg.1.svg|raw}}
+					{% endif %}
+				</div>
+				<input type="submit" id="sondageAnswer4" class="sondageAnswers" name="4" value="{{subject.answerFour}}">
+			</div>
+			<div id="answer5">
+				<div id="svgAnsFive" class="sondageAnswersDiv">
+					{% if subject.svg %}
+						{{svg.0.svg|raw}}
+					{% endif %}
+				</div>
+				<input type="submit" id="sondageAnswer5" class="sondageAnswers" name="5" value="{{subject.answerFive}}">
+			</div>
+		</form>
+	</div>
+
+	<div id="sondageArrowLeft">
+		{% if subject.id <= begin %}
+			<a href="{{path('sondage',{'id':begin})}}">
+			{% else %}
+				<a href="{{path('sondage',{'id': befor.id })}}">
+				{% endif %}
+				<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewbox="0 0 48 48" version="1.1" x="0px" y="0px">
+					<title>9.13</title>
+					<desc>Created with Sketch.</desc>
+					<g stroke="none" stroke-width="1">
+						<g>
+							<g transform="translate(24.000000, 24.000000) rotate(-180.000000) translate(-24.000000, -24.000000) ">
+								<path d="M17.6862915,23.8587234 L30.4107158,11.1342992 C31.1941338,10.3508811 31.1952621,9.08342284 30.4142136,8.30237426 C29.6277197,7.51588035 28.365269,7.52289168 27.5822887,8.30587203 L13.4471486,22.4410121 C13.4465655,22.4415952 13.4459828,22.4421786 13.4454005,22.4427623 C13.4448173,22.4433441 13.4442339,22.4439268 13.4436508,22.4445099 C13.050989,22.8371717 12.8561136,23.3484688 12.8568423,23.8595052 C12.8587273,24.3718101 13.0537077,24.8829939 13.4436508,25.272937 C13.4442339,25.2735201 13.4448173,25.2741028 13.445401,25.2746851 C13.4459828,25.2752683 13.4465655,25.2758517 13.4471486,25.2764348 L27.5822887,39.4115749 C28.3657067,40.1949929 29.633165,40.1961212 30.4142136,39.4150726 C31.2007075,38.6285787 31.1936961,37.3661281 30.4107158,36.5831477 L17.6862915,23.8587234 Z"></path>
+							</g>
+						</g>
+					</g>
+				</svg>
+			</a>
+		</div>
+		<div id="sondageArrowRight">
+			{% if subject.id>=end%}
+				<a href="{{path('result_show',{'idUser':app.user.id})}}">
+				{% else %}
+					<a href="{{path('sondage',{'id': after.id})}}">
+					{% endif %}
+					<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewbox="0 0 48 48" version="1.1" x="0px" y="0px">
+						<title>9.13</title>
+						<desc>Created with Sketch.</desc>
+						<g stroke="none" stroke-width="1">
+							<g>
+								<g transform="translate(24.000000, 24.000000) rotate(-180.000000) translate(-24.000000, -24.000000) ">
+									<path d="M17.6862915,23.8587234 L30.4107158,11.1342992 C31.1941338,10.3508811 31.1952621,9.08342284 30.4142136,8.30237426 C29.6277197,7.51588035 28.365269,7.52289168 27.5822887,8.30587203 L13.4471486,22.4410121 C13.4465655,22.4415952 13.4459828,22.4421786 13.4454005,22.4427623 C13.4448173,22.4433441 13.4442339,22.4439268 13.4436508,22.4445099 C13.050989,22.8371717 12.8561136,23.3484688 12.8568423,23.8595052 C12.8587273,24.3718101 13.0537077,24.8829939 13.4436508,25.272937 C13.4442339,25.2735201 13.4448173,25.2741028 13.445401,25.2746851 C13.4459828,25.2752683 13.4465655,25.2758517 13.4471486,25.2764348 L27.5822887,39.4115749 C28.3657067,40.1949929 29.633165,40.1961212 30.4142136,39.4150726 C31.2007075,38.6285787 31.1936961,37.3661281 30.4107158,36.5831477 L17.6862915,23.8587234 Z"></path>
+								</g>
+							</g>
+						</g>
+					</svg>
+				</a>
+			</a>
+		</div>
+		<div action="" id="sondageHeartMain">
+			<div id="sondageHeartTitle">{{'txt_notation'|trans|raw }}
+				{{ result.user.company.name }}
+			</div>
+			<div id="sondageHeartDiv">
+				{% if result is defined %}
+					{% if result.notation == 0 %}
+						{% for i in 1..5 %}
+							<a href="{{path('notation_check',{'idResult':result.id,'idSubject':subject.id,'valeur':i})}}" name="{{i}}" class="sondageHeart">
+								<svg height='100px' width='100px' fill="none" stroke="#00aaaa" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewbox="0 0 50 42.432" style="enable-background:new 0 0 50 42.432;" xml:space="preserve">
+									<g>
+										<path d="M25.001,42.432C67.431,14.587,44.889,0,36.27,0c-8.617,0-11.269,6.632-11.269,6.632S22.347,0,13.732,0   C5.109,0-17.43,14.587,25.001,42.432z"></path>
+									</g>
+								</svg>
+							</a>
+						{% endfor %}
+					{% else %}
+						{% set counter = 0 %}
+						{% for i in 1..5 %}
+							{% set counter = counter + 1 %}
+							{% if counter <= result.notation %}
+								{# <a href="{{path('notation_check',{'idResult':result.id,'idSubject':subject.id,'valeur':i})}}" name="{{i}}" class="sondageHeart">
+																											<svg height='100px' width='100px' fill="#00aaaa" stroke="#00aaaa" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewbox="0 0 50 42.432" style="enable-background:new 0 0 50 42.432;" xml:space="preserve">
+																												<g>
+																													<path d="M25.00142.432C67.431,14.587,44.889,0,36.27,0c-8.617,0-11.269,6.632-11.269,6.632S22.347,0,13.732,0   C5.109,0-17.43,14.587,25.001,42.432z"></path>
+																												</g>
+																											</svg>
+																										</a>, #}
+								{% else %}
+								{# <a href="{{path('notation_check',{'idResult':result.id,'idSubject':subject.id,'valeur':i})}}" name="{{i}}" class="sondageHeart">
+																											<svg height='100px' width='100px' fill="none" stroke="#00aaaa" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewbox="0 0 50 42.432" style="enable-background:new 0 0 50 42.432;" xml:space="preserve">
+																												<g>
+																													<path d="M25.001,42.432C67.431,14.587,44.889,0,36.27,0c-8.617,0-11.269,6.632-11.269,6.632S22.347,0,13.732,0   C5.109,0-17.43,14.587,25.001,42.432z"></path>
+																												</g>
+																											</svg>
+																										</a> #}
+							{% endif %}
+						{% endfor %}
+					{% endif %}
+				{% endif %}
+			</div>
+		</div>
+
+
+		<div id="sondageArrowLeftMobile">
+			{% if subject.id<=begin %}
+				<a href="{{path('sondage',{'id':begin})}}">
+				{% else %}
+					<a href="{{path('sondage',{'id': befor.id })}}">
+					{% endif %}
+					<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewbox="0 0 48 48" version="1.1" x="0px" y="0px">
+						<title>9.13</title>
+						<desc>Created with Sketch.</desc>
+						<g stroke="none" stroke-width="1">
+							<g>
+								<g transform="translate(24.000000, 24.000000) rotate(-180.000000) translate(-24.000000, -24.000000) ">
+									<path d="M17.6862915,23.8587234 L30.4107158,11.1342992 C31.1941338,10.3508811 31.1952621,9.08342284 30.4142136,8.30237426 C29.6277197,7.51588035 28.365269,7.52289168 27.5822887,8.30587203 L13.4471486,22.4410121 C13.4465655,22.4415952 13.4459828,22.4421786 13.4454005,22.4427623 C13.4448173,22.4433441 13.4442339,22.4439268 13.4436508,22.4445099 C13.050989,22.8371717 12.8561136,23.3484688 12.8568423,23.8595052 C12.8587273,24.3718101 13.0537077,24.8829939 13.4436508,25.272937 C13.4442339,25.2735201 13.4448173,25.2741028 13.445401,25.2746851 C13.4459828,25.2752683 13.4465655,25.2758517 13.4471486,25.2764348 L27.5822887,39.4115749 C28.3657067,40.1949929 29.633165,40.1961212 30.4142136,39.4150726 C31.2007075,38.6285787 31.1936961,37.3661281 30.4107158,36.5831477 L17.6862915,23.8587234 Z"></path>
+								</g>
+							</g>
+						</g>
+					</svg>
+				</a>
+			</div>
+			<div id="sondageArrowRightMobile">
+				{% if subject.id>=end%}
+					<a href="{{path('result_show',{'idUser':app.user.id})}}">
+					{% else %}
+						<a href="{{path('sondage',{'id': after.id})}}">
+						{% endif %}
+						<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewbox="0 0 48 48" version="1.1" x="0px" y="0px">
+							<title>9.13</title>
+							<desc>Created with Sketch.</desc>
+							<g stroke="none" stroke-width="1">
+								<g>
+									<g transform="translate(24.000000, 24.000000) rotate(-180.000000) translate(-24.000000, -24.000000) ">
+										<path d="M17.6862915,23.8587234 L30.4107158,11.1342992 C31.1941338,10.3508811 31.1952621,9.08342284 30.4142136,8.30237426 C29.6277197,7.51588035 28.365269,7.52289168 27.5822887,8.30587203 L13.4471486,22.4410121 C13.4465655,22.4415952 13.4459828,22.4421786 13.4454005,22.4427623 C13.4448173,22.4433441 13.4442339,22.4439268 13.4436508,22.4445099 C13.050989,22.8371717 12.8561136,23.3484688 12.8568423,23.8595052 C12.8587273,24.3718101 13.0537077,24.8829939 13.4436508,25.272937 C13.4442339,25.2735201 13.4448173,25.2741028 13.445401,25.2746851 C13.4459828,25.2752683 13.4465655,25.2758517 13.4471486,25.2764348 L27.5822887,39.4115749 C28.3657067,40.1949929 29.633165,40.1961212 30.4142136,39.4150726 C31.2007075,38.6285787 31.1936961,37.3661281 30.4107158,36.5831477 L17.6862915,23.8587234 Z"></path>
+									</g>
+								</g>
+							</g>
+						</svg>
+					</a>
+				</a>
+			</div>
+		</div>
+	{% endblock %}

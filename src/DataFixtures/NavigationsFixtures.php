@@ -3,7 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\Navigations;
-use App\Repository\ImagesRepository;
+use App\Repository\SvgRepository;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -13,12 +13,12 @@ class NavigationsFixtures extends Fixture implements OrderedFixtureInterface
 {
 
 
-    private $imagesRepository;
+    private $svgRepository;
 
     public function __construct(
-        ImagesRepository $imagesRepository
+        SvgRepository $svgRepository
     ) {
-        $this->imagesRepository = $imagesRepository;
+        $this->svgRepository = $svgRepository;
     }
     public function load(ObjectManager $manager)
     {
@@ -27,8 +27,8 @@ class NavigationsFixtures extends Fixture implements OrderedFixtureInterface
                 // Menu Principal
                 'settings',
                 'results',
-                // Menu Paramèters
-                'introduction',
+                // Menu Paramètersintroduction
+                'intro',
                 'profil',
                 'user',
                 'client',
@@ -36,7 +36,7 @@ class NavigationsFixtures extends Fixture implements OrderedFixtureInterface
                 'translation',
                 'company',
                 'email',
-                'image',
+                'svg',
                 'users',
                 'csv',
                 'logout',
@@ -59,7 +59,7 @@ class NavigationsFixtures extends Fixture implements OrderedFixtureInterface
                 "menu_translation_management",
                 "menu_company_management",
                 "menu_email_management",
-                "menu_image_management",
+                "menu_svg_management",
                 "menu_list_users",
                 "menu_csv_key_values",
                 "menu_logout",
@@ -71,24 +71,24 @@ class NavigationsFixtures extends Fixture implements OrderedFixtureInterface
             ],
             'link' => [
                 // Menu Principal
-                "path('introduction')",
-                "path('introduction')",
+                "introduction",
+                "introduction",
                 // Menu Paramèters
-                "path('introduction')",
-                "path('introduction')",
-                "path('introduction')",
-                "path('introduction')",
-                "path('introduction')",
-                "path('introduction')",
-                "path('introduction')",
-                "path('introduction')",
-                "path('introduction')",
-                "path('introduction')",
-                "path('introduction')",
-                "path('introduction')",
+                "introduction",
+                "introduction",
+                "introduction",
+                "introduction",
+                "subject_index",
+                "translation_index",
+                "company_index",
+                "emails_index",
+                "svg_index",
+                "user_index",
+                "csvkeyvalues_index",
+                "app_logout",
                 // Menu Résultats
-                "path('introduction')",
-                "path('introduction')",
+                "introduction",
+                "introduction",
                 // Menu special
                 "",
             ],
@@ -168,10 +168,10 @@ class NavigationsFixtures extends Fixture implements OrderedFixtureInterface
             $navigation->setTranslation($navigations['translation'][$i]);
             $navigation->setLink($navigations['link'][$i]);
             $navigation->setPosition($navigations['positions'][$i]);
-            if ($image = $this->imagesRepository->findOneByName('site' . $navigations['name'][$i])) {
-                $navigation->setImage($this->imagesRepository->findOneByName($image));
+            if ($svg = $this->svgRepository->findOneByName('site' . $navigations['name'][$i])) {
+                $navigation->setSvg($this->svgRepository->findOneByName($svg));
             } else {
-                $navigation->setImage($this->imagesRepository->findOneByName('site_burger'));
+                $navigation->setSvg($this->svgRepository->findOneByName('site_burger'));
             }
             if ($i > 1) {
                 $navigation->setSubPosition($navigations['subPositions'][$i]);

@@ -42,10 +42,10 @@ class Navigations
     private $authorisation;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Images", inversedBy="navigations")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Svg", inversedBy="navigations")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $image;
+    private $svg;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -117,14 +117,14 @@ class Navigations
         return $this;
     }
 
-    public function getImage(): ?Images
+    public function getSvg(): ?Svg
     {
-        return $this->image;
+        return $this->svg;
     }
 
-    public function setImage(?Images $image): self
+    public function setSvg(?Svg $svg): self
     {
-        $this->image = $image;
+        $this->svg = $svg;
 
         return $this;
     }

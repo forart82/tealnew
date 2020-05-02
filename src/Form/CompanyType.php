@@ -43,7 +43,7 @@ class CompanyType extends AbstractType
                             'image/png',
                             'image/jpeg',
                         ],
-                        'mimeTypesMessage' => 'Please upload a valid PNG/JPG',
+                        'mimeTypesMessage' => $this->translator->trans('tPlease upload a valid PNG/JPG'),
                     ])
                 ]
             ])

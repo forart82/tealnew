@@ -28,8 +28,8 @@ class LanguageType extends AbstractType
             ->add('active', ChoiceType::class, [
                 'label' => $this->translator->trans('tActive'),
                 'choices' => [
-                    'yes'=> true,
-                    'no'=> false,
+                    $this->translator->trans('tYes')=> true,
+                    $this->translator->trans('tNo')=> false,
                 ]
             ]);
     }

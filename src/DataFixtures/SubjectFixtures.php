@@ -3,7 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\Subject;
-use App\Repository\ImagesRepository;
+use App\Repository\SvgRepository;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
@@ -11,14 +11,14 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class SubjectFixtures extends Fixture implements OrderedFixtureInterface
 {
-    private $imagesRepository;
+    private $svgRepository;
     private $container;
     public function __construct(
-        ImagesRepository $imagesRepository,
+        SvgRepository $svgRepository,
         ContainerInterface $container = null
         )
     {
-        $this->imagesRepository = $imagesRepository;
+        $this->svgRepository = $svgRepository;
         $this->container = $container;
 
     }
@@ -28,7 +28,7 @@ class SubjectFixtures extends Fixture implements OrderedFixtureInterface
         $handle = fopen($fileCsv, "r");
         $counter = 0;
         for ($j = 1; $j < 41; $j++) {
-            $image = $this->imagesRepository->findOneByNameAndDirectory(++$counter, "questions");
+            $svg = $this->svgRepository->findOneByNameAndDirectory('questions_'.++$counter, "questions");
             if ($counter == 20) {
                 $counter = 0;
             }
@@ -42,7 +42,7 @@ class SubjectFixtures extends Fixture implements OrderedFixtureInterface
                 ->setAnswerFive($sujet[7])
                 ->setPosition($sujet[8])
                 ->setUserNotation(3)
-                ->setImage($image)
+                ->setSvg($svg)
                 ->setTitle($sujet[10])
                 ->setIsRespond(0)
                 ->setLanguage($sujet[12]);
@@ -53,6 +53,6 @@ class SubjectFixtures extends Fixture implements OrderedFixtureInterface
 
     public function getOrder()
     {
-        return 7;
+        return 10;
     }
 }

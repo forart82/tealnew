@@ -1,0 +1,85 @@
+#sondageMain {
+  grid-column: 2/2;
+  grid-row: 1 / 6;
+  display: grid;
+  grid-template-columns: minmax(20%,80%);
+  grid-template-rows: auto;
+  justify-items: left;
+  #sondageQuestion {
+    grid-column: 1/1;
+    grid-row: auto;
+    color: $turkys;
+    font-weight: bold;
+    font-size: 15px;
+    text-align: left;
+    width: minmax(20%,80%);
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    hyphens: auto;
+  }
+  #sondageForm {
+    grid-column: 1/1;
+    grid-row: auto;
+    display: grid;
+    grid-template-columns: minmax(20%,80%);
+    grid-template-rows: repeat(5, 1fr);
+    gap: 20px;
+  }
+  .sondageAnswersDiv{
+    width: 10%;
+  }
+  .sondageAnswers{
+    text-align: left;
+    font-family: $catamaran;
+    font-size: 15px;
+    font-weight: normal;
+    background: rgba($color:$white1, $alpha: 1.0);
+    width: minmax(20%,80%);
+    border:0px;
+    border-radius: 5px;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    hyphens: auto;
+  }
+}
+.sondageArrows{
+  grid-row: 1 / span all;
+  justify-self: center;
+  align-self: center;
+  width: 44px;
+  height: 44px;
+  svg{
+    fill:#D9D9D9;
+    &:hover{
+        fill:$gray3;
+    }
+  }
+}
+
+#sondageArrowLeft {
+  @extend .sondageArrows;
+  grid-column: 1/1;
+  transform: rotate(180deg);
+}
+#sondageArrowRight {
+  @extend .sondageArrows;
+  grid-column: 3/3;
+}
+
+#sondageHeartMain{
+  grid-column: 1/span all;
+  grid-row: 12/12;
+}
+#sondageArrowLeftMobile{
+  grid-column: 1/span all;
+  grid-row: 12/12;
+  width: 25px;
+  height: 25px;
+  transform: rotate(180deg);
+}
+#sondageArrowRightMobile{
+  grid-column: 1/span all;
+  grid-row: 12/12;
+  width: 25px;
+  height: 25px;
+}

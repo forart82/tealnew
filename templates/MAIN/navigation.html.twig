@@ -2,7 +2,7 @@
 	{% for nav in navigation.navigation %}
 		{% if nav.name == "burger" %}
 			<a href="{{nav.link|raw}}" class="navMainBurger">
-				{{nav.image.svg|raw}}
+				{{nav.svg.svg|raw}}
 			</a>
 		{% endif %}
 	{% endfor %}

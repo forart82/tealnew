@@ -7,9 +7,9 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\ImagesRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\SvgRepository")
  */
-class Images
+class Svg
 {
     /**
      * @ORM\Id()
@@ -34,7 +34,7 @@ class Images
     private $svgColor;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Navigations", mappedBy="image")
+     * @ORM\OneToMany(targetEntity="App\Entity\Navigations", mappedBy="svg")
      */
     private $navigations;
 
@@ -101,7 +101,7 @@ class Images
     {
         if (!$this->navigations->contains($navigation)) {
             $this->navigations[] = $navigation;
-            $navigation->setImage($this);
+            $navigation->setSvg($this);
         }
 
         return $this;
@@ -112,8 +112,8 @@ class Images
         if ($this->navigations->contains($navigation)) {
             $this->navigations->removeElement($navigation);
             // set the owning side to null (unless already changed)
-            if ($navigation->getImage() === $this) {
-                $navigation->setImage(null);
+            if ($navigation->getSvg() === $this) {
+                $navigation->setSvg(null);
             }
         }
 

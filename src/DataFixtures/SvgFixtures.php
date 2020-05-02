@@ -2,13 +2,13 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\Images;
+use App\Entity\Svg;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class ImagesFixtures extends Fixture implements OrderedFixtureInterface
+class SvgFixtures extends Fixture implements OrderedFixtureInterface
 {
 
 
@@ -23,32 +23,30 @@ class ImagesFixtures extends Fixture implements OrderedFixtureInterface
 
     public function load(ObjectManager $manager)
     {
-        // $product = new Product();
-        // $manager->persist($product);
-        $dirs = $this->container->getParameter('images_directory').'/svgs';
-        $this->currentDirectory = "images";
+        $dirs = $this->container->getParameter('svg_directory');
+        $this->currentDirectory = "svg";
 
-        $this->loadImageFiles($dirs);
+        $this->loadSvgFiles($dirs);
         foreach ($this->listOfFiles as $file) {
-            $image = new Images();
+            $svg = new Svg();
             $fileData = file_get_contents($file['path'], "r");
             $fileData = preg_replace('/fill="[#0-9a-zA-z]+"/', '', $fileData);
             $fileName = $file['dir'] . '_' . $file['name'];
-            $image->setName($fileName);
-            $image->setSvg($fileData);
-            $image->setCategory($file['dir']);
-            $manager->persist($image);
+            $svg->setName($fileName);
+            $svg->setSvg($fileData);
+            $svg->setCategory($file['dir']);
+            $manager->persist($svg);
         }
         $manager->flush();
     }
 
-    public function loadImageFiles($path)
+    public function loadSvgFiles($path)
     {
         foreach (array_diff(scandir($path), array('..', '.')) as $item) {
 
             if (is_dir($path . '/' . $item)) {
                 $this->currentDirectory = $item;
-                $this->loadImageFiles($path . '/' . $item);
+                $this->loadSvgFiles($path . '/' . $item);
             } elseif (is_file($path . '/' . $item)) {
                 $this->listOfFiles[] = [
                     'path' => $path,
