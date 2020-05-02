@@ -22,5 +22,6 @@ $(document).ready(function () {
   require('./introduction');
   require('./fielUploadFields');
   require('./emails');
+  require('./sondage');
 
 })

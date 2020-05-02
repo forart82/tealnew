@@ -12,7 +12,7 @@
 	<div id="sondageMain">
 		<div id="sondageTealImage">
 			<a href="{{path('introduction')}}">
-				<img class="list-teal-logo" src="/contents/images/logos/tlb.png" alt="logo tlb">
+				<img class="sondagelogo" src="/contents/images/logos/tlb.png" alt="logo tlb">
 			</a>
 		</div>
 		<div id="sondageIcon">
@@ -32,49 +32,39 @@
 				<input type="hidden" name="choice" id="sondageChoice" value="{{result.choice}}">
 				<input type="hidden" name="resultId" value="{{result.id}}">
 			{% endif %}
-			<div id="answer1">
-				<div id="svgAnsOne" class="sondageAnswersDiv">
-					{% if subject.svg %}
-						{{svg.4.svg|raw}}
+
+				<div id="svgAnsOne" class="sondageAnswerSvg">
+					{% if images.answers %}
+						{{images.answers.4.svg|raw}}
 					{% endif %}
 				</div>
 				<button type="submit" id="sondageAnswer1" class="sondageAnswers" name="1">{{subject.answerOne}}</button>
-			</div>
-			<div id="answer2">
-				<div id="svgAnsTwo" class="sondageAnswersDiv">
-					{% if subject.svg %}
-						{{svg.3.svg|raw}}
+				<div id="svgAnsTwo" class="sondageAnswerSvg">
+					{% if images.answers %}
+						{{images.answers.3.svg|raw}}
 					{% endif %}
 				</div>
-				<input type="submit" id="sondageAnswer2" class="sondageAnswers" name="2" value="{{subject.answerTwo}}">
-			</div>
-			<div id="answer3">
-				<div id="svgAnsThree" class="sondageAnswersDiv">
-					{% if subject.svg %}
-						{{svg.2.svg|raw}}
+				<button type="submit" id="sondageAnswer2" class="sondageAnswers" name="2">{{subject.answerTwo}}</button>
+				<div id="svgAnsThree" class="sondageAnswerSvg">
+					{% if images.answers %}
+						{{images.answers.2.svg|raw}}
 					{% endif %}
 				</div>
-				<input type="submit" id="sondageAnswer3" class="sondageAnswers" name="3" value="{{subject.answerThree}}">
-			</div>
-			<div id="answer4">
-				<div id="svgAnsFour" class="sondageAnswersDiv">
-					{% if subject.svg %}
-						{{svg.1.svg|raw}}
+				<button type="submit" id="sondageAnswer3" class="sondageAnswers" name="3">{{subject.answerThree}}</button>
+				<div id="svgAnsFour" class="sondageAnswerSvg">
+					{% if images.answers %}
+						{{images.answers.1.svg|raw}}
 					{% endif %}
 				</div>
-				<input type="submit" id="sondageAnswer4" class="sondageAnswers" name="4" value="{{subject.answerFour}}">
-			</div>
-			<div id="answer5">
-				<div id="svgAnsFive" class="sondageAnswersDiv">
-					{% if subject.svg %}
-						{{svg.0.svg|raw}}
+				<button type="submit" id="sondageAnswer4" class="sondageAnswers" name="4">{{subject.answerFour}}</button>
+				<div id="svgAnsFive" class="sondageAnswerSvg">
+					{% if images.answers %}
+						{{images.answers.0.svg|raw}}
 					{% endif %}
 				</div>
-				<input type="submit" id="sondageAnswer5" class="sondageAnswers" name="5" value="{{subject.answerFive}}">
-			</div>
+				<button type="submit" id="sondageAnswer5" class="sondageAnswers" name="5">{{subject.answerFive}}</button>
 		</form>
 	</div>
-
 	<div id="sondageArrowLeft">
 		{% if subject.id <= begin %}
 			<a href="{{path('sondage',{'id':begin})}}">
@@ -122,13 +112,13 @@
 				{% if result is defined %}
 					{% if result.notation == 0 %}
 						{% for i in 1..5 %}
-							<a href="{{path('notation_check',{'idResult':result.id,'idSubject':subject.id,'valeur':i})}}" name="{{i}}" class="sondageHeart">
+							{# <a href="{{path('notation_check',{'idResult':result.id,'idSubject':subject.id,'valeur':i})}}" name="{{i}}" class="sondageHeart">
 								<svg height='100px' width='100px' fill="none" stroke="#00aaaa" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewbox="0 0 50 42.432" style="enable-background:new 0 0 50 42.432;" xml:space="preserve">
 									<g>
 										<path d="M25.001,42.432C67.431,14.587,44.889,0,36.27,0c-8.617,0-11.269,6.632-11.269,6.632S22.347,0,13.732,0   C5.109,0-17.43,14.587,25.001,42.432z"></path>
 									</g>
 								</svg>
-							</a>
+							</a> #}
 						{% endfor %}
 					{% else %}
 						{% set counter = 0 %}
@@ -136,20 +126,20 @@
 							{% set counter = counter + 1 %}
 							{% if counter <= result.notation %}
 								{# <a href="{{path('notation_check',{'idResult':result.id,'idSubject':subject.id,'valeur':i})}}" name="{{i}}" class="sondageHeart">
-																											<svg height='100px' width='100px' fill="#00aaaa" stroke="#00aaaa" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewbox="0 0 50 42.432" style="enable-background:new 0 0 50 42.432;" xml:space="preserve">
-																												<g>
-																													<path d="M25.00142.432C67.431,14.587,44.889,0,36.27,0c-8.617,0-11.269,6.632-11.269,6.632S22.347,0,13.732,0   C5.109,0-17.43,14.587,25.001,42.432z"></path>
-																												</g>
-																											</svg>
-																										</a>, #}
+								<svg height='100px' width='100px' fill="#00aaaa" stroke="#00aaaa" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewbox="0 0 50 42.432" style="enable-background:new 0 0 50 42.432;" xml:space="preserve">
+								<g>
+								<path d="M25.00142.432C67.431,14.587,44.889,0,36.27,0c-8.617,0-11.269,6.632-11.269,6.632S22.347,0,13.732,0   C5.109,0-17.43,14.587,25.001,42.432z"></path>
+								</g>
+								</svg>
+								</a>, #}
 								{% else %}
 								{# <a href="{{path('notation_check',{'idResult':result.id,'idSubject':subject.id,'valeur':i})}}" name="{{i}}" class="sondageHeart">
-																											<svg height='100px' width='100px' fill="none" stroke="#00aaaa" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewbox="0 0 50 42.432" style="enable-background:new 0 0 50 42.432;" xml:space="preserve">
-																												<g>
-																													<path d="M25.001,42.432C67.431,14.587,44.889,0,36.27,0c-8.617,0-11.269,6.632-11.269,6.632S22.347,0,13.732,0   C5.109,0-17.43,14.587,25.001,42.432z"></path>
-																												</g>
-																											</svg>
-																										</a> #}
+								<svg height='100px' width='100px' fill="none" stroke="#00aaaa" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewbox="0 0 50 42.432" style="enable-background:new 0 0 50 42.432;" xml:space="preserve">
+								<g>
+								<path d="M25.001,42.432C67.431,14.587,44.889,0,36.27,0c-8.617,0-11.269,6.632-11.269,6.632S22.347,0,13.732,0   C5.109,0-17.43,14.587,25.001,42.432z"></path>
+								</g>
+								</svg>
+								</a> #}
 							{% endif %}
 						{% endfor %}
 					{% endif %}
