@@ -46,13 +46,6 @@ class SubjectType extends AbstractType
             ->add('title', TextType::class,[
                 'label' => $this->translator->trans('ttitle'),
             ])
-            ->add('isRespond', ChoiceType::class, [
-                'label' => $this->translator->trans('tIsRespond'),
-                'choices' => [
-                    $this->translator->trans('tYes') => true,
-                    $this->translator->trans('tNo') => false,
-                ]
-            ])
             ->add('language', EntityType::class, [
                 'label' => $this->translator->trans('tLanguage'),
                 'class' => Language::class,

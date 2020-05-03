@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class LanguageController extends AbstractController
 {
     /**
-     * @Route("/", name="language_index", methods={"GET"})
+     * @Route("/", name="language", methods={"GET"})
      */
     public function index(LanguageRepository $languageRepository): Response
     {
@@ -39,7 +39,7 @@ class LanguageController extends AbstractController
             $entityManager->persist($language);
             $entityManager->flush();
 
-            return $this->redirectToRoute('language_index');
+            return $this->redirectToRoute('language');
         }
 
         return $this->render('MAIN/NEW.html.twig', [
@@ -69,7 +69,7 @@ class LanguageController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('language_index');
+            return $this->redirectToRoute('language');
         }
 
         return $this->render('MAIN/EDIT.html.twig', [
@@ -89,6 +89,6 @@ class LanguageController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('language_index');
+        return $this->redirectToRoute('language');
     }
 }

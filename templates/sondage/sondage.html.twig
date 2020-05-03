@@ -1,5 +1,4 @@
 {% extends "MAIN/BASE.html.twig" %}
-
 {% block body %}
 	{% set begin = 0 %}
 	{% set end = 0 %}
@@ -11,9 +10,6 @@
 	{% endfor %}
 	<div id="sondageMain">
 		<div id="sondageTealImage">
-			<a href="{{path('introduction')}}">
-				<img class="sondagelogo" src="/contents/images/logos/tlb.png" alt="logo tlb">
-			</a>
 		</div>
 		<div id="sondageIcon">
 			{% if subject.svg %}

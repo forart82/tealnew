@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class EmailsController extends AbstractController
 {
     /**
-     * @Route("/", name="emails_index", methods={"GET"})
+     * @Route("/", name="emails", methods={"GET"})
      */
     public function index(EmailsRepository $emailsRepository): Response
     {
@@ -39,7 +39,7 @@ class EmailsController extends AbstractController
             $entityManager->persist($email);
             $entityManager->flush();
 
-            return $this->redirectToRoute('emails_index');
+            return $this->redirectToRoute('emails');
         }
 
         return $this->render('MAIN/NEW.html.twig', [
@@ -69,7 +69,7 @@ class EmailsController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('emails_index');
+            return $this->redirectToRoute('emails');
         }
 
         return $this->render('MAIN/EDIT.html.twig', [
@@ -89,6 +89,6 @@ class EmailsController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('emails_index');
+        return $this->redirectToRoute('emails');
     }
 }

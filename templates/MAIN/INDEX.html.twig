@@ -1,45 +1,4 @@
 {% extends "MAIN/BASE.html.twig" %}
 {% block body %}
-	<div class="list-teal">
-		<img class="list-teal-logo" src="/contents/images/logos/tlb.png" alt="logo tlb">
-		<h1 class="h1 list-teal-title">{{className(element_teal.0)}}
-			index</h1>
-		<table class="table">
-			<thead>
-				<tr>
-					{# TODO : Find a way to show only specific columns #}
-					{% for property in cast_to_array(element_teal) %}
-						<th>{{('t'~property|capitalize)|trans}}</th>
-					{% endfor %}
-					<th>{{'tActions'|trans}}</th>
-				</tr>
-			</thead>
-			<tbody>
-				{% for element in element_teal %}
-					<tr>
-						{% for property in cast_to_array(element_teal) %}
-							{% if property == "logo" %}
-								<td>
-									<img class="list-teal-company-logo-table" alt="Company Logo" src="data:image/png;base64,{{ get_string(element,property) }}"/>
-								</td>
-							{% else %}
-								{# TODO : Find a way to show only specific columns #}
-								<td>{{ get_string(element,property,0)|raw }}</td>
-							{% endif %}
-						{% endfor %}
-						<td>
-							<a class="btnGlobalSmall" href="{{ path(className(element_teal.0)|lower~'_show', {'id': element.id}) }}">{{'tShow'|trans}}</a>
-							<a class="btnGlobalSmall" href="{{ path(className(element_teal.0)|lower~'_edit', {'id': element.id}) }}">{{'tEdit'|trans}}</a>
-						</td>
-					</tr>
-				{% else %}
-					<tr>
-						<td colspan="6">no records found</td>
-					</tr>
-				{% endfor %}
-			</tbody>
-		</table>
-		<a class="btnGlobal" href="{{ path(className(element_teal.0)|lower~'_new') }}">{{ 'tCreateNew'|trans|raw }}</a>
-
-	</div>
+	{% include "MAIN/_list.html.twig" %}
 {% endblock %}

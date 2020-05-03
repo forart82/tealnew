@@ -22,7 +22,7 @@ class SvgController extends AbstractController
     }
 
     /**
-     * @Route("/", name="svg_index", methods={"GET"})
+     * @Route("/", name="svg", methods={"GET"})
      */
     public function index(SvgRepository $svgRepository): Response
     {
@@ -59,7 +59,7 @@ class SvgController extends AbstractController
             }
 
 
-            return $this->redirectToRoute('svg_index');
+            return $this->redirectToRoute('svg');
         }
 
         return $this->render('MAIN/NEW.html.twig', [
@@ -100,7 +100,7 @@ class SvgController extends AbstractController
             // file_get_contents()
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('svg_index');
+            return $this->redirectToRoute('svg');
         }
 
         return $this->render('MAIN/EDIT.html.twig', [
@@ -120,6 +120,6 @@ class SvgController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('svg_index');
+        return $this->redirectToRoute('svg');
     }
 }

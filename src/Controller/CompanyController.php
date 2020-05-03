@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class CompanyController extends AbstractController
 {
     /**
-     * @Route("/", name="company_index", methods={"GET"})
+     * @Route("/", name="company", methods={"GET"})
      */
     public function company(CompanyRepository $companyRepository): Response
     {
@@ -38,7 +38,7 @@ class CompanyController extends AbstractController
             $entityManager->persist($company);
             $entityManager->flush();
 
-            return $this->redirectToRoute('company_index');
+            return $this->redirectToRoute('company');
         }
 
         return $this->render('MAIN/NEW.html.twig', [
@@ -70,7 +70,7 @@ class CompanyController extends AbstractController
             $this->getDoctrine()->getManager()->persist($company);
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('company_index');
+            return $this->redirectToRoute('company');
         }
         $companyImage = base64_encode(stream_get_contents($company->getLogo()));
         return $this->render('MAIN/EDIT.html.twig', [
@@ -91,6 +91,6 @@ class CompanyController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('company_index');
+        return $this->redirectToRoute('company');
     }
 }

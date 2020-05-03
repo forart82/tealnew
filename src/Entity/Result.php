@@ -23,7 +23,6 @@ class Result
      */
     private $choice;
 
-
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Subject", inversedBy="subjectResult", fetch="EAGER")
      * @ORM\JoinColumn(nullable=false)

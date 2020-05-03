@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class KeytextController extends AbstractController
 {
     /**
-     * @Route("/", name="keytext_index", methods={"GET"})
+     * @Route("/", name="keytext", methods={"GET"})
      */
     public function index(KeytextRepository $keytextRepository): Response
     {
@@ -39,7 +39,7 @@ class KeytextController extends AbstractController
             $entityManager->persist($keytext);
             $entityManager->flush();
 
-            return $this->redirectToRoute('keytext_index');
+            return $this->redirectToRoute('keytext');
         }
 
         return $this->render('MAIN/NEW.html.twig', [
@@ -69,7 +69,7 @@ class KeytextController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('keytext_index');
+            return $this->redirectToRoute('keytext');
         }
 
         return $this->render('MAIN/EDIT.html.twig', [
@@ -89,6 +89,6 @@ class KeytextController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('keytext_index');
+        return $this->redirectToRoute('keytext');
     }
 }

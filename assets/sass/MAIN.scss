@@ -8,6 +8,7 @@
 @import "./LIST.scss";
 @import "./diagram.scss";
 @import "./sondage.scss";
+@import "./admin.scss";
 
 body {
   font-family: $catamaran;
@@ -21,15 +22,32 @@ body {
   background-image: linear-gradient($turkys 5%, $white1 90%);
   width: 100vw;
   height: 100vh;
+  #MAINHEADER {
+    grid-column: 2/2;
+    grid-row: 1 / 1;
+    width: 80vw;
+    justify-self: center;
+    background: $white1;
+    #MAINLOGOLINK {
+
+      #MAINLOGO {
+        max-width: 20vw;
+        margin: 20px;
+      }
+    }
+  }
+  #MAINNAVIGATION {
+
+  }
   #CONTAINER {
     grid-column: 2 / 2;
-    grid-row: 1 / 1;
+    grid-row: 2 / 2;
     background: $white1;
     width: 80vw;
     height: 100vh;
     justify-self: center;
     display: grid;
     grid-template-columns: 1fr 8fr 1fr;
-    grid-template-rows: repeat(12,1fr);
+    grid-template-rows: repeat(12, 1fr);
   }
 }

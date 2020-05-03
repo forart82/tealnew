@@ -1,11 +1,10 @@
 .introMainElements {
   grid-column: 1 / span all;
   justify-self: center;
-}
-#introLogo {
-  grid-row: 1/1;
+
 }
 #introWelcomeUser {
+  margin-top: 5vh;
 }
 #introWelcome {
   width: 70vw;

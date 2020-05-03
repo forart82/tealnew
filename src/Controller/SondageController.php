@@ -43,7 +43,6 @@ class SondageController extends AbstractController
   public function sondage($id, Request $request, SvgRepository $svgRepository)
   {
 
-    $message = "";
     $svgs = $svgRepository->findLikeAnswer("answer");
     $subjects = $this->subjectRepository->findBy(['language' => 'fr']);
     $insert = new InsertReponse();
@@ -94,7 +93,6 @@ class SondageController extends AbstractController
     $doPosition = $this->subjectRepository->findByLanguage('fr');
     $allPositions = SondagePositionCounter::doPositionCounter($position, $doPosition);
     return $this->render('sondage/sondage.html.twig', [
-      'message' => $message,
       'subject' => $subject,
       'subjects' => $subjects,
       'result' => $result,

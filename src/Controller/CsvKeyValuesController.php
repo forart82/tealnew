@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class CsvKeyValuesController extends AbstractController
 {
     /**
-     * @Route("/", name="csvkeyvalues_index", methods={"GET"})
+     * @Route("/", name="csvkeyvalues", methods={"GET"})
      */
     public function index(CsvKeyValuesRepository $csvKeyValuesRepository): Response
     {
@@ -39,7 +39,7 @@ class CsvKeyValuesController extends AbstractController
             $entityManager->persist($csvKeyValue);
             $entityManager->flush();
 
-            return $this->redirectToRoute('csvkeyvalues_index');
+            return $this->redirectToRoute('csvkeyvalues');
         }
 
         return $this->render('MAIN/NEW.html.twig', [
@@ -69,7 +69,7 @@ class CsvKeyValuesController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('csvkeyvalues_index');
+            return $this->redirectToRoute('csvkeyvalues');
         }
 
         return $this->render('MAIN/EDIT.html.twig', [
@@ -89,6 +89,6 @@ class CsvKeyValuesController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('csvkeyvalues_index');
+        return $this->redirectToRoute('csvkeyvalues');
     }
 }

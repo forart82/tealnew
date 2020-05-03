@@ -27,8 +27,13 @@
 			</div>
 		{% endfor %}
 		<div id="MAIN">
+			<div id="MAINHEADER">
+				<a href="{{path('introduction')}}" id="MAINLOGOLINK">
+					<img id="MAINLOGO" src="/contents/images/logos/tlb.png" alt="logo tlb">
+				</a>
+			</div>
+						{% include "MAIN/navigation.html.twig" %}
 			<div id="CONTAINER">
-				{% include "MAIN/navigation.html.twig" %}
 				{% block body %}{% endblock %}
 			</div>
 		</div>

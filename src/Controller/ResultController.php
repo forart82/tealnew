@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ResultController extends AbstractController
 {
     /**
-     * @Route("/", name="result_index", methods={"GET"})
+     * @Route("/", name="result", methods={"GET"})
      */
     public function index(ResultRepository $resultRepository): Response
     {
@@ -39,7 +39,7 @@ class ResultController extends AbstractController
             $entityManager->persist($result);
             $entityManager->flush();
 
-            return $this->redirectToRoute('result_index');
+            return $this->redirectToRoute('result');
         }
 
         return $this->render('result/new.html.twig', [
@@ -69,7 +69,7 @@ class ResultController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('result_index');
+            return $this->redirectToRoute('result');
         }
 
         return $this->render('result/edit.html.twig', [
@@ -89,6 +89,6 @@ class ResultController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('result_index');
+        return $this->redirectToRoute('result');
     }
 }

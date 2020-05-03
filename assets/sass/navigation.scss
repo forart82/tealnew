@@ -1,4 +1,7 @@
 #navBurger {
+  position:absolute;
+  top:10px;
+  right: 10vw;
   grid-column: 1/span all;
   grid-row: 1/1;
   justify-self: right;
@@ -11,7 +14,7 @@
 #navMain {
   position: absolute;
   top: 10px;
-  right: 20px;
+  right: 10vw;
   z-index: 80;
   display: grid;
   grid-template-columns: auto;

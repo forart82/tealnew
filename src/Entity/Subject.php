@@ -61,11 +61,6 @@ class Subject
     private $position;
 
     /**
-     * @ORM\Column(type="integer",options={"userNotation" : 0})
-     */
-    private $userNotation;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Result", mappedBy="subject")
      */
     private $subjectResult;
@@ -81,11 +76,6 @@ class Subject
      * @ORM\JoinColumn(name="svg_id", referencedColumnName="id",  onDelete="SET NULL")
      */
     private $svg;
-
-    /**
-     * @ORM\Column(type="boolean", options={"default" : 0})
-     */
-    private $isRespond;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -186,18 +176,6 @@ class Subject
         return $this;
     }
 
-    public function getUserNotation(): ?int
-    {
-        return $this->userNotation;
-    }
-
-    public function setUserNotation(int $userNotation): self
-    {
-        $this->userNotation = $userNotation;
-
-        return $this;
-    }
-
     /**
      * @return Collection|Result[]
      */
@@ -249,18 +227,6 @@ class Subject
     public function setSvg(?Svg $svg): self
     {
         $this->Svg = $svg;
-
-        return $this;
-    }
-
-    public function getIsRespond(): ?bool
-    {
-        return $this->isRespond;
-    }
-
-    public function setIsRespond(bool $isRespond): self
-    {
-        $this->isRespond = $isRespond;
 
         return $this;
     }

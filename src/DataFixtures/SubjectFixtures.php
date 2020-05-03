@@ -41,10 +41,8 @@ class SubjectFixtures extends Fixture implements OrderedFixtureInterface
                 ->setAnswerFour($sujet[6])
                 ->setAnswerFive($sujet[7])
                 ->setPosition($sujet[8])
-                ->setUserNotation(3)
                 ->setSvg($svg)
                 ->setTitle($sujet[10])
-                ->setIsRespond(0)
                 ->setLanguage($sujet[12]);
             $manager->persist($subject);
         }

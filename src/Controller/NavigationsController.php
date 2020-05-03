@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class NavigationsController extends AbstractController
 {
   /**
-   * @Route("/", name="navigations_index", methods={"GET"})
+   * @Route("/", name="navigations", methods={"GET"})
    */
   public function index(NavigationsRepository $navigationsRepository): Response
   {
@@ -39,7 +39,7 @@ class NavigationsController extends AbstractController
       $entityManager->persist($navigations);
       $entityManager->flush();
 
-      return $this->redirectToRoute('navigations_index');
+      return $this->redirectToRoute('navigations');
     }
 
     return $this->render('MAIN/NEW.html.twig', [
@@ -69,7 +69,7 @@ class NavigationsController extends AbstractController
     if ($form->isSubmitted() && $form->isValid()) {
       $this->getDoctrine()->getManager()->flush();
 
-      return $this->redirectToRoute('navigations_index');
+      return $this->redirectToRoute('navigations');
     }
 
     return $this->render('MAIN/EDIT.html.twig', [
@@ -89,6 +89,6 @@ class NavigationsController extends AbstractController
       $entityManager->flush();
     }
 
-    return $this->redirectToRoute('navigations_index');
+    return $this->redirectToRoute('navigations');
   }
 }

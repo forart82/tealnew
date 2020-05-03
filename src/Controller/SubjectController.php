@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class SubjectController extends AbstractController
 {
     /**
-     * @Route("/", name="subject_index", methods={"GET"})
+     * @Route("/", name="subject", methods={"GET"})
      */
     public function index(SubjectRepository $subjectRepository): Response
     {
@@ -39,7 +39,7 @@ class SubjectController extends AbstractController
             $entityManager->persist($subject);
             $entityManager->flush();
 
-            return $this->redirectToRoute('subject_index');
+            return $this->redirectToRoute('subject');
         }
 
         return $this->render('MAIN/NEW.html.twig', [
@@ -69,7 +69,7 @@ class SubjectController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('subject_index');
+            return $this->redirectToRoute('subject');
         }
 
         return $this->render('MAIN/EDIT.html.twig', [
@@ -89,6 +89,6 @@ class SubjectController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('subject_index');
+        return $this->redirectToRoute('subject');
     }
 }
