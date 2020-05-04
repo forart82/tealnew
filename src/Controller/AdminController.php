@@ -6,6 +6,7 @@ use App\Entity\Company;
 use App\Form\CompanyType;
 use App\Form\AdminCreateUserType;
 use App\Repository\CompanyRepository;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -19,13 +20,16 @@ class AdminController extends AbstractController
 {
   private $request;
   private $companyRepository;
+  private $userRepository;
 
   public function __construct(
     RequestStack $requestStack,
-    CompanyRepository $companyRepository
+    CompanyRepository $companyRepository,
+    UserRepository $userRepository
   ) {
     $this->request=$requestStack->getCurrentRequest();
     $this->companyRepository = $companyRepository;
+    $this->userRepository=$userRepository;
   }
 
   /**
@@ -36,7 +40,7 @@ class AdminController extends AbstractController
     $form=$this->createForm(AdminCreateUserType::class);
 
 
-    $company = $this->getUser()->getCompany();
+    $company = $this->userRepository->findByCompany($this->getUser()->getCompany());
     return $this->render('admin/admin.html.twig', [
       "element_teal" => $company,
       'form'=>$form->createView(),

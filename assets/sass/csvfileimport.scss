@@ -1,0 +1,20 @@
+#csvFileImport {
+  grid-column: 2/2;
+  grid-row: auto;
+  margin-top: 80px;
+}
+
+.csvFileImportButtonLine {
+margin-top: 20px;
+}
+#csvTableImportForm {
+  grid-column: 2/2;
+  grid-row: auto;
+  .csvFileImportRowWarning {
+    background: rgb(255, 176, 176);
+    border: 1px solid rgb(255, 169, 169);
+  }
+}
+.csvFileImportSubmit {
+  grid-column: 2/2;
+}

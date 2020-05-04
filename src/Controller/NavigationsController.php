@@ -49,7 +49,7 @@ class NavigationsController extends AbstractController
   }
 
   /**
-   * @Route("/{id}", name="navigations_show", methods={"GET"})
+   * @Route("/{id}/show", name="navigations_show", methods={"GET"})
    */
   public function show(Navigations $navigations): Response
   {

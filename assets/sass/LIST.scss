@@ -1,11 +1,12 @@
 .list-teal {
   grid-column: 1 / span all;
-  grid-row: 1/1;
+  grid-row: auto;
   margin: 40px;
   display: flex;
   flex-flow: column nowrap;
   // grid-template-rows: repeat(auto-fill, minmax(10px,150px));
   // justify-items: center;
+
   .list-teal-title-block {
     display: flex;
     flex-flow: row nowrap;
@@ -19,25 +20,36 @@
       height: auto;
     }
   }
-  table {
-    svg {
-      width: 25px;
+  .list-teal-table{
+    width: 70vw;
+    height: 100vh;
+    overflow-x: auto;
+    td{
+      max-width: 200px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: wrap;
     }
   }
-  .list-teal-btnline {
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: left;
-    button,
-    a,
-    form {
-      margin-left: 10px;
-    }
+  svg {
+    width: 25px;
+  }
+
+}
+.list-teal-btnline {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: left;
+  margin-bottom: 80px;
+  button,
+  a,
+  form {
+    margin-left: 10px;
   }
 }
 #list-teal-email {
   grid-column: 2/2;
-  grid-row: 2 / span 4;
+  grid-row: auto / span 4;
 }
 .list-teal-company-logo-table {
   width: 50px;

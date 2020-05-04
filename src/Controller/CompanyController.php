@@ -48,7 +48,7 @@ class CompanyController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="company_show", methods={"GET"})
+     * @Route("/{id}/show", name="company_show", methods={"GET"})
      */
     public function show(Company $company): Response
     {

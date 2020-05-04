@@ -1,0 +1,51 @@
+{% extends 'MAIN/BASE.html.twig' %}
+{% block body %}
+	<div id="csvFileImport">
+		<form id="csvFileImportForm" action="{{path('import_csv')}}" method="POST" enctype="multipart/form-data">
+			<div class="input-group csvFileImportInput">
+				<div class="custom-file">
+					<input required type="file" class="custom-file-input" name="csvFileImport" id="inputFile" aria-describedby="inputGroupFileAddon01">
+					<label class="custom-file-label" for="inputFile">{{ 'choose_file'|trans|raw }}</label>
+				</div>
+			</div>
+		</form>
+		<div class="csvFileImportButtonLine">
+			<button form="csvFileImportForm" class="btnGlobal">{{ 'bUpload'|trans|raw }}</button>
+			<a href="{{path('admin')}}">
+				<button class="btnGlobal">{{ 'btBackToList'|trans|raw }}</button>
+			</a>
+		</div>
+	</div>
+
+	{% if not errorTable == null %}
+		<form id="csvTableImportForm" action="{{path('import_table')}}" method="POST">
+			<table class="table">
+				<thead>
+					<tr>
+						{% for errorKey in errorTable.0 %}
+							<td>{{errorKey}}</td>
+						{% endfor %}
+					</tr>
+				</thead>
+				<tbody>
+					{% for rowNumber, errors in errorTable.fields %}
+						<tr>
+							<td colspan="100%" class="csvFileImportRowWarning">
+								{% for error in errorTable.errors[rowNumber] %}
+									{{error}}
+								{% endfor %}
+							</td>
+						</tr>
+						<tr>
+							{% for cellNumber,field in errors %}
+								<td><input type="text" name="{{errorTable.0[cellNumber]}}{{rowNumber}}" value="{{field}}"></td>
+							{% endfor %}
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+			<button type="submit" form="csvTableImportForm" class="btnGlobal">{{ 'btnSubmit'|trans|raw }}</button>
+		</form>
+	{% endif %}
+
+{% endblock %}

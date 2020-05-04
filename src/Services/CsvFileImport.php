@@ -239,7 +239,7 @@ class CsvFileImport
    */
   public function checkFileType(): bool
   {
-    if (mime_content_type($this->file) == "text/csv") {
+    if (mime_content_type($this->file) == "text/plain") {
       return true;
     }
     $this->messageType[] = "error";

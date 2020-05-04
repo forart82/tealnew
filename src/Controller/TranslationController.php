@@ -49,7 +49,7 @@ class TranslationController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="translation_show", methods={"GET"})
+     * @Route("/{id}/show", name="translation_show", methods={"GET"})
      */
     public function show(Translation $translation): Response
     {

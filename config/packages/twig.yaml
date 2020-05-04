@@ -4,3 +4,13 @@ twig:
     globals:
         navigation: '@App\Services\TwigLoad\Navigation'
         images: '@App\Services\TwigLoad\Svg'
+        restrictetList:
+            - salt
+            - password
+            - roles
+            - username
+            - isnew
+            - token
+            - userresult
+            - language
+            - subjectresult

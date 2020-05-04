@@ -38,7 +38,7 @@ class GetString extends AbstractExtension
   {
     $string = "";
     $property = 'get' . ucfirst($property);
-    dump($property);
+    // dump($property);
     switch ($property) {
       case 'getUsers':
         $users = $object->$property();

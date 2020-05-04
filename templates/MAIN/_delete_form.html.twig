@@ -1,7 +1,10 @@
-{% if element_teal.id != null %}
-	<form method="post" action="{{ path(className(element_teal)|lower~'_delete', {'id': element_teal.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
-		<input type="hidden" name="_method" value="DELETE">
-		<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ element_teal.id) }}">
-		<button class="btnGlobal">{{'tDelete'|trans}}</button>
-	</form>
+{% if element_teal is iterable %}
+	{% else %}
+		{% if element_teal.id != null %}
+			<form method="post" action="{{ path(className(element_teal)|lower~'_delete', {'id': element_teal.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+				<input type="hidden" name="_method" value="DELETE">
+				<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ element_teal.id) }}">
+				<button class="btnGlobal">{{'tDelete'|trans}}</button>
+			</form>
+		{% endif %}
 {% endif %}

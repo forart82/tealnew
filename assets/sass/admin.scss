@@ -1,7 +1,18 @@
 #adminMain{
   grid-column: 1/span all;
-  grid-row: 1/span all;
-  display: felx;
-  flex-flow: column nowrap;
-
+  grid-row: auto;
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: auto;
+  justify-items: center;
+  gap:10px;
+  form{
+    grid-column: 1/span all;
+    grid-row: auto;
+    width: 40vw;
+  }
+  #adminButtonLine{
+    grid-column: 1/span all;
+    grid-row: auto;
+  }
 }

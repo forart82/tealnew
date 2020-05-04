@@ -49,7 +49,7 @@ class EmailsController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="emails_show", methods={"GET"})
+     * @Route("/{id}/show", name="emails_show", methods={"GET"})
      */
     public function show(Emails $email): Response
     {

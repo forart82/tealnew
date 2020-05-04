@@ -49,7 +49,7 @@ class LanguageController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="language_show", methods={"GET"})
+     * @Route("/{id}/show", name="language_show", methods={"GET"})
      */
     public function show(Language $language): Response
     {

@@ -69,7 +69,7 @@ class SvgController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="svg_show", methods={"GET"})
+     * @Route("/{id}/show", name="svg_show", methods={"GET"})
      */
     public function show(Svg $svg): Response
     {

@@ -39,7 +39,8 @@ class SvgType extends AbstractType
                     new File([
                         'maxSize' => '1M',
                         'mimeTypes' => [
-                            'image/svg+xml'
+                            'image/svg+xml',
+                            'application/xml'
                         ],
                         'mimeTypesMessage' => $this->translator->trans('tPlease upload a valid SVG'),
                     ])

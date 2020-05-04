@@ -49,7 +49,7 @@ class CsvKeyValuesController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="csvkeyvalues_show", methods={"GET"})
+     * @Route("/{id}/show", name="csvkeyvalues_show", methods={"GET"})
      */
     public function show(CsvKeyValues $csvKeyValue): Response
     {

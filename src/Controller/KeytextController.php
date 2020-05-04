@@ -49,7 +49,7 @@ class KeytextController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="keytext_show", methods={"GET"})
+     * @Route("/{id}/show", name="keytext_show", methods={"GET"})
      */
     public function show(Keytext $keytext): Response
     {

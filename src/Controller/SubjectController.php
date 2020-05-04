@@ -49,7 +49,7 @@ class SubjectController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="subject_show", methods={"GET"})
+     * @Route("/{id}/show", name="subject_show", methods={"GET"})
      */
     public function show(Subject $subject): Response
     {

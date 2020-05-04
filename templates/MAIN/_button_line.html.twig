@@ -1,5 +1,20 @@
+{% set uri = app.request.server.get('REQUEST_URI')|split('/') %}
+
+
 <div class="list-teal-btnline">
-	<button form="MAINFORM" class="btnGlobal">{{'tSave'|trans}}</button>
-	<a class="btnGlobal" href="{{ path(className(element_teal)|lower~'') }}">{{'tBackToList'|trans}}</a>
+	{% if "edit" in uri or "new" in uri %}
+		<button form="MAINFORM" class="btnGlobal">{{'tSave'|trans}}</button>
+		<a href="{{ path(className(element_teal)|lower) }}">
+			<button class="btnGlobal">{{ 'tBackToList'|trans }}</button>
+		</a>
+	{% endif %}
+	{% if "show" in uri %}
+		<a href="{{ path(className(element_teal)|lower) }}">
+			<button class="btnGlobal">{{ 'tBackToList'|trans }}</button>
+		</a>
+	{% endif %}
+			<a href="{{ path(className(element_teal)|lower~'_new') }}">
+			<button class="btnGlobal">{{ 'tCreateNew'|trans }}</button>
+		</a>
 	{{ include('MAIN/_delete_form.html.twig') }}
 </div>

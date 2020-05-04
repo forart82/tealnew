@@ -1,8 +1,13 @@
 {% extends "MAIN/BASE.html.twig" %}
 {% block body %}
-<div id="adminMain">
-	{% include "MAIN/_form.html.twig" %}
-	{% include "MAIN/_list.html.twig" %}
-	{% include "MAIN/_button_line.html.twig" %}
-</div>
+	<div id="adminMain">
+		{% include "MAIN/_form.html.twig" %}
+		<div id="adminButtonLine">
+			<a href="{{ path("import_csv") }}">
+				<button class="btnGlobal">{{ 'tImportCsv'|trans }}</button>
+			</a>
+			<button form="MAINFORM" class="btnGlobal">{{'tSave'|trans}}</button>
+		</div>
+		{% include "MAIN/_list.html.twig" %}
+	</div>
 {% endblock %}

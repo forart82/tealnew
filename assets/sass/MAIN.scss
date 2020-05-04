@@ -9,19 +9,26 @@
 @import "./diagram.scss";
 @import "./sondage.scss";
 @import "./admin.scss";
+@import "./csvfileimport.scss";
 
 body {
   font-family: $catamaran;
   color: $turkys;
   font-size: 15px;
+  background-image: linear-gradient($turkys 5%, $white1 90%);
+  background-repeat: repeat;
+  background-attachment: fixed;
 }
 #MAIN {
   display: grid;
-  grid-template-columns: 1fr 10fr 1fr;
-  grid-template-rows: auto;
-  background-image: linear-gradient($turkys 5%, $white1 90%);
-  width: 100vw;
-  height: 100vh;
+  grid-template-columns: 1fr 80vw 1fr;
+  grid-template-rows: repeat(auto-fill,minmax(10px,100px));
+  #MAINWHITE{
+    grid-column: 2/2;
+    grid-row: 1 / span all;
+    background: $white1;
+    height: 100vh;
+  }
   #MAINHEADER {
     grid-column: 2/2;
     grid-row: 1 / 1;
@@ -40,14 +47,13 @@ body {
 
   }
   #CONTAINER {
-    grid-column: 2 / 2;
+    grid-column: 2/ 2;
     grid-row: 2 / 2;
     background: $white1;
     width: 80vw;
-    height: 100vh;
     justify-self: center;
     display: grid;
     grid-template-columns: 1fr 8fr 1fr;
-    grid-template-rows: repeat(12, 1fr);
+    grid-template-rows: repeat(auto-fill);
   }
 }

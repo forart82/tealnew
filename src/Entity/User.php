@@ -67,7 +67,7 @@ class User implements UserInterface
     private $userResult;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Company", cascade={"persist"}, inversedBy="users")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Company", cascade={"persist"}, fetch="EAGER", inversedBy="users")
      */
     private $company;
 
