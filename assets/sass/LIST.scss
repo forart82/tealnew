@@ -22,17 +22,19 @@
   }
   .list-teal-table{
     width: 70vw;
-    height: 100vh;
+    height: 100%;
     overflow-x: auto;
     td{
       max-width: 200px;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: wrap;
+      text-align: center;
     }
   }
   svg {
     width: 25px;
+    height: 25px;
   }
 
 }

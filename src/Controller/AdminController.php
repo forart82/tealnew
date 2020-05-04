@@ -27,6 +27,7 @@ class AdminController extends AbstractController
     CompanyRepository $companyRepository,
     UserRepository $userRepository
   ) {
+    // TODO Find solution for problem when anyonym user try to charge site.
     $this->request=$requestStack->getCurrentRequest();
     $this->companyRepository = $companyRepository;
     $this->userRepository=$userRepository;

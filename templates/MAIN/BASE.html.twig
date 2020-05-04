@@ -27,20 +27,19 @@
 			</div>
 		{% endfor %}
 		<div id="MAIN">
-		<div id="MAINWHITE">
-		</div>
+			<div id="MAINLEFT"></div>
+			<div id="MAINRIGHT"></div>
 			<div id="MAINHEADER">
 				<a href="{{path('introduction')}}" id="MAINLOGOLINK">
 					<img id="MAINLOGO" src="/contents/images/logos/tlb.png" alt="logo tlb">
 				</a>
 			</div>
-						{% include "MAIN/navigation.html.twig" %}
-			<div id="CONTAINER">
-				{% block body %}{% endblock %}
+			{% include "MAIN/navigation.html.twig" %}
+			<div id="CONTAINER"> {% block body %}{% endblock %}
+				</div>
 			</div>
-		</div>
-		{% block javascripts %}
-			{{ encore_entry_script_tags('app') }}
-		{% endblock %}
-	</body>
-</html>
+			{% block javascripts %}
+				{{ encore_entry_script_tags('app') }}
+			{% endblock %}
+		</body>
+	</html>

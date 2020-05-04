@@ -43,10 +43,11 @@ class SvgController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             if ($form->get('svg')->getData()) {
-                $svg = $svg->getSvg();
-                $color = $svg->getSvgColor();
-                $svg = preg_replace('/fill="[#0-9a-zA-z]+"/', '', $svg);
-                $svg = preg_replace('/<svg/', '<svg fill="' . $color . '"', $svg);
+                $svgFile = file_get_contents($form->get('svg')->getData());
+                $color = $form->get('svgColor')->getData();
+                $svgFile = preg_replace('/fill="[#0-9a-zA-z]+"/', '', $svgFile);
+                $svgFile = preg_replace('/<svg/', '<svg fill="' . $color . '"', $svgFile);
+                $svg->setSvg($svgFile);
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($svg);
                 $entityManager->flush();

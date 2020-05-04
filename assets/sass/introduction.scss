@@ -4,14 +4,16 @@
 
 }
 #introWelcomeUser {
-  margin-top: 5vh;
+
+  margin: auto;
+  height: 20px;
 }
 #introWelcome {
   width: 70vw;
   text-align: center;
 }
 #introBox {
-  grid-column: 1 / 1;
+  grid-column: 1/ 1;
   grid-row: 6/6;
   margin: 0 20px;
   display: grid;

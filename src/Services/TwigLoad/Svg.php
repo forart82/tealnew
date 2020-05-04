@@ -24,5 +24,15 @@ class Svg
         $this->site = $svgRepository->findByCategory('site');
         $this->questions = $svgRepository->findByCategory('questions');
         $this->answers = $svgRepository->findByCategory('answers');
+        $this->doKeyName();
+    }
+
+    public function doKeyName(){
+        $tmp=[];
+        foreach($this->site as $site)
+        {
+            $tmp[$site->getName()]=$site;
+        }
+        $this->site=$tmp;
     }
 }

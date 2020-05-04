@@ -15,19 +15,34 @@ body {
   font-family: $catamaran;
   color: $turkys;
   font-size: 15px;
-  background-image: linear-gradient($turkys 5%, $white1 90%);
-  background-repeat: repeat;
-  background-attachment: fixed;
+  background: $white1;
+  //   background-image: linear-gradient($turkys 5%, $white1 90%);
+  //   background-repeat: repeat;
+  //   background-attachment: fixed;
+  //
 }
 #MAIN {
   display: grid;
   grid-template-columns: 1fr 80vw 1fr;
-  grid-template-rows: repeat(auto-fill,minmax(10px,100px));
-  #MAINWHITE{
-    grid-column: 2/2;
-    grid-row: 1 / span all;
-    background: $white1;
+  grid-template-rows: repeat(auto-fill, minmax(10px, 100px));
+  #MAINLEFT {
+    position: fixed;
+    top: 0px;
     height: 100vh;
+    width: 10vw;
+    background-image: linear-gradient($turkys 5%, $white1 90%);
+    background-repeat: repeat;
+    background-attachment: fixed;
+  }
+  #MAINRIGHT {
+    position: fixed;
+    top: 0px;
+    right: 0px;
+    height: 100vh;
+    width: 10vw;
+    background-image: linear-gradient($turkys 5%, $white1 90%);
+    background-repeat: repeat;
+    background-attachment: fixed;
   }
   #MAINHEADER {
     grid-column: 2/2;
@@ -36,24 +51,22 @@ body {
     justify-self: center;
     background: $white1;
     #MAINLOGOLINK {
-
       #MAINLOGO {
         max-width: 20vw;
         margin: 20px;
       }
     }
   }
-  #MAINNAVIGATION {
-
-  }
   #CONTAINER {
     grid-column: 2/ 2;
     grid-row: 2 / 2;
     background: $white1;
     width: 80vw;
+    height: 80vh;
     justify-self: center;
     display: grid;
     grid-template-columns: 1fr 8fr 1fr;
-    grid-template-rows: repeat(auto-fill);
+    grid-template-rows: repeat(12,1fr);
+    gap:10px;
   }
 }
