@@ -478,6 +478,7 @@ class CsvFileImport
   {
     if (!in_array($this->fields, $this->errorTable['fields'])) {
       $this->newUser = new User();
+      $token=CreateToken::create();
       $company = $this->user->getCompany();
       $password = $this->userPasswordEncoderInterface->encodePassword($this->newUser, uniqid());
       $this->newUser->setFirstname($this->fields[$this->csvKeyValuePositions['firstname']])
@@ -486,7 +487,7 @@ class CsvFileImport
         ->setLanguage($company->getLanguage())
         ->setPassword($password)
         ->setRoles(["ROLE_USER"])
-        ->setToken(uniqid())
+        ->setToken($token)
         ->setIsNew(1)
         ->setCompany($company);
       $this->entityManagerInterface->persist($this->newUser);

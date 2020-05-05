@@ -12,11 +12,6 @@ parameters:
     svg_directory: '%kernel.project_dir%/public/contents/images/svgs'
     uploads_directory: '%kernel.project_dir%/public/contents/uploads'
 
-
-
-
-
-
 services:
     # default configuration for services in *this* file
     _defaults:

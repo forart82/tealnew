@@ -30,14 +30,13 @@ class SendMailer
 
     public function invitation(User $user, EntityManagerInterface $entityManagerInterface): bool
     {
-        dump($user->getToken());
         // TODO: add posibility to send default language message
         if ($this->messages->findOneByLanguage($user->getLanguage())) {
             $this->setUserOff($user, $entityManagerInterface);
             $token = $user->getToken();
             $email = $user->getEmail();
             $host = $this->container->get('request_stack')->getCurrentRequest()->getHttpHost();
-            $token = 'https://' . $host . '/fr/verification/' . $email . '/' . $token;
+            $token = 'https://' . $host . '/fr/user/verification/' . $email . '/' . $token;
             $message = $this->messages->findOneByLanguage($user->getLanguage())->getMessage();
             $message = preg_replace('/{prenom}/', $user->getFirstname(), $message);
             $message = preg_replace('/{nom}/', $user->getLastname(), $message);
@@ -50,7 +49,7 @@ class SendMailer
                 ->context([
                     'message'=>$message
                     ]);
-            // $this->mailer->send($email);
+            $this->mailer->send($email);
             return true;
         }
         return false;
