@@ -68,5 +68,9 @@ body {
     grid-template-columns: 1fr 8fr 1fr;
     grid-template-rows: repeat(12,1fr);
     gap:10px;
+    #MASSAGES{
+      grid-column: 1/ span all;
+      grid-row: auto;
+    }
   }
 }

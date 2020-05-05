@@ -79,6 +79,13 @@ class UserController extends AbstractController
     }
 
     /**
+     * @Route("/verification/{email}/{token}", name="user_verification", methods={"GET"})
+     */
+    public function verification(Request $request, User $user): Response
+    {
+
+    }
+    /**
      * @Route("/{id}", name="user_delete", methods={"DELETE"})
      */
     public function delete(Request $request, User $user): Response

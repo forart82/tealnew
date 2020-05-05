@@ -2,14 +2,20 @@
 
 namespace App\Controller;
 
+
 use App\Repository\CsvKeyValuesRepository;
 use App\Repository\UserRepository;
+use App\Repository\EmailsRepository;
 use App\Services\CsvFileImport;
+use App\Services\SendMailer;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @Route("/import")
@@ -22,19 +28,34 @@ class CsvFileImportController extends AbstractController
     private $userPasswordEncoderInterface;
     private $entityManagerInterface;
     private $request;
+    /**
+     * @var SendMailer
+     */
+    private $sendMailer;
+    private $translatorInterface;
 
     public function __construct(
         CsvKeyValuesRepository $csvKeyValuesRepository,
         UserRepository $userRepository,
         UserPasswordEncoderInterface $userPasswordEncoderInterface,
         EntityManagerInterface $entityManagerInterface,
-        RequestStack $requestStack
+        RequestStack $requestStack,
+        MailerInterface $mailerInterface,
+        ContainerInterface $containerInterface = null,
+        EmailsRepository $emailsRepository,
+        TranslatorInterface $translatorInterface
     ) {
         $this->csvKeyValuesRepository = $csvKeyValuesRepository;
         $this->userRepository = $userRepository;
         $this->userPasswordEncoderInterface = $userPasswordEncoderInterface;
         $this->entityManagerInterface = $entityManagerInterface;
         $this->request = $requestStack->getCurrentRequest();
+        $this->sendMailer = new SendMailer(
+            $emailsRepository,
+            $containerInterface,
+            $mailerInterface
+        );
+        $this->translatorInterface=$translatorInterface;
     }
 
     /**
@@ -52,7 +73,9 @@ class CsvFileImportController extends AbstractController
                 $this->userRepository,
                 $this->getUser(),
                 $this->userPasswordEncoderInterface,
-                $this->entityManagerInterface
+                $this->entityManagerInterface,
+                $this->sendMailer,
+                $this->translatorInterface
             );
             $csvfile->doCsv();
             unlink($targetFile);
@@ -70,22 +93,22 @@ class CsvFileImportController extends AbstractController
      */
     public function importTable()
     {
-        $rowAsString="";
+        $rowAsString = "";
         $table = $this->request->request->all();
-        $tableValues=[];
-        $targetFile="file.csv";
+        $tableValues = [];
+        $targetFile = "file.csv";
         $handle = fopen($targetFile, 'w');
 
         if ($table) {
             $tableValues = array_unique(preg_filter('/[0-9]+/', '', array_keys($table)));
-            fputcsv($handle,$tableValues,';');
-            for ($i = 0; $i < (count($table)/count($tableValues)); $i++) {
-            $rowAsString="";
+            fputcsv($handle, $tableValues, ';');
+            for ($i = 0; $i < (count($table) / count($tableValues)); $i++) {
+                $rowAsString = "";
 
                 foreach ($tableValues as $value) {
-                    $rowAsString.=$table[$value.''.$i].';';
+                    $rowAsString .= $table[$value . '' . $i] . ';';
                 }
-                fputcsv($handle, [substr($rowAsString,0,-1)]);
+                fputcsv($handle, [substr($rowAsString, 0, -1)]);
             }
             fclose($handle);
             $csvfile = new CsvFileImport(
@@ -94,7 +117,9 @@ class CsvFileImportController extends AbstractController
                 $this->userRepository,
                 $this->getUser(),
                 $this->userPasswordEncoderInterface,
-                $this->entityManagerInterface
+                $this->entityManagerInterface,
+                $this->sendMailer,
+                $this->translatorInterface
             );
             $csvfile->doCsv();
 
@@ -104,9 +129,6 @@ class CsvFileImportController extends AbstractController
                 'errorTable' => $csvfile->getErrorTable(),
             ]);
         }
-        return $this->render('admin/admin.html.twig', [
-
-        ]);
-
+        return $this->render('admin/admin.html.twig', []);
     }
 }

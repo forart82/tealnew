@@ -11,8 +11,10 @@ use App\Entity\User;
 use App\Repository\CsvKeyValuesRepository;
 use App\Repository\UserRepository;
 use App\Services\ReportAndMessage;
+use App\Services\SendMailer;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Class CsvFileImport
@@ -45,6 +47,14 @@ class CsvFileImport
    */
   private $entityManagerInterface;
   /**
+   * @var SendMailer
+   */
+  private $sendMailer;
+  /**
+   * @var TranslatorInterface
+   */
+  private $translatorInterface;
+  /**
    * @var CsvKeyValues[]
    */
   private $csvKeyValues;
@@ -72,15 +82,15 @@ class CsvFileImport
    * @var array
    */
   private $message;
-    /**
+  /**
    * @var ReportAndMessage
    */
   private $report;
-    /**
+  /**
    * @var bool
    */
   private $handleIsOpen;
-    /**
+  /**
    * @var mixed
    */
   private $handle;
@@ -109,6 +119,10 @@ class CsvFileImport
    */
   private $fields;
   /**
+   * @var User
+   */
+  private $newUser;
+  /**
    * @var array
    */
   private $functionToCallArray;
@@ -123,7 +137,9 @@ class CsvFileImport
     UserRepository $userRepository,
     User $user,
     UserPasswordEncoderInterface $userPasswordEncoderInterface,
-    EntityManagerInterface $entityManagerInterface
+    EntityManagerInterface $entityManagerInterface,
+    SendMailer $sendMailer,
+    TranslatorInterface $translatorInterface
   ) {
     $this->file = $file;
     $this->csvKeyValuesRepository = $csvKeyValuesRepository;
@@ -131,6 +147,8 @@ class CsvFileImport
     $this->user = $user;
     $this->userPasswordEncoderInterface = $userPasswordEncoderInterface;
     $this->entityManagerInterface = $entityManagerInterface;
+    $this->sendMailer = $sendMailer;
+    $this->translatorInterface = $translatorInterface;
     $this->csvKeyValues = $csvKeyValuesRepository->findAll();
     $this->csvKeyValuesName = array_map('strtolower', array_map('current', $csvKeyValuesRepository->findAllByName()));
     $this->csvKeyValuesValue = array_map('current', $csvKeyValuesRepository->findDistinctValue());
@@ -146,10 +164,11 @@ class CsvFileImport
     $this->elements = 0;
     $this->emptyField = [];
     $this->fields = explode(';', $this->data);
+    $this->newUser = new User();
     // Must be in reverse order!
     $this->functionToCallArray = [
-      // 'userSuccesInformation',
-      // 'sendMail',
+      'userSuccesInformation',
+      'sendMail',
       'saveUser',
       'createErrorTable',
       'checkEmailExist',
@@ -166,7 +185,7 @@ class CsvFileImport
   /**
    * @return bool
    */
-  public function doCsv():bool
+  public function doCsv(): bool
   {
     // Check file type.
     $this->report->reportRecord("checkFileType", $this->checkFileType());
@@ -202,7 +221,7 @@ class CsvFileImport
    * Open and close file.
    * @return bool
    */
-  public function doHandle():bool
+  public function doHandle(): bool
   {
     if (!$this->handleIsOpen) {
       $this->handle = fopen($this->file, "r");
@@ -458,23 +477,51 @@ class CsvFileImport
   public function saveUser(): bool
   {
     if (!in_array($this->fields, $this->errorTable['fields'])) {
+      $this->newUser = new User();
       $company = $this->user->getCompany();
-      $newUser = new User();
-      $password = $this->userPasswordEncoderInterface->encodePassword($newUser, uniqid());
-      $newUser->setFirstname($this->fields[$this->csvKeyValuePositions['firstname']])
+      $password = $this->userPasswordEncoderInterface->encodePassword($this->newUser, uniqid());
+      $this->newUser->setFirstname($this->fields[$this->csvKeyValuePositions['firstname']])
         ->setLastname($this->fields[$this->csvKeyValuePositions['lastname']])
         ->setEmail($this->fields[$this->csvKeyValuePositions['email']])
         ->setLanguage($company->getLanguage())
         ->setPassword($password)
         ->setRoles(["ROLE_USER"])
+        ->setToken(uniqid())
         ->setIsNew(1)
         ->setCompany($company);
-      $this->entityManagerInterface->persist($newUser);
+      $this->entityManagerInterface->persist($this->newUser);
       $this->entityManagerInterface->flush();
-      $this->messageType[] = "success";
-      $this->message[] = $newUser->getFirstname() . ' ' . $newUser->getLastname() . 'is registred';
+
       return true;
     }
+    return false;
+  }
+
+  /**
+   * Send invitation mail.
+   * @return bool
+   */
+  public function sendMail(): bool
+  {
+    return $this->sendMailer->invitation($this->newUser, $this->entityManagerInterface);
+  }
+  /**
+   * Send invitation mail.
+   * @return bool
+   */
+  public function userSuccesInformation(): bool
+  {
+    dump($this->report->getReport());
+    if (!in_array($this->fields, $this->errorTable['fields'])) {
+      $this->messageType[] = "success";
+      $this->message[] = $this->newUser->getFirstname() . ' ' . $this->newUser->getLastname() .
+        $this->translatorInterface->trans('tIs registred and invitation mail ist send');
+      return true;
+    }
+    $this->messageType[] = "error";
+    $this->message[] = $this->fields[$this->csvKeyValuePositions['firstname']] . ' ' .
+      $this->fields[$this->csvKeyValuePositions['lastname']] . ' ' .
+      $this->translatorInterface->trans('tIs not registred and invitation mail ist not send');
     return false;
   }
 
@@ -491,7 +538,7 @@ class CsvFileImport
    *
    * @return void
    */
-  public function setFile($file):void
+  public function setFile($file): void
   {
     $this->file = $file;
   }
