@@ -487,7 +487,6 @@ class CsvFileImport
         ->setLanguage($company->getLanguage())
         ->setPassword($password)
         ->setRoles(["ROLE_USER"])
-        ->setToken($token)
         ->setIsNew(1)
         ->setCompany($company);
       $this->entityManagerInterface->persist($this->newUser);

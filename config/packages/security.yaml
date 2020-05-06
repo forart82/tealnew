@@ -40,6 +40,7 @@ security:
     access_control:
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/(%supported_locales%)/user/verification, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/(%supported_locales%)/user/repassword, roles: IS_AUTHENTICATED_ANONYMOUSLY }
 
         - { path: ^/(%supported_locales%)/introduction, roles: ROLE_USER }
         - { path: ^/(%supported_locales%)/sondage, roles: ROLE_USER }

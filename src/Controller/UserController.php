@@ -43,9 +43,9 @@ class UserController extends AbstractController
         $this->userRepository = $userRepository;
         $this->userPasswordEncoderInterface = $userPasswordEncoderInterface;
         $this->entityManagerInterface = $entityManagerInterface;
-        $this->sessionInterface=$sessionInterface;
+        $this->sessionInterface = $sessionInterface;
         $this->emailsRepository = $emailsRepository;
-        $this->mailer=$mailer;
+        $this->mailer = $mailer;
     }
 
     /**
@@ -128,12 +128,10 @@ class UserController extends AbstractController
                     $encoded = $this->userPasswordEncoderInterface->encodePassword($user, $user->getPassword());
                     $user->setPassword($encoded);
                     $user->setToken("");
-                    $user->setIsNew(0);
+                    $user->setIsNew(0);git add *
                     $this->entityManagerInterface->persist($user);
                     $this->entityManagerInterface->flush();
-                    return $this->render('introduction/introduction.html.twig', [
-                        'form' => $form->createView(),
-                    ]);
+                    return $this->redirectToRoute('introduction');
                 }
                 return $this->render('user/verification.html.twig', [
                     'form' => $form->createView(),
@@ -148,25 +146,43 @@ class UserController extends AbstractController
      */
     public function reinvite($id): Response
     {
-        $mail=new SendMailer(
+        $mail = new SendMailer(
             $this->emailsRepository,
             $this->request,
             $this->mailer
         );
 
-        if($mail->invitation(
+        if ($mail->invitation(
             $this->userRepository->findOneById($id),
             $this->entityManagerInterface
-        ))
-        {
-            $this->addFlash('email send','success');
-
+        )) {
+            $this->addFlash('email send', 'success');
         }
-        if($route=$this->sessionInterface->get('last_route'))
-        {
+        if ($route = $this->sessionInterface->get('last_route')) {
             return $this->redirectToRoute($route);
         }
         return $this->redirectToRoute('introduction');
+    }
+
+    /**
+     * @Route("/repassword/", name="user_repassword")
+     */
+    public function repassword(): Response
+    {
+        $email= $this->request->request->get('email');
+        if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $mail = new SendMailer(
+                $this->emailsRepository,
+                $this->request,
+                $this->mailer
+            );
+            if ($mail->repassword(
+                $this->userRepository->findOneByEmail($email),
+                $this->entityManagerInterface
+            ));
+            return $this->redirectToRoute('app_login');
+        }
+        return $this->render('user/repassword.html.twig');
     }
     /**
      * @Route("/{id}", name="user_delete", methods={"DELETE"})

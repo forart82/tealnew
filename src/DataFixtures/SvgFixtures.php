@@ -31,9 +31,11 @@ class SvgFixtures extends Fixture implements OrderedFixtureInterface
             $svg = new Svg();
             $fileData = file_get_contents($file['path'], "r");
             $fileData = preg_replace('/fill="[#0-9a-zA-z]+"/', '', $fileData);
-            $fileName = $file['dir'] . '_' . $file['name'];
+            $fileData = preg_replace('/<svg/','<svg fill="#000000"',$fileData);
+            $fileName = $file['name'];
             $svg->setName($fileName);
             $svg->setSvg($fileData);
+            $svg->setSvgColor("#000000");
             $svg->setCategory($file['dir']);
             $manager->persist($svg);
         }

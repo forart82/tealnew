@@ -24,11 +24,12 @@ class ChangeSvgColor extends AbstractExtension
   {
     switch ($svgType) {
       case 'email':
+        dump($svgType);
         if ($user->getIsNew()) {
-          $svg = preg_replace('/fill="#[a-zA-Z0-9]+"/', 'fill="#99ff33"', $svg);
+          $svg = preg_replace('/fill="#[a-zA-Z0-9]+"/', 'fill="#ff8000"', $svg);
           return $svg;
         }
-        $svg = preg_replace('/fill="#[a-zA-Z0-9]+"/', 'fill="#ff8000"', $svg);
+        $svg = preg_replace('/fill="#[a-zA-Z0-9]+"/', 'fill="#99ff33"', $svg);
         return $svg;
       case 'admin':
         if ($user->getRoles()[0]=="ROLE_SUPER_ADMIN") {

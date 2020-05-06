@@ -171,7 +171,7 @@ class NavigationsFixtures extends Fixture implements OrderedFixtureInterface
             if ($svg = $this->svgRepository->findOneByName('site' . $navigations['name'][$i])) {
                 $navigation->setSvg($this->svgRepository->findOneByName($svg));
             } else {
-                $navigation->setSvg($this->svgRepository->findOneByName('site_burger'));
+                $navigation->setSvg($this->svgRepository->findOneByName('burger'));
             }
             if ($i > 1) {
                 $navigation->setSubPosition($navigations['subPositions'][$i]);

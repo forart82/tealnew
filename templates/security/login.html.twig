@@ -3,9 +3,6 @@
 {% endblock %}
 {% block body %}
 	<form id="loginMain" method="post">
-		{% if error %}
-			<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-		{% endif %}
 		{% if app.user %}
 			<div class="mb-3">
 				You are logged in as
@@ -13,9 +10,6 @@
 				<a href="{{ path('app_logout') }}">Logout</a>
 			</div>
 		{% endif %}
-		<div id="loginImg">
-			<img src="/contents/images/logos/tlb.png" alt="logo tlb">
-		</div>
 		<div id="loginTitle">{{ 'SignInWelcome'|trans|raw }}</div>
 		<div id="loginForm">
 			<input type="email" value="{{ last_username }}" name="email" id="loginInputEmail" class="form-control" placeholder="{{ 'SignInEmail'|trans|raw }}" required autofocus>
@@ -26,4 +20,7 @@
 			{{ 'btSignIn'|trans|raw }}
 		</button>
 	</form>
+	<a id="loginRePassword" href="{{ path('user_repassword') }}">
+		<button class="btnGlobal">{{ 'tForgotPassword'|trans }}</button>
+	</a>
 {% endblock %}

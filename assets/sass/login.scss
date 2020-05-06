@@ -1,6 +1,6 @@
 #loginMain {
   grid-column: 2/2;
-  grid-row: 1 / span all;
+  grid-row: auto;
   width: 600px;
   margin: 10px auto;
   padding: 10px auto;
@@ -25,4 +25,10 @@
   #loginSubmit {
     grid-row: 4/4;
   }
+
 }
+  #loginRePassword {
+    grid-column: 1/span all;
+    grid-row:auto;
+    justify-self: center;
+  }

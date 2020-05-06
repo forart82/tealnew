@@ -26,9 +26,9 @@ class UserFixtures extends Fixture implements OrderedFixtureInterface
 
         $person = [
             'email' => [
-                "teal.innovation.consulting@gmail.com",
-                "timothee@esprit-teal.com",
                 "carmelo.roberto.82@gmail.com",
+                "c.armeloroberto82@gmail.com",
+                "ca.rmeloroberto82@gmail.com",
                 "emmanuelle.buono@hotmail.fr",
                 "cyrille.stammler@gmail.com",
             ],
@@ -54,7 +54,7 @@ class UserFixtures extends Fixture implements OrderedFixtureInterface
             $user->setFirstname($person["prenom"][$i]);
             $user->setLastname($person["nom"][$i]);
             $user->setLanguage("fr");
-            $user->setIsNew(1);
+            $user->setIsNew(0);
             $user->setRoles(['ROLE_SUPER_ADMIN']);
             $user->setCompany($this->companyRepository->findOneById(1));
             $user->setEmail($person["email"][$i]);
