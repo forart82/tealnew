@@ -160,6 +160,7 @@ class UserController extends AbstractController
         ))
         {
             $this->addFlash('email send','success');
+
         }
         if($route=$this->sessionInterface->get('last_route'))
         {
