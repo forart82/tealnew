@@ -6,11 +6,16 @@ use App\Entity\User;
 use App\Form\UserType;
 use App\Form\UserVerificationType;
 use App\Repository\UserRepository;
-use Symfony\Component\HttpFoundation\Request;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Mailer\MailerInterface;
+use App\Repository\EmailsRepository;
+use App\Services\SendMailer;
 
 /**
  * @Route("/user")
@@ -19,13 +24,28 @@ class UserController extends AbstractController
 {
     private $request;
     private $userRepository;
+    private $userPasswordEncoderInterface;
+    private $entityManagerInterface;
+    private $sessionInterface;
+    private $emailsRepository;
+    private $mailer;
 
     public function __construct(
         RequestStack $requestStack,
-        UserRepository $userRepository
+        UserRepository $userRepository,
+        UserPasswordEncoderInterface $userPasswordEncoderInterface,
+        EntityManagerInterface $entityManagerInterface,
+        SessionInterface $sessionInterface,
+        EmailsRepository $emailsRepository,
+        MailerInterface $mailer
     ) {
         $this->request = $requestStack->getCurrentRequest();
         $this->userRepository = $userRepository;
+        $this->userPasswordEncoderInterface = $userPasswordEncoderInterface;
+        $this->entityManagerInterface = $entityManagerInterface;
+        $this->sessionInterface=$sessionInterface;
+        $this->emailsRepository = $emailsRepository;
+        $this->mailer=$mailer;
     }
 
     /**
@@ -48,9 +68,8 @@ class UserController extends AbstractController
         $form->handleRequest($this->request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($user);
-            $entityManager->flush();
+            $this->entityManagerInterface->persist($user);
+            $this->entityManagerInterface->flush();
 
             return $this->redirectToRoute('user');
         }
@@ -92,15 +111,13 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/verification/{email}/{token}", name="user_verification", methods={"GET"},
-     * defaults={"email"="email@email.com", "token"="0"})
+     * @Route("/verification/{email}/{token}", name="user_verification", methods={"GET","POST"},
+     * defaults={"email"="email@email.com", "token"="empty"})
      */
     public function verification($email, $token): Response
     {
         $user = $this->userRepository->findOneByEmail($email);
         $userToken = null;
-
-
         if ($user); {
             $token = preg_replace('/[\W]/', '', $token);
             $userToken = $user->getToken();
@@ -108,13 +125,47 @@ class UserController extends AbstractController
                 $form = $this->createForm(UserVerificationType::class, $user);
                 $form->handleRequest($this->request);
                 if ($form->isSubmitted() && $form->isValid()) {
+                    $encoded = $this->userPasswordEncoderInterface->encodePassword($user, $user->getPassword());
+                    $user->setPassword($encoded);
+                    $user->setToken("");
+                    $user->setIsNew(0);
+                    $this->entityManagerInterface->persist($user);
+                    $this->entityManagerInterface->flush();
+                    return $this->render('introduction/introduction.html.twig', [
+                        'form' => $form->createView(),
+                    ]);
                 }
-                return $this->render('user/verification.html.twig',[
-                    'form'=>$form->createView(),
+                return $this->render('user/verification.html.twig', [
+                    'form' => $form->createView(),
                 ]);
             }
         }
         return $this->redirectToRoute('app_login');
+    }
+
+    /**
+     * @Route("/reinvite/{id}", name="user_reinvite", methods={"GET"})
+     */
+    public function reinvite($id): Response
+    {
+        $mail=new SendMailer(
+            $this->emailsRepository,
+            $this->request,
+            $this->mailer
+        );
+
+        if($mail->invitation(
+            $this->userRepository->findOneById($id),
+            $this->entityManagerInterface
+        ))
+        {
+            $this->addFlash('email send','success');
+        }
+        if($route=$this->sessionInterface->get('last_route'))
+        {
+            return $this->redirectToRoute($route);
+        }
+        return $this->redirectToRoute('introduction');
     }
     /**
      * @Route("/{id}", name="user_delete", methods={"DELETE"})
@@ -122,9 +173,8 @@ class UserController extends AbstractController
     public function delete(User $user): Response
     {
         if ($this->isCsrfTokenValid('delete' . $user->getId(), $this->request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($user);
-            $entityManager->flush();
+            $this->entityManagerInterface->remove($user);
+            $this->entityManagerInterface->flush();
         }
 
         return $this->redirectToRoute('user');

@@ -1,4 +1,7 @@
 {% extends "MAIN/BASE.html.twig" %}
 {% block body %}
-{% include "MAIN/_form.html.twig" %}
+	<div id="verifictationMain">
+		{% include "MAIN/_form.html.twig" %}
+		<button form="MAINFORM" class="btnGlobal">{{'tValider'|trans}}</button>
+	</div>
 {% endblock %}

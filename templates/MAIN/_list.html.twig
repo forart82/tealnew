@@ -33,8 +33,10 @@
 								{% endif %}
 							{% endfor %}
 							{% if className(element_teal)|lower == "user" %}
-								<td>{{images.site.admin.svg|raw}}</td>
-								<td>{{images.site.email.svg|raw}}</td>
+								<td>{{change_svg_color(images.site.admin.svg,element,'admin')|raw}}</td>
+								<td>
+									<a href="{{path('user_reinvite',{'id':element.id})}}">{{change_svg_color(images.site.email.svg,element,'email')|raw}}</a>
+								</td>
 							{% endif %}
 							<td>
 								<a class="btnGlobalSmall" href="{{ path(className(element_teal.0)|lower~'_show', {'id': element.id}) }}">{{'tShow'|trans}}</a>
@@ -60,8 +62,8 @@
 							{% endif %}
 						{% endfor %}
 						{% if className(element_teal)|lower == "user" %}
-							<td>{{images.site.admin}}</td>
-							<td>{{images.site.email}}</td>
+							<td>{{change_svg_color(images.site.admin.svg,element_teal,'admin')|raw}}</td>
+							<td>{{change_svg_color(images.site.email.svg,element_teal,'email')|raw}}</td>
 						{% endif %}
 						<td>
 							<a class="btnGlobalSmall" href="{{ path(className(element_teal)|lower~'_show', {'id': element_teal.id}) }}">{{'tShow'|trans}}</a>
