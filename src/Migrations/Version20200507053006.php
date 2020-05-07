@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20200506183651 extends AbstractMigration
+final class Version20200507053006 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -32,7 +32,7 @@ final class Version20200506183651 extends AbstractMigration
         $this->addSql('CREATE TABLE subject (id INT AUTO_INCREMENT NOT NULL, svg_id INT DEFAULT NULL, question LONGTEXT NOT NULL, answer_one LONGTEXT NOT NULL, answer_two LONGTEXT NOT NULL, answer_three LONGTEXT NOT NULL, answer_four LONGTEXT NOT NULL, answer_five LONGTEXT NOT NULL, position INT NOT NULL, title VARCHAR(255) NOT NULL, language VARCHAR(255) NOT NULL, INDEX IDX_FBCE3E7A7517183B (svg_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE svg (id INT AUTO_INCREMENT NOT NULL, name VARCHAR(255) NOT NULL, svg LONGTEXT DEFAULT NULL, svg_color LONGTEXT DEFAULT NULL, category VARCHAR(255) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE translation (id INT AUTO_INCREMENT NOT NULL, language_id INT NOT NULL, keytext_id INT DEFAULT NULL, text LONGTEXT NOT NULL, INDEX IDX_B469456F82F1BAF4 (language_id), INDEX IDX_B469456F9B873397 (keytext_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
-        $this->addSql('CREATE TABLE user (id INT AUTO_INCREMENT NOT NULL, company_id INT DEFAULT NULL, email VARCHAR(180) NOT NULL, roles JSON NOT NULL, password VARCHAR(255) NOT NULL, firstname VARCHAR(255) NOT NULL, lastname VARCHAR(255) NOT NULL, language VARCHAR(255) NOT NULL, is_new TINYINT(1) DEFAULT \'1\' NOT NULL, token VARCHAR(255) DEFAULT NULL, UNIQUE INDEX UNIQ_8D93D649E7927C74 (email), INDEX IDX_8D93D649979B1AD6 (company_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE user (id INT AUTO_INCREMENT NOT NULL, company_id INT DEFAULT NULL, email VARCHAR(180) NOT NULL, roles JSON NOT NULL, password VARCHAR(255) NOT NULL, firstname VARCHAR(255) NOT NULL, lastname VARCHAR(255) NOT NULL, language VARCHAR(255) NOT NULL, is_new INT DEFAULT 1 NOT NULL, token VARCHAR(255) DEFAULT NULL, UNIQUE INDEX UNIQ_8D93D649E7927C74 (email), INDEX IDX_8D93D649979B1AD6 (company_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('ALTER TABLE navigations ADD CONSTRAINT FK_AD21D8F37517183B FOREIGN KEY (svg_id) REFERENCES svg (id)');
         $this->addSql('ALTER TABLE result ADD CONSTRAINT FK_136AC11323EDC87 FOREIGN KEY (subject_id) REFERENCES subject (id)');
         $this->addSql('ALTER TABLE result ADD CONSTRAINT FK_136AC113A76ED395 FOREIGN KEY (user_id) REFERENCES user (id)');

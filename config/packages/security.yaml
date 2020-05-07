@@ -46,6 +46,7 @@ security:
         - { path: ^/(%supported_locales%)/sondage, roles: ROLE_USER }
 
         - { path: ^/(%supported_locales%)/company, roles: ROLE_ADMIN }
+        - { path: ^/(%supported_locales%)/admin, roles: ROLE_ADMIN }
 
         - { path: ^/(%supported_locales%)/csvkeyvalues, roles: ROLE_SUPER_ADMIN }
         - { path: ^/(%supported_locales%)/emails, roles: ROLE_SUPER_ADMIN }

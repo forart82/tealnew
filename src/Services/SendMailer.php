@@ -84,7 +84,7 @@ class SendMailer
 
     public function setUserStatusZero(User $user, EntityManagerInterface $entityManagerInterface,$token):void
     {
-        $user->setIsNew(1);
+        $user->setIsNew(time());
         $user->setPassword(CreateToken::create());
         $user->setToken($token);
         $entityManagerInterface->persist($user);

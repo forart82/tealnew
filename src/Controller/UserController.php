@@ -16,6 +16,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use App\Repository\EmailsRepository;
 use App\Services\SendMailer;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @Route("/user")
@@ -29,6 +30,7 @@ class UserController extends AbstractController
     private $sessionInterface;
     private $emailsRepository;
     private $mailer;
+    private $translator;
 
     public function __construct(
         RequestStack $requestStack,
@@ -37,7 +39,8 @@ class UserController extends AbstractController
         EntityManagerInterface $entityManagerInterface,
         SessionInterface $sessionInterface,
         EmailsRepository $emailsRepository,
-        MailerInterface $mailer
+        MailerInterface $mailer,
+        TranslatorInterface $translator
     ) {
         $this->request = $requestStack->getCurrentRequest();
         $this->userRepository = $userRepository;
@@ -46,6 +49,7 @@ class UserController extends AbstractController
         $this->sessionInterface = $sessionInterface;
         $this->emailsRepository = $emailsRepository;
         $this->mailer = $mailer;
+        $this->translator = $translator;
     }
 
     /**
@@ -128,7 +132,7 @@ class UserController extends AbstractController
                     $encoded = $this->userPasswordEncoderInterface->encodePassword($user, $user->getPassword());
                     $user->setPassword($encoded);
                     $user->setToken("");
-                    $user->setIsNew(0);git add *
+                    $user->setIsNew(0);
                     $this->entityManagerInterface->persist($user);
                     $this->entityManagerInterface->flush();
                     return $this->redirectToRoute('introduction');
@@ -156,7 +160,36 @@ class UserController extends AbstractController
             $this->userRepository->findOneById($id),
             $this->entityManagerInterface
         )) {
-            $this->addFlash('email send', 'success');
+            $this->addFlash('success', $this->translator->trans('tEmail ReSend'));
+        }
+        if ($route = $this->sessionInterface->get('last_route')) {
+            return $this->redirectToRoute($route);
+        }
+        return $this->redirectToRoute('introduction');
+    }
+
+    /**
+     * @Route("/reinviteall", name="user_reinvite_all")
+     */
+    public function reinviteAll(): Response
+    {
+        $users=$this->userRepository->findByCompany($this->getUser()->getCompany());
+        $mail = new SendMailer(
+            $this->emailsRepository,
+            $this->request,
+            $this->mailer
+        );
+        foreach($users as $user)
+        {
+            if($user->getIsNew())
+            {
+                if ($mail->invitation(
+                    $user,
+                    $this->entityManagerInterface
+                )) {
+                    $this->addFlash('email send', 'success');
+                }
+            }
         }
         if ($route = $this->sessionInterface->get('last_route')) {
             return $this->redirectToRoute($route);
