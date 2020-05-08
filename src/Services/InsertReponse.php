@@ -9,6 +9,7 @@ class InsertReponse
 {
     public function insert(Result $result, EntityManagerInterface $manager, $choice, $subjectId, $user)
     {
+        dd("hallo");
         $result->setChoice($choice);
         $result->setSubject($subjectId);
         $result->setUser($user);

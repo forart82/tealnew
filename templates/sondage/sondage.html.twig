@@ -33,36 +33,37 @@
 					{{images.answers.4.svg|raw}}
 				{% endif %}
 			</div>
-			<button type="submit" id="sondageAnswer1" class="sondageAnswers" name="1">{{subject.answerOne}}</button>
+			<button type="submit" id="sondageAnswer1" class="sondageAnswers" name="1" value="1">{{subject.answerOne}}</button>
 			<div id="svgAnsTwo" class="sondageAnswerSvg">
 				{% if images.answers %}
 					{{images.answers.3.svg|raw}}
 				{% endif %}
 			</div>
-			<button type="submit" id="sondageAnswer2" class="sondageAnswers" name="2">{{subject.answerTwo}}</button>
+			<button type="submit" id="sondageAnswer2" class="sondageAnswers" name="2" value="2">{{subject.answerTwo}}</button>
 			<div id="svgAnsThree" class="sondageAnswerSvg">
 				{% if images.answers %}
 					{{images.answers.2.svg|raw}}
 				{% endif %}
 			</div>
-			<button type="submit" id="sondageAnswer3" class="sondageAnswers" name="3">{{subject.answerThree}}</button>
+			<button type="submit" id="sondageAnswer3" class="sondageAnswers" name="3" value="3">{{subject.answerThree}}</button>
 			<div id="svgAnsFour" class="sondageAnswerSvg">
 				{% if images.answers %}
 					{{images.answers.1.svg|raw}}
 				{% endif %}
 			</div>
-			<button type="submit" id="sondageAnswer4" class="sondageAnswers" name="4">{{subject.answerFour}}</button>
+			<button type="submit" id="sondageAnswer4" class="sondageAnswers" name="4" value="4">{{subject.answerFour}}</button>
 			<div id="svgAnsFive" class="sondageAnswerSvg">
 				{% if images.answers %}
 					{{images.answers.0.svg|raw}}
 				{% endif %}
 			</div>
-			<button type="submit" id="sondageAnswer5" class="sondageAnswers" name="5">{{subject.answerFive}}</button>
+			<button type="submit" id="sondageAnswer5" class="sondageAnswers" name="5" value="5">{{subject.answerFive}}</button>
 		</form>
 
 		<div id="sondageHeartMain">
 			<div id="sondageHeartTitle">{{'txt_notation'|trans|raw }}
-				{{ result.user.company.name }}
+				{{
+					.user.company.name }}
 			</div>
 			<div id="sondageHeartDiv">
 				{% if result is defined %}

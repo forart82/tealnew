@@ -6,6 +6,7 @@ const TOKENVALUES = "1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVW
 
 class CreateToken
 {
+
   public static function create(): string
   {
     $token="";

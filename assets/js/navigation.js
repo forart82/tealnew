@@ -1,10 +1,27 @@
 $('#navMain').hide();
 $('.navSubButton').hide();
+$('#navSubjects').hide();
+$('#navMainButton10').hide();
+$('#navMainButton20').show();
+
+let hidden = 0;
+
 $('#navBurger').on('click', function (e) {
   e.preventDefault();
   $('#navMain').toggle();
+  $('.navMainButton20').hide();
   $('.navMainButton10').show();
 })
+
+$('.navMainButton').each(function () {
+  $(this).on('click', function (e) {
+    e.preventDefault();
+    $('.navMainButton').each(function () {
+      $(this).toggle();
+    })
+  })
+})
+
 $('.navMainButton').each(function () {
   $(this).on('click', function (e) {
     e.preventDefault();
@@ -14,7 +31,10 @@ $('.navMainButton').each(function () {
     $('.' + $(this).attr("name")).show();
   })
 })
-$('body').on('click', function () {
 
+
+$('#CONTAINER, #MAINLEFT, #MAINRIGHT, #MAINHEADER').on('click', function () {
+  $('#navMain').hide();
+  $('.navSubButton').hide();
 })
 

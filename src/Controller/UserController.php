@@ -13,8 +13,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Symfony\Component\Mailer\MailerInterface;
-use App\Repository\EmailsRepository;
 use App\Services\SendMailer;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -28,9 +26,8 @@ class UserController extends AbstractController
     private $userPasswordEncoderInterface;
     private $entityManagerInterface;
     private $sessionInterface;
-    private $emailsRepository;
-    private $mailer;
     private $translator;
+    private $sendMailer;
 
     public function __construct(
         RequestStack $requestStack,
@@ -38,18 +35,16 @@ class UserController extends AbstractController
         UserPasswordEncoderInterface $userPasswordEncoderInterface,
         EntityManagerInterface $entityManagerInterface,
         SessionInterface $sessionInterface,
-        EmailsRepository $emailsRepository,
-        MailerInterface $mailer,
-        TranslatorInterface $translator
+        TranslatorInterface $translator,
+        SendMailer $sendMailer
     ) {
         $this->request = $requestStack->getCurrentRequest();
         $this->userRepository = $userRepository;
         $this->userPasswordEncoderInterface = $userPasswordEncoderInterface;
         $this->entityManagerInterface = $entityManagerInterface;
         $this->sessionInterface = $sessionInterface;
-        $this->emailsRepository = $emailsRepository;
-        $this->mailer = $mailer;
         $this->translator = $translator;
+        $this->sendMailer = $sendMailer;
     }
 
     /**
@@ -150,15 +145,12 @@ class UserController extends AbstractController
      */
     public function reinvite($id): Response
     {
-        $mail = new SendMailer(
-            $this->emailsRepository,
-            $this->request,
-            $this->mailer
-        );
 
-        if ($mail->invitation(
+
+        if ($this->sendMailer->invitation(
             $this->userRepository->findOneById($id),
-            $this->entityManagerInterface
+            $this->entityManagerInterface,
+            $this->request->getHttpHost()
         )) {
             $this->addFlash('success', $this->translator->trans('tEmail ReSend'));
         }
@@ -173,19 +165,13 @@ class UserController extends AbstractController
      */
     public function reinviteAll(): Response
     {
-        $users=$this->userRepository->findByCompany($this->getUser()->getCompany());
-        $mail = new SendMailer(
-            $this->emailsRepository,
-            $this->request,
-            $this->mailer
-        );
-        foreach($users as $user)
-        {
-            if($user->getIsNew())
-            {
-                if ($mail->invitation(
+        $users = $this->userRepository->findByCompany($this->getUser()->getCompany());
+        foreach ($users as $user) {
+            if ($user->getIsNew()) {
+                if ($this->sendMailer->invitation(
                     $user,
-                    $this->entityManagerInterface
+                    $this->entityManagerInterface,
+                    $this->request->getHttpHost()
                 )) {
                     $this->addFlash('email send', 'success');
                 }
@@ -202,16 +188,12 @@ class UserController extends AbstractController
      */
     public function repassword(): Response
     {
-        $email= $this->request->request->get('email');
+        $email = $this->request->request->get('email');
         if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $mail = new SendMailer(
-                $this->emailsRepository,
-                $this->request,
-                $this->mailer
-            );
-            if ($mail->repassword(
+            if ($this->sendMailer->repassword(
                 $this->userRepository->findOneByEmail($email),
-                $this->entityManagerInterface
+                $this->entityManagerInterface,
+                $this->request->getHttpHost()
             ));
             return $this->redirectToRoute('app_login');
         }

@@ -25,7 +25,7 @@ class ResultFixtures extends Fixture implements OrderedFixtureInterface
 
     public function load(ObjectManager $manager)
     {
-        for ($i = 0; $i < 5; $i++) {
+        for ($i = 1; $i < 6; $i++) {
             for ($j = 1; $j < 41; $j++) {
                 $result = new Result();
                 $result->setChoice(mt_rand(0, 5))
