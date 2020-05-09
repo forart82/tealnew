@@ -23,7 +23,7 @@ class SendMailer
         $this->mailer=$mailer;
 
     }
-    composer require symfony/twig-bundle
+
     public function invitation(User $user, EntityManagerInterface $entityManagerInterface, $host): bool
     {
         // TODO: add posibility to send default language message

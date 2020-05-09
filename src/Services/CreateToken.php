@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\Controller\UserController;
+
 const TOKENVALUES = "1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 class CreateToken
@@ -10,7 +12,8 @@ class CreateToken
   public static function create(): string
   {
     $token="";
-    for ($i = 0; $i < 30; $i++) {
+    $rand=mt_rand(30,90);
+    for ($i = 0; $i < $rand; $i++) {
       $token.= TOKENVALUES[mt_rand(0, 61)];
     }
     return $token;

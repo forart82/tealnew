@@ -11,10 +11,13 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use App\Services\SendMailer;
+use StaticCounter;
 use Symfony\Contracts\Translation\TranslatorInterface;
+
 
 /**
  * @Route("/user")
@@ -108,6 +111,13 @@ class UserController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+    /**
+     * @Route("/expired", name="user_expired")
+     */
+    public function expired(): Response
+    {
+        return $this->render('user/expired.html.twig', []);
+    }
 
     /**
      * @Route("/verification/{email}/{token}", name="user_verification", methods={"GET","POST"},
@@ -121,6 +131,10 @@ class UserController extends AbstractController
             $token = preg_replace('/[\W]/', '', $token);
             $userToken = $user->getToken();
             if ($token == $userToken) {
+                if ((date('U') - $user->getIsNew()) > 86400) {
+                    return $this->redirectToRoute('user_expired');
+                }
+                // TODO service for ip scan
                 $form = $this->createForm(UserVerificationType::class, $user);
                 $form->handleRequest($this->request);
                 if ($form->isSubmitted() && $form->isValid()) {
