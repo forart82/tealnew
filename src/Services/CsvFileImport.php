@@ -137,7 +137,6 @@ class CsvFileImport
   private $errorTable;
 
   public function __construct(
-    // string $file,
     CsvKeyValuesRepository $csvKeyValuesRepository,
     UserRepository $userRepository,
     UserPasswordEncoderInterface $userPasswordEncoderInterface,
@@ -146,7 +145,6 @@ class CsvFileImport
     TranslatorInterface $translatorInterface,
     RequestStack $requestStack
   ) {
-    // $this->file = $file;
     $this->csvKeyValuesRepository = $csvKeyValuesRepository;
     $this->userRepository = $userRepository;
     $this->userPasswordEncoderInterface = $userPasswordEncoderInterface;
