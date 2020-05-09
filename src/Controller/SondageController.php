@@ -2,19 +2,19 @@
 
 namespace App\Controller;
 
-use App\Entity\Result;
-use App\Services\InsertReponse;
-use App\Repository\SvgRepository;
+
+use App\Repository\LanguageRepository;
 use App\Repository\ResultRepository;
 use App\Repository\SubjectRepository;
 use App\Repository\UserRepository;
+use App\Services\CheckLanguage;
+use App\Services\Sondage;
 use App\Services\SondagePositionCounter;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * @Route("/sondage")
@@ -23,81 +23,74 @@ class SondageController extends AbstractController
 {
 
   private $subjectRepository;
-  private $manager;
+  private $entityManagerInterface;
   private $resultRepository;
+  private $request;
+  private $languageRepository;
+  private $parameterBagInterface;
+
   public function __construct(
-      SubjectRepository $subjectRepository,
-      EntityManagerInterface $manager,
-      ResultRepository $resultRepository,
-      UserRepository $userRepository
+    SubjectRepository $subjectRepository,
+    EntityManagerInterface $entityManagerInterface,
+    ResultRepository $resultRepository,
+    UserRepository $userRepository,
+    RequestStack $requestStack,
+    LanguageRepository $languageRepository,
+    ParameterBagInterface $parameterBagInterface
   ) {
-      $this->subjectRepository = $subjectRepository;
-      $this->manager = $manager;
-      $this->resultRepository = $resultRepository;
-      $this->userRepository = $userRepository;
+    $this->subjectRepository = $subjectRepository;
+    $this->entityManagerInterface = $entityManagerInterface;
+    $this->resultRepository = $resultRepository;
+    $this->userRepository = $userRepository;
+    $this->request = $requestStack->getCurrentRequest();
+    $this->languageRepository = $languageRepository;
+    $this->parameterBagInterface = $parameterBagInterface;
   }
 
   /**
    * @Route("/{id<\d+>}", name="sondage", defaults={"id":1})
    */
-  public function sondage($id, Request $request, SvgRepository $svgRepository)
+  public function sondage($id)
   {
 
-    $svgs = $svgRepository->findLikeAnswer("answer");
-    $subjects = $this->subjectRepository->findBy(['language' => 'fr']);
-    $insert = new InsertReponse();
-    if (
-      !$this->resultRepository->findOneBy([
-        'user' => $this->getUser()->getId(),
-        'subject' => $request->request->get('subjectId')
-      ])
-      && $request->request->get('subjectId')
-    ) {
-      $result = new Result();
-      for ($i = 1; $i < 6; $i++) {
-        if ($request->request->get($i)) {
-          $subjectId = $request->request->get('subjectId');
-          $insert->insert(
-            $result,
-            $this->manager,
-            $i,
-            $this->subjectRepository->findOneById($subjectId),
-            $this->getUser()
-          );
-        }
-      }
-    } else {
-      for ($i = 1; $i < 6; $i++) {
-        if ($request->request->get($i)) {
-          $subjectId = $request->request->get('subjectId');
-          $result = $this->resultRepository->findOneBy([
-            'user' => $this->getUser()->getId(),
-            'subject' => $request->request->get('subjectId')
-          ]);
-          $insert->update($result, $this->manager, $i, $subjectId);
-        }
-      }
-    }
-    $position = $this->subjectRepository->findOneById($id);
-    $subject = $this->subjectRepository->findOneBy(
-      array(
-        'language' => 'fr',
-        'position' => $position->getPosition()
-      )
+    // Do sondage.
+    $sondage = new Sondage(
+      $this->entityManagerInterface,
+      $this->resultRepository,
+      $this->request,
+      $this->getUser()
     );
+    $sondage->sondage();
+
+    // Get langue to show result in right language.
+    $language = new CheckLanguage(
+      $this->languageRepository,
+      $this->parameterBagInterface
+    );
+
+    // Find all subject with right langue.
+    $subjects = $this->subjectRepository->findBy(['language' => $language->doLangue()]);
+    $position = $this->subjectRepository->findOneById($id);
+    $subject = $this->subjectRepository->findOneBy([
+        'language' => $language->doLangue(),
+        'position' => $position->getPosition()
+      ]
+    );
+    // Find this result.
     $result = $this->resultRepository->findOneBy([
       'user' => $this->getUser()->getId(),
       'subject' => $subject->getId()
     ]);
-    $results = $this->resultRepository->findAll();
-    $doPosition = $this->subjectRepository->findByLanguage('fr');
-    $allPositions = SondagePositionCounter::doPositionCounter($position, $doPosition);
+
+    // Get all subject position to show subejcts in right order.
+    $doPosition = $this->subjectRepository->findByLanguage($language->doLangue());
+    $allPositions = SondagePositionCounter::doCountPosition($position, $doPosition);
+
+    // Render web view.
     return $this->render('sondage/sondage.html.twig', [
       'subject' => $subject,
       'subjects' => $subjects,
       'result' => $result,
-      'svgs' => $svgs,
-      'results' => $results,
       'befor' => $allPositions["befor"],
       'after' => $allPositions["after"]
     ]);

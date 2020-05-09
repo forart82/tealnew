@@ -28,9 +28,6 @@ class UserVerificationType extends AbstractType
       ->add('lastname', TextType::class, [
         'label' => $this->translator->trans('tLastname'),
       ])
-      ->add('email', EmailType::class, [
-        'label' => $this->translator->trans('tEmail'),
-      ])
       ->add('password', RepeatedType::class, [
         'type' => PasswordType::class,
         'invalid_message' => 'The password fields must match.',

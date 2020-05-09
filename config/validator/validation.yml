@@ -1,0 +1,15 @@
+App\Entity\User:
+    properties:
+        firstname:
+            - Regex:
+                pattern: '/\d+|\W+/'
+                match: false
+                message : Your first name can only contains a alphabetic values.
+        lastname:
+            - Regex:
+                pattern: '/^\w+$/'
+                message : Your last name can only contains a alphabetic values.
+        password:
+            - Regex:
+                pattern: '/^(?=.*\d)[a-zA-Z\d\S]{6,}$/'
+                message : Your password must contain at least one number, at least one digit and must be minimum 6 character long.

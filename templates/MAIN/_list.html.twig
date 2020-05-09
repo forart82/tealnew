@@ -35,7 +35,13 @@
 							{% if className(element_teal)|lower == "user" %}
 								<td>{{change_svg_color(images.site.admin.svg,element,'admin')|raw}}</td>
 								<td>
+								{% set timeDifference = date().format('U') - element.isNew %}
+								{% if timeDifference < 86400 %}
+									<a href="{{path('user_reinvite',{'id':element.id})}}">{{change_svg_color(images.site.email_send.svg,element,'email')|raw}}</a>
+								{% else %}
 									<a href="{{path('user_reinvite',{'id':element.id})}}">{{change_svg_color(images.site.email.svg,element,'email')|raw}}</a>
+								{% endif %}
+
 								</td>
 							{% endif %}
 							<td>

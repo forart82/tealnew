@@ -1,6 +1,6 @@
 #sondageMain {
   grid-column: 2/2;
-  grid-row: 1 / 8;
+  grid-row: 1/8;
   display: grid;
   grid-template-columns: minmax(10%, 100%);
   grid-template-rows: auto;
@@ -49,6 +49,18 @@
       hyphens: auto;
     }
   }
+  #sondageHeartMain {
+    grid-column: 1/1;
+    grid-row: auto;
+    margin-top:40px;
+    justify-self: center;
+    display: flex;
+    flex-flow: column nowrap;
+  }
+  #sondageHeartDiv {
+    justify-self: center;
+    margin: auto;
+  }
 }
 .sondageArrows {
   grid-row: 1 / span all;
@@ -74,20 +86,5 @@
   grid-column: 3/3;
 }
 
-#sondageHeartMain {
-  grid-column: 1 / span all;
-  grid-row: 12/12;
-}
-#sondageArrowLeftMobile {
-  grid-column: 1 / span all;
-  grid-row: 12/12;
-  width: 25px;
-  height: 25px;
-  transform: rotate(180deg);
-}
-#sondageArrowRightMobile {
-  grid-column: 1 / span all;
-  grid-row: 12/12;
-  width: 25px;
-  height: 25px;
-}
+
+

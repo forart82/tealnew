@@ -52,7 +52,7 @@ class User implements UserInterface
     private $language;
 
     /**
-     * @ORM\Column(type="boolean", options={"default" : 1})
+     * @ORM\Column(type="integer", options={"default" : 1})
      */
     private $isNew;
 
@@ -190,12 +190,12 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getIsNew(): ?bool
+    public function getIsNew(): ?int
     {
         return $this->isNew;
     }
 
-    public function setIsNew(bool $isNew): self
+    public function setIsNew(int $isNew): self
     {
         $this->isNew = $isNew;
 

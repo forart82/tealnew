@@ -7,7 +7,7 @@ use App\Entity\Subject;
 class SondagePositionCounter
 {
 
-    public static function doPositionCounter(?Subject $position, ?array $doPosition):array
+    public static function doCountPosition(?Subject $position, ?array $doPosition):array
     {
         $allPositions=[
             "tmpBefor"=>$position,

@@ -18,8 +18,7 @@ class SecurityController extends AbstractController
     public function __construct(
         LanguageRepository $languageRepository,
         ParameterBagInterface $parameterBagInterface
-    )
-    {
+    ) {
         $this->languageRepository = $languageRepository;
         $this->parameterBagInterface = $parameterBagInterface;
     }
@@ -47,10 +46,10 @@ class SecurityController extends AbstractController
      */
     public function language(): Response
     {
-        $checkLanguage=new CheckLanguage(
+        $checkLanguage = new CheckLanguage(
             $this->languageRepository,
             $this->parameterBagInterface
         );
-        return $this->redirect($checkLanguage->doLangue());
+        return $this->redirect('/' . $checkLanguage->doLangue() . '/introduction');
     }
 }

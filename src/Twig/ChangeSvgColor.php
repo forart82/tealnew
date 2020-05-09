@@ -24,23 +24,22 @@ class ChangeSvgColor extends AbstractExtension
   {
     switch ($svgType) {
       case 'email':
-        dump($svgType);
         if ($user->getIsNew()) {
-          $svg = preg_replace('/fill="#[a-zA-Z0-9]+"/', 'fill="#ff8000"', $svg);
+          $svg = preg_replace('/fill="#[a-zA-Z0-9]+"/', 'fill="#ff6420"', $svg);
           return $svg;
         }
-        $svg = preg_replace('/fill="#[a-zA-Z0-9]+"/', 'fill="#99ff33"', $svg);
+        $svg = preg_replace('/fill="#[a-zA-Z0-9]+"/', 'fill="#00aaaa"', $svg);
         return $svg;
       case 'admin':
         if ($user->getRoles()[0]=="ROLE_SUPER_ADMIN") {
-          $svg = preg_replace('/fill="#[a-zA-Z0-9]+"/', 'fill="#CC0000"', $svg);
+          $svg = preg_replace('/fill="#[a-zA-Z0-9]+"/', 'fill="#ff0000"', $svg);
           return $svg;
         }
         if ($user->getRoles()[0]=="ROLE_ADMIN") {
-          $svg = preg_replace('/fill="#[a-zA-Z0-9]+"/', 'fill="#CC6600"', $svg);
+          $svg = preg_replace('/fill="#[a-zA-Z0-9]+"/', 'fill="#ff6420"', $svg);
           return $svg;
         }
-        $svg = preg_replace('/fill="#[a-zA-Z0-9]+"/', 'fill="#CCCC00"', $svg);
+        $svg = preg_replace('/fill="#[a-zA-Z0-9]+"/', 'fill="#00aaaa"', $svg);
         return $svg;
       default:
         # code...

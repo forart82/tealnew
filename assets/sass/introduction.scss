@@ -30,6 +30,7 @@
     grid-template-columns: auto;
     grid-template-rows: 1fr;
     cursor: help;
+    transition: box-shadow 0.5s;
     &:hover{
       box-shadow: 10px -10px 10px $orangeMain;
     }
@@ -50,12 +51,16 @@
       fill: $white1;
     }
   }
+  svg{
+    fill:$white1;
+  }
   #introEvolution {
     grid-column: 1 / span 5;
     grid-row: 1 / span 5;
     background-image: radial-gradient($white1 5%, $turkys 70%);
     width: 185px;
     height: 180px;
+    padding-top: 4px;
   }
   #introPluraliste {
     grid-column: 1 / span 4;
@@ -63,6 +68,7 @@
     background-image: radial-gradient($white1 5%, $green 70%);
     width: 171px;
     height: 146px;
+    padding-top: 4px;
   }
   #introReussite {
     grid-column: 1 / span 4;
@@ -70,6 +76,7 @@
     background-image: radial-gradient($white1 5%, $orangeMain 70%);
     width: 155px;
     height: 114px;
+    padding-top: 4px;
   }
   #introConformiste {
     grid-column: 1 / span 2;
@@ -77,6 +84,7 @@
     background-image: radial-gradient($white1 5%, $orangeSub1 70%);
     width: 137px;
     height: 83px;
+    padding-top: 4px;
   }
   #introImpulsif {
     grid-column: 1/1;
@@ -84,6 +92,7 @@
     background-image: radial-gradient($white1 5%, $orangeSub2 70%);
     width: 124px;
     height: 50px;
+    padding-top: 4px;
   }
 }
 

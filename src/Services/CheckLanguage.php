@@ -22,11 +22,12 @@ class CheckLanguage extends AbstractController
         $this->available = [];
     }
 
+    // TODO make function static
     public function doLangue(): string
     {
         $this->getAvailableLangues();
         $language=$this->compareLangue();
-        return '/' . $language . '/introduction';
+        return $language;
     }
 
     public function getAvailableLangues(): void

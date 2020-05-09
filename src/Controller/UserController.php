@@ -11,11 +11,13 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Symfony\Component\Mailer\MailerInterface;
-use App\Repository\EmailsRepository;
 use App\Services\SendMailer;
+use StaticCounter;
+use Symfony\Contracts\Translation\TranslatorInterface;
+
 
 /**
  * @Route("/user")
@@ -27,8 +29,8 @@ class UserController extends AbstractController
     private $userPasswordEncoderInterface;
     private $entityManagerInterface;
     private $sessionInterface;
-    private $emailsRepository;
-    private $mailer;
+    private $translator;
+    private $sendMailer;
 
     public function __construct(
         RequestStack $requestStack,
@@ -36,16 +38,16 @@ class UserController extends AbstractController
         UserPasswordEncoderInterface $userPasswordEncoderInterface,
         EntityManagerInterface $entityManagerInterface,
         SessionInterface $sessionInterface,
-        EmailsRepository $emailsRepository,
-        MailerInterface $mailer
+        TranslatorInterface $translator,
+        SendMailer $sendMailer
     ) {
         $this->request = $requestStack->getCurrentRequest();
         $this->userRepository = $userRepository;
         $this->userPasswordEncoderInterface = $userPasswordEncoderInterface;
         $this->entityManagerInterface = $entityManagerInterface;
         $this->sessionInterface = $sessionInterface;
-        $this->emailsRepository = $emailsRepository;
-        $this->mailer = $mailer;
+        $this->translator = $translator;
+        $this->sendMailer = $sendMailer;
     }
 
     /**
@@ -109,6 +111,13 @@ class UserController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+    /**
+     * @Route("/expired", name="user_expired")
+     */
+    public function expired(): Response
+    {
+        return $this->render('user/expired.html.twig', []);
+    }
 
     /**
      * @Route("/verification/{email}/{token}", name="user_verification", methods={"GET","POST"},
@@ -122,13 +131,17 @@ class UserController extends AbstractController
             $token = preg_replace('/[\W]/', '', $token);
             $userToken = $user->getToken();
             if ($token == $userToken) {
+                if ((date('U') - $user->getIsNew()) > 86400) {
+                    return $this->redirectToRoute('user_expired');
+                }
+                // TODO service for ip scan
                 $form = $this->createForm(UserVerificationType::class, $user);
                 $form->handleRequest($this->request);
                 if ($form->isSubmitted() && $form->isValid()) {
                     $encoded = $this->userPasswordEncoderInterface->encodePassword($user, $user->getPassword());
                     $user->setPassword($encoded);
                     $user->setToken("");
-                    $user->setIsNew(0);git add *
+                    $user->setIsNew(0);
                     $this->entityManagerInterface->persist($user);
                     $this->entityManagerInterface->flush();
                     return $this->redirectToRoute('introduction');
@@ -146,17 +159,37 @@ class UserController extends AbstractController
      */
     public function reinvite($id): Response
     {
-        $mail = new SendMailer(
-            $this->emailsRepository,
-            $this->request,
-            $this->mailer
-        );
 
-        if ($mail->invitation(
+
+        if ($this->sendMailer->invitation(
             $this->userRepository->findOneById($id),
-            $this->entityManagerInterface
+            $this->entityManagerInterface,
+            $this->request->getHttpHost()
         )) {
-            $this->addFlash('email send', 'success');
+            $this->addFlash('success', $this->translator->trans('tEmail ReSend'));
+        }
+        if ($route = $this->sessionInterface->get('last_route')) {
+            return $this->redirectToRoute($route);
+        }
+        return $this->redirectToRoute('introduction');
+    }
+
+    /**
+     * @Route("/reinviteall", name="user_reinvite_all")
+     */
+    public function reinviteAll(): Response
+    {
+        $users = $this->userRepository->findByCompany($this->getUser()->getCompany());
+        foreach ($users as $user) {
+            if ($user->getIsNew()) {
+                if ($this->sendMailer->invitation(
+                    $user,
+                    $this->entityManagerInterface,
+                    $this->request->getHttpHost()
+                )) {
+                    $this->addFlash('email send', 'success');
+                }
+            }
         }
         if ($route = $this->sessionInterface->get('last_route')) {
             return $this->redirectToRoute($route);
@@ -169,16 +202,12 @@ class UserController extends AbstractController
      */
     public function repassword(): Response
     {
-        $email= $this->request->request->get('email');
+        $email = $this->request->request->get('email');
         if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $mail = new SendMailer(
-                $this->emailsRepository,
-                $this->request,
-                $this->mailer
-            );
-            if ($mail->repassword(
+            if ($this->sendMailer->repassword(
                 $this->userRepository->findOneByEmail($email),
-                $this->entityManagerInterface
+                $this->entityManagerInterface,
+                $this->request->getHttpHost()
             ));
             return $this->redirectToRoute('app_login');
         }

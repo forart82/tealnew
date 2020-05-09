@@ -13,7 +13,7 @@
 		{% for nav in navigation.navigation %}
 			{% if nav.position % 1000 == 0 %}
 				{% set navigationCounter = navigationCounter + 1 %}
-				<a href="{{path(nav.link)}}" class="navMainButton btnGlobal" name="navMainButton{{nav.position|slice(0,2)}}">{{nav.translation|trans|raw}}</a>
+				<a href="{{path(nav.link)}}" class="navMainButton btnGlobal" id="navMainButton{{nav.position|slice(0,2)}}" name="navMainButton{{nav.position|slice(0,2)}}">{{nav.translation|trans|raw}}</a>
 			{% endif %}
 			{% if nav.name == "burger" %}{% endif %}
 		{% endfor %}
@@ -23,8 +23,32 @@
 			{% for nav in navigation.navigation %}
 				{% if nav.position|slice(0,1) == counter %}
 					<a href="{{path(nav.link)}}" class="navSubButton navMainButton{{nav.position|slice(0,2)}}">{{nav.translation|trans|raw}}</a>
+					<hr>
 				{% endif %}
 			{% endfor %}
 		</div>
 	{% endfor %}
+	<div id="navSubjects">
+		{% set counter = navigation.subjects[0].id-1 %}
+		{% for s in navigation.subjects %}
+			{% if s.language == app.request.attributes.get('_locale') %}
+				<a class="navSubjects" href="{{path('sondage',{"id":s.id})}}">
+					<p class="navSubjectPosition">{{ s.position }}</p>
+					{% if s.svg %}
+						<p class="navSubjectIcon">{{s.image.svg|raw}}</p>
+					{% endif %}
+					<p class="navSubjectTitle">{{ s.title }}</p>
+					<p class="navSubjectCheck">
+						{% if app.user.userResult[counter] is defined %}
+							{% if not app.user.userResult[counter].choice == 0 %}
+								{# {{images.svg.check.svg}} #}
+							{% endif %}
+						{% endif %}
+					</p>
+					<hr>
+				</a>
+			{% endif %}
+			{% set counter = counter + 1 %}
+		{% endfor %}
+	</div>
 </div>

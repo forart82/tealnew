@@ -1,5 +1,12 @@
-<a href="{{path('introduction')}}" id="MAINLOGOLINK">
-	<img id="MAINLOGO" src="/contents/images/logos/tlb.png" alt="logo tlb">
+{% apply inline_css(source('@emailcontent/email.css')) %}
+
+<a href="http://www.tealfinder.com" >
+	<img id="logo" src="{{email.image('@emailcontent/tlb.png')}}" alt="logo tlb">
 </a>
 
-{{message}}
+<div>
+	{{message}}
+</div>
+
+
+{% endapply %}

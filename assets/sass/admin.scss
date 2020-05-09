@@ -15,4 +15,10 @@
     grid-column: 1/span all;
     grid-row: auto;
   }
+  #adminButtonResend{
+    grid-column: 1/ span all;
+    grid-row: auto;
+    justify-self: flex-end;
+    margin-right: 40px;
+  }
 }

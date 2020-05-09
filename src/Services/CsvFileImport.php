@@ -13,6 +13,7 @@ use App\Repository\UserRepository;
 use App\Services\ReportAndMessage;
 use App\Services\SendMailer;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -54,6 +55,10 @@ class CsvFileImport
    * @var TranslatorInterface
    */
   private $translatorInterface;
+  /**
+   * @var Request
+   */
+  private $request;
   /**
    * @var CsvKeyValues[]
    */
@@ -132,23 +137,23 @@ class CsvFileImport
   private $errorTable;
 
   public function __construct(
-    string $file,
+    // string $file,
     CsvKeyValuesRepository $csvKeyValuesRepository,
     UserRepository $userRepository,
-    User $user,
     UserPasswordEncoderInterface $userPasswordEncoderInterface,
     EntityManagerInterface $entityManagerInterface,
     SendMailer $sendMailer,
-    TranslatorInterface $translatorInterface
+    TranslatorInterface $translatorInterface,
+    RequestStack $requestStack
   ) {
-    $this->file = $file;
+    // $this->file = $file;
     $this->csvKeyValuesRepository = $csvKeyValuesRepository;
     $this->userRepository = $userRepository;
-    $this->user = $user;
     $this->userPasswordEncoderInterface = $userPasswordEncoderInterface;
     $this->entityManagerInterface = $entityManagerInterface;
     $this->sendMailer = $sendMailer;
     $this->translatorInterface = $translatorInterface;
+    $this->request = $requestStack->getCurrentRequest();
     $this->csvKeyValues = $csvKeyValuesRepository->findAll();
     $this->csvKeyValuesName = array_map('strtolower', array_map('current', $csvKeyValuesRepository->findAllByName()));
     $this->csvKeyValuesValue = array_map('current', $csvKeyValuesRepository->findDistinctValue());
@@ -157,13 +162,9 @@ class CsvFileImport
     $this->message = [];
     $this->report = new ReportAndMessage($this->messageType, $this->message);
     $this->handleIsOpen = true;
-    $this->handle = fopen($file, 'r');
-    $this->data = fgetcsv($this->handle, 1000)[0];
-    $this->columns = count(explode(';', $this->data));
     $this->rows = 0;
     $this->elements = 0;
     $this->emptyField = [];
-    $this->fields = explode(';', $this->data);
     $this->newUser = new User();
     // Must be in reverse order!
     $this->functionToCallArray = [
@@ -185,8 +186,15 @@ class CsvFileImport
   /**
    * @return bool
    */
-  public function doCsv(): bool
+  public function doCsv(string $targetFile, User $user): bool
   {
+    $this->file = $targetFile;
+    $this->handle = fopen($this->file, 'r');
+    $this->data = fgetcsv($this->handle, 1000)[0];
+    $this->columns = count(explode(';', $this->data));
+    $this->fields = explode(';', $this->data);
+    $this->user = $user;
+
     // Check file type.
     $this->report->reportRecord("checkFileType", $this->checkFileType());
 
@@ -478,7 +486,6 @@ class CsvFileImport
   {
     if (!in_array($this->fields, $this->errorTable['fields'])) {
       $this->newUser = new User();
-      $token=CreateToken::create();
       $company = $this->user->getCompany();
       $password = $this->userPasswordEncoderInterface->encodePassword($this->newUser, uniqid());
       $this->newUser->setFirstname($this->fields[$this->csvKeyValuePositions['firstname']])
@@ -487,7 +494,7 @@ class CsvFileImport
         ->setLanguage($company->getLanguage())
         ->setPassword($password)
         ->setRoles(["ROLE_USER"])
-        ->setIsNew(1)
+        ->setIsNew(time())
         ->setCompany($company);
       $this->entityManagerInterface->persist($this->newUser);
       $this->entityManagerInterface->flush();
@@ -503,7 +510,14 @@ class CsvFileImport
    */
   public function sendMail(): bool
   {
-    return $this->sendMailer->invitation($this->newUser, $this->entityManagerInterface);
+    if (!in_array($this->fields, $this->errorTable['fields'])) {
+      return $this->sendMailer->invitation(
+        $this->newUser,
+        $this->entityManagerInterface,
+        $this->request->getHttpHost()
+      );
+    }
+    return false;
   }
   /**
    * Send invitation mail.
