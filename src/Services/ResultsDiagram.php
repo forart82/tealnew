@@ -135,7 +135,7 @@ class ResultsDiagram
 
   public function createPngDiagram(): void
   {
-    $png = imagecreatefrompng('contents/images/results/diagramBack.png');
+    $png = imagecreatefrompng('public/contents/images/results/diagramBack.png');
     imagesetthickness($png, 4);
     $lineColor=imagecolorallocate($png,$this->clRed,$this->clGreen,$this->clBlue);
     $pointColor = imagecolorallocate($png, $this->cpRed, $this->cpGreen, $this->cpBlue);
@@ -162,7 +162,7 @@ class ResultsDiagram
       imagefilledellipse($png, $rectX1, $rectY1, 20, 20, $pointColor);
     }
 
-    imagepng($png, 'contents/images/results/diagram-user-id.png');
+    imagepng($png, 'public/contents/images/results/diagram-user-id.png');
     imagedestroy($png);
   }
 
@@ -173,7 +173,7 @@ class ResultsDiagram
 
   public function getSvgDiagramFile(): void
   {
-    $this->svgDiagram=file_get_contents('contents/images/results/diagramBack.svg');
+    $this->svgDiagram=file_get_contents('public/contents/images/results/diagramBack.svg');
     $this->svgDiagram=substr($this->svgDiagram,0,-6);
   }
 

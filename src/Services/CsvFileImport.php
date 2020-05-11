@@ -556,6 +556,24 @@ class CsvFileImport
   }
 
   /**
+   * @return string
+   */
+  public function getData(): string
+  {
+    return "hallo";
+  }
+
+  /**
+   * @param mixed $data
+   *
+   * @return void
+   */
+  public function setData($data): void
+  {
+    $this->data = $data;
+  }
+
+  /**
    * @return void|array
    */
   public function getErrorTable(): ?array
