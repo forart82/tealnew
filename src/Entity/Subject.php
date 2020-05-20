@@ -226,7 +226,7 @@ class Subject
 
     public function setSvg(?Svg $svg): self
     {
-        $this->Svg = $svg;
+        $this->svg = $svg;
 
         return $this;
     }

@@ -50,7 +50,6 @@ class ResultsDiagramTest extends KernelTestCase
       $this->assertSame(255,(int)$point['offsetX'
       ]);
     }
-    dump($diagram);
   }
 
 }

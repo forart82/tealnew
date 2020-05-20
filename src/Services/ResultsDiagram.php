@@ -122,20 +122,21 @@ class ResultsDiagram
     }
     $firstX = $this->results[0]['offsetX'] + $this->center;
     $firstY = $this->results[0]['offsetY'] + $this->center;
-    $this->svgDiagram .= "<line x1={$pointX} y1={$pointY} x2={$firstX} y2={$firstY}
-    style='stroke:rgb({$this->clRed},{$this->clGreen},{$this->clBlue});stroke-width:{$this->stroke};' />";
+    $this->svgDiagram .= "<line x1={$pointX} y1={$pointY} x2={$firstX} y2={$firstY} style='stroke:rgb({$this->clRed},{$this->clGreen},{$this->clBlue});stroke-width:{$this->stroke};' />";
     // Creation of Points
     foreach ($this->results as $key => $dia) {
       $rectX1 = $this->results[$key]['offsetX'] + $this->center;
       $rectY1 = $this->results[$key]['offsetY'] + $this->center;
       $this->svgDiagram .= "<circle cx={$rectX1} cy={$rectY1} r=10 style='fill:rgb({$this->cpRed}, {$this->cpGreen}, {$this->cpBlue});' />";
+      $rectX1+=$rectX1/10;
+      $this->svgDiagram .= "<text class='diagramText' x={$rectX1 } y={$rectY1} style='fill:rgb({$this->cpRed}, {$this->cpGreen}, {$this->cpBlue});'>test</text>";
     }
     $this->svgDiagram .= '<use id="use" xlink:href="#circle2" /></svg>';
   }
 
   public function createPngDiagram(): void
   {
-    $png = imagecreatefrompng('public/contents/images/results/diagramBack.png');
+    $png = imagecreatefrompng('contents/images/results/diagramBack.png');
     imagesetthickness($png, 4);
     $lineColor=imagecolorallocate($png,$this->clRed,$this->clGreen,$this->clBlue);
     $pointColor = imagecolorallocate($png, $this->cpRed, $this->cpGreen, $this->cpBlue);
@@ -162,7 +163,7 @@ class ResultsDiagram
       imagefilledellipse($png, $rectX1, $rectY1, 20, 20, $pointColor);
     }
 
-    imagepng($png, 'public/contents/images/results/diagram-user-id.png');
+    imagepng($png, 'contents/images/results/diagram-user-id.png');
     imagedestroy($png);
   }
 
@@ -173,8 +174,12 @@ class ResultsDiagram
 
   public function getSvgDiagramFile(): void
   {
-    $this->svgDiagram=file_get_contents('public/contents/images/results/diagramBack.svg');
-    $this->svgDiagram=substr($this->svgDiagram,0,-6);
+    $this->svgDiagram=file_get_contents('contents/images/results/diagramBack.svg');
+    $this->svgDiagram=substr($this->svgDiagram,0,-7);
   }
 
+  public function getResults()
+  {
+    return $this->results;
+  }
 }

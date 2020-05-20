@@ -1,21 +1,22 @@
 #diagramMain {
   grid-column: 1 / span all;
   grid-row: 1 / span all;
+  justify-items: center;
+  align-items: center;
+  margin: auto;
 }
 
 #diagramSvg {
-  display: flex;
-  margin: 80px auto;
-  justify-self: center;
-  // background: url("/contents/images/site/diagramBack.png");
-  background-repeat: no-repeat;
-  background-position: center;
-  width: 600px;
-  height: 600px;
+  width: 80%;
+  height: 80%;
+  svg{
+    &:hover .diagramText{
+      fill:wheat;
+    }
+  }
+
 }
+#diagram:hover .diagramText{
+  fill:wheat;
 
-#diagramPng {
-  width: 20vw;
 }
-
-

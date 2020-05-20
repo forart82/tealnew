@@ -24,7 +24,6 @@ class ResultController extends AbstractController
             'results' => $resultRepository->findAll(),
         ]);
     }
-
     /**
      * @Route("/new", name="result_new", methods={"GET","POST"})
      */

@@ -523,7 +523,6 @@ class CsvFileImport
    */
   public function userSuccesInformation(): bool
   {
-    dump($this->report->getReport());
     if (!in_array($this->fields, $this->errorTable['fields'])) {
       $this->messageType[] = "success";
       $this->message[] = $this->newUser->getFirstname() . ' ' . $this->newUser->getLastname() .

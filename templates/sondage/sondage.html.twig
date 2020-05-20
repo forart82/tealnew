@@ -62,15 +62,14 @@
 
 		<div id="sondageHeartMain">
 			<div id="sondageHeartTitle">{{'txt_notation'|trans|raw }}
-				{{
-					.user.company.name }}
+				{{app.user.company.name }}
 			</div>
 			<div id="sondageHeartDiv">
 				{% if result is defined %}
 					{% if result.notation == 0 %}
 						{% for i in 1..5 %}
 							<a href="{# {{path('notation_check',{'idResult':result.id,'idSubject':subject.id,'valeur':i})}} #}" name="{{i}}" class="sondageHeart">
-								{{images.site.heart.svg|raw}}
+								{{images.site.site_heart.svg|raw}}
 							</a>
 						{% endfor %}
 					{% else %}
@@ -79,11 +78,11 @@
 							{% set counter = counter + 1 %}
 							{% if counter <= result.notation %}
 								<a href="{#{path('notation_check',{'idResult':result.id,'idSubject':subject.id,'valeur':i})}#}" name="{{i}}" class="sondageHeart">
-									{{images.site.heart.svg|raw}}
+									{{images.site.site_heart.svg|raw}}
 								</a>
 							{% else %}
 								<a href="{#{path('notation_check',{'idResult':result.id,'idSubject':subject.id,'valeur':i})}#}" name="{{i}}" class="sondageHeart">
-									{{images.site.heart.svg|raw}}
+									{{images.site.site_heart.svg|raw}}
 								</a>
 							{% endif %}
 						{% endfor %}
@@ -98,16 +97,16 @@
 			{% else %}
 				<a href="{{path('sondage',{'id': befor.id })}}">
 				{% endif %}
-				{{images.site.arrow.svg|raw}}
+				{{images.site.site_arrow.svg|raw}}
 			</a>
 		</div>
 		<div id="sondageArrowRight">
 			{% if subject.id>=end%}
-				<a href="{{path('result_show',{'idUser':app.user.id})}}">
+				<a href="{{path('result_diagram')}}">
 				{% else %}
 					<a href="{{path('sondage',{'id': after.id})}}">
 					{% endif %}
-					{{images.site.arrow.svg|raw}}
+					{{images.site.site_arrow.svg|raw}}
 				</a>
 			</a>
 		</div>
@@ -123,7 +122,7 @@
 					</div>
 					<div id="sondageArrowRightMobile">
 						{% if subject.id>=end%}
-							<a href="{{path('result_show',{'idUser':app.user.id})}}">
+							<a href="{{path('result_diagram')}}">
 							{% else %}
 								<a href="{{path('sondage',{'id': after.id})}}">
 								{% endif %}

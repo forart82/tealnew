@@ -9,6 +9,9 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 
+use Symfony\Component\HttpClient\HttpClient;
+use Symfony\Component\HttpClient\CurlHttpClient;
+
 /**
  * @Route("/resultdiagram")
  */
@@ -30,6 +33,22 @@ class ResultDiagramController extends AbstractController
      */
     public function diagram(): Response
     {
+        $client = HttpClient::create();
+        $response = $client->request('GET','https://www.linkedin.com/oauth/v2/accessToken?grant_type=client_credentials&client_id=86qa1cgyg80rud&client_secret=s1QNIeC55rSWoXuQ');
+        $statusCode = $response->getStatusCode();
+        // $statusCode = 200
+        $contentType = $response->getHeaders()['content-type'][0];
+        // $contentType = 'application/json'
+        $content = $response->getContent();
+        // $content = '{"id":521583, "name":"symfony-docs", ...}'
+        $content = $response->toArray();
+        // $content = ['id' => 521583, 'name' => 'symfony-docs', ...]
+
+        // $client = new CurlHttpClient();
+        // $response = $client->request('GET', 'https://www.linkedin.com/oauth/v2/accessToken?grant_type=client_credentials&client_id=86qa1cgyg80rud&client_secret=s1QNIeC55rSWoXuQ');
+        // $contents = $response->getContent();
+        dump($contents);
+
         $user = $this->userRepository->findOneById(3);
 
         $resultsDiagram = new ResultsDiagram(
@@ -38,9 +57,9 @@ class ResultDiagramController extends AbstractController
         );
         $resultsDiagram->doDiagram();
         $resultsDiagram->createPngDiagram();
-
-        return $this->render('result_diagram/result_diagram.html.twig', [
+        return $this->render('result_diagram/diagram.html.twig', [
             'svgDiagram' => $resultsDiagram->getSvgDiagram(),
+            'results' => $resultsDiagram->getResults(),
         ]);
     }
 }

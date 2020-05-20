@@ -1,0 +1,15 @@
+{% extends "MAIN/BASE.html.twig" %}
+
+{% block body %}
+	<div
+		id="diagramMain">
+		{# <img id="diagramImage" src="/contents/images/site/diagram3.png" alt="diagram"> #}
+		<div id="diagramSvg">
+			{{svgDiagram|raw}}
+		</div>
+
+
+	</div>
+
+
+{% endblock %}
