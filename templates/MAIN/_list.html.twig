@@ -33,13 +33,13 @@
 								{% endif %}
 							{% endfor %}
 							{% if className(element_teal)|lower == "user" %}
-								<td>{{change_svg_color(images.site.admin.svg,element,'admin')|raw}}</td>
+								<td class="admin{{element.roles.0}}">{{change_svg_color(images.site.site_admin.svg,element,'admin')|raw}}</td>
 								<td>
 								{% set timeDifference = date().format('U') - element.isNew %}
 								{% if timeDifference < 86400 %}
-									<a href="{{path('user_reinvite',{'id':element.id})}}">{{change_svg_color(images.site.email_send.svg,element,'email')|raw}}</a>
+									<a href="{{path('user_reinvite',{'id':element.id})}}">{{change_svg_color(images.site.site_email_send.svg,element,'email')|raw}}</a>
 								{% else %}
-									<a href="{{path('user_reinvite',{'id':element.id})}}">{{change_svg_color(images.site.email.svg,element,'email')|raw}}</a>
+									<a href="{{path('user_reinvite',{'id':element.id})}}">{{change_svg_color(images.site.site_email.svg,element,'email')|raw}}</a>
 								{% endif %}
 
 								</td>
@@ -68,8 +68,8 @@
 							{% endif %}
 						{% endfor %}
 						{% if className(element_teal)|lower == "user" %}
-							<td>{{change_svg_color(images.site.admin.svg,element_teal,'admin')|raw}}</td>
-							<td>{{change_svg_color(images.site.email.svg,element_teal,'email')|raw}}</td>
+							<td>{{change_svg_color(images.site.site_admin.svg,element_teal,'admin')|raw}}</td>
+							<td>{{change_svg_color(images.site.stie_email.svg,element_teal,'email')|raw}}</td>
 						{% endif %}
 						<td>
 							<a class="btnGlobalSmall" href="{{ path(className(element_teal)|lower~'_show', {'id': element_teal.id}) }}">{{'tShow'|trans}}</a>

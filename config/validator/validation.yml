@@ -2,12 +2,11 @@ App\Entity\User:
     properties:
         firstname:
             - Regex:
-                pattern: '/\d+|\W+/'
-                match: false
+                pattern: '/^[A-zÀ-ú]+$/'
                 message : Your first name can only contains a alphabetic values.
         lastname:
             - Regex:
-                pattern: '/^\w+$/'
+                pattern: '/^[A-zÀ-ú]+$/'
                 message : Your last name can only contains a alphabetic values.
         password:
             - Regex:

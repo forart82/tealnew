@@ -1,15 +1,9 @@
 {% extends "MAIN/BASE.html.twig" %}
 
 {% block body %}
-	<div
-		id="diagramMain">
-		{# <img id="diagramImage" src="/contents/images/site/diagram3.png" alt="diagram"> #}
-		<div id="diagramSvg">
-			{{svgDiagram|raw}}
-		</div>
-
-
+	<button id="diagramButton" class="btnGlobal">{{'tGroupe'|trans}}</button>
+	<div id="diagramSvg">
+		{{svgUser|raw}}
 	</div>
-
-
+	<div id="diagramQuestion">{{'tHoverOverPoints'|trans}}</div>
 {% endblock %}

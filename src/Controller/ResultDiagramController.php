@@ -5,12 +5,12 @@ namespace App\Controller;
 use App\Services\ResultsDiagram;
 use App\Repository\UserRepository;
 use App\Repository\ResultRepository;
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Repository\SubjectRepository;
 use Symfony\Component\HttpFoundation\Response;
-
-use Symfony\Component\HttpClient\HttpClient;
-use Symfony\Component\HttpClient\CurlHttpClient;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * @Route("/resultdiagram")
@@ -18,48 +18,61 @@ use Symfony\Component\HttpClient\CurlHttpClient;
 class ResultDiagramController extends AbstractController
 {
 
-    private $userRepository;
-    private $resultRepository;
+  private $userRepository;
+  private $resultRepository;
+  private $request;
+  private $subjectRepository;
 
-    public function __construct(
-        UserRepository $userRepository,
-        ResultRepository $resultRepository
-    ) {
-        $this->userRepository = $userRepository;
-        $this->resultRepository = $resultRepository;
-    }
-    /**
-     * @Route("/", name="result_diagram")
-     */
-    public function diagram(): Response
-    {
-        $client = HttpClient::create();
-        $response = $client->request('GET','https://www.linkedin.com/oauth/v2/accessToken?grant_type=client_credentials&client_id=86qa1cgyg80rud&client_secret=s1QNIeC55rSWoXuQ');
-        $statusCode = $response->getStatusCode();
-        // $statusCode = 200
-        $contentType = $response->getHeaders()['content-type'][0];
-        // $contentType = 'application/json'
-        $content = $response->getContent();
-        // $content = '{"id":521583, "name":"symfony-docs", ...}'
-        $content = $response->toArray();
-        // $content = ['id' => 521583, 'name' => 'symfony-docs', ...]
+  public function __construct(
+    UserRepository $userRepository,
+    ResultRepository $resultRepository,
+    RequestStack $requestStack,
+    SubjectRepository $subjectRepository
+  ) {
+    $this->userRepository = $userRepository;
+    $this->resultRepository = $resultRepository;
+    $this->request = $requestStack->getCurrentRequest();
+    $this->subjectRepository = $subjectRepository;
+  }
+  /**
+   * @Route("/", name="result_diagram")
+   */
+  public function diagram(): Response
+  {
 
-        // $client = new CurlHttpClient();
-        // $response = $client->request('GET', 'https://www.linkedin.com/oauth/v2/accessToken?grant_type=client_credentials&client_id=86qa1cgyg80rud&client_secret=s1QNIeC55rSWoXuQ');
-        // $contents = $response->getContent();
-        dump($contents);
+    $user = $this->userRepository->findOneById(3);
 
-        $user = $this->userRepository->findOneById(3);
+    $resultsDiagram = new ResultsDiagram(
+      $this->resultRepository,
+      $user
+    );
+    $resultsDiagram->doDiagram();
+    $resultsDiagram->createPngDiagram();
 
-        $resultsDiagram = new ResultsDiagram(
-            $this->resultRepository,
-            $user
-        );
-        $resultsDiagram->doDiagram();
-        $resultsDiagram->createPngDiagram();
-        return $this->render('result_diagram/diagram.html.twig', [
-            'svgDiagram' => $resultsDiagram->getSvgDiagram(),
-            'results' => $resultsDiagram->getResults(),
+    return $this->render('result_diagram/diagram.html.twig', [
+      'svgUser' => $resultsDiagram->getSvgDiagramUser(),
+      'results' => $resultsDiagram->getResults(),
+    ]);
+  }
+  /**
+   * @Route("/ajaxgetsubject", name="ajaxgetsubject" )
+   */
+  public function ajaxGetSubject(): Response
+  {
+
+    if ($this->request->isXmlHttpRequest()) {
+      if($this->request->get('id'))
+      {
+        $values=explode('_',$this->request->get('id'));
+      }
+      if ($subject = $this->subjectRepository->findOneById($values[0])) {
+        return new JsonResponse([
+          'question'=>$subject->getQuestion(),
+          'choice'=>$values[1],
         ]);
+      }
     }
+
+    return new JsonResponse();
+  }
 }

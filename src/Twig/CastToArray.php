@@ -11,7 +11,6 @@ use ReflectionClass;
 use Doctrine\ORM\EntityManagerInterface;
 
 
-use ReflectionProperty;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 use Symfony\Bridge\Doctrine\PropertyInfo\DoctrineExtractor;

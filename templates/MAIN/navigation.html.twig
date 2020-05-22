@@ -21,8 +21,10 @@
 		<div class="navSubButtons navMainButton{{counter}}0">
 			{% for nav in navigation.navigation %}
 				{% if nav.position|slice(0,1) == counter %}
-					<a href="{{path(nav.link)}}" class="navSubButton navMainButton{{nav.position|slice(0,2)}}">{{nav.translation|trans|raw}}</a>
-					<hr>
+					{% if nav.position % 1000 != 0 %}
+						<a href="{{path(nav.link)}}" class="navSubButton navMainButton{{nav.position|slice(0,2)}}">{{nav.translation|trans|raw}}</a>
+						<hr>
+					{% endif %}
 				{% endif %}
 			{% endfor %}
 			{% if navigation.navigation[counter-1].name == "results" %}
@@ -50,5 +52,4 @@
 			{% endif %}
 		</div>
 	{% endfor %}
-
 </div>

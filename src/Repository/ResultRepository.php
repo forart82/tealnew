@@ -31,29 +31,30 @@ class ResultRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
-    public function allResultsCompanyAscSubject(int $id)
+
+    public function allResultNotZeroUser($user)
+    {
+        return $this->createQueryBuilder('r')
+            ->where('r.choice > :val')
+            ->setParameter('val', 0)
+            ->andWhere('r.user=:user')
+            ->setParameter('user', $user)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function allResultNotZeroCompany($companyId)
     {
         return $this->createQueryBuilder('r')
             ->join('r.user', 'u')
             ->join('u.company', 'c')
-            ->where('c.id=:id')
-            ->setParameter('id', $id)
+            ->where('c.id=:companyId')
+            ->setParameter('companyId', $companyId)
             ->andWhere('r.choice > :val')
             ->setParameter('val', 0)
             ->orderBy('r.subject', 'ASC')
             ->getQuery()
             ->getResult();
-    }
-
-    public function allResultNotZero($user)
-    {
-        return $this->createQueryBuilder('r')
-        ->where('r.choice > :val')
-        ->setParameter('val', 0)
-        ->andWhere('r.user=:user')
-        ->setParameter('user', $user)
-        ->getQuery()
-        ->getResult();
     }
 
     public function allNotationsCompany(int $id)
@@ -69,16 +70,19 @@ class ResultRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function allNotationNotZero($user)
+    public function allNotationNotZeroUser($user)
     {
         return $this->createQueryBuilder('r')
-        ->where('r.notation > :val')
-        ->setParameter('val', 0)
-        ->andWhere('r.user=:user')
-        ->setParameter('user', $user)
-        ->getQuery()
-        ->getResult();
+            ->where('r.notation > :val')
+            ->setParameter('val', 0)
+            ->andWhere('r.user=:user')
+            ->setParameter('user', $user)
+            ->getQuery()
+            ->getResult();
     }
+
+
+
     // /**
     //  * @return Result[] Returns an array of Result objects
     //  */

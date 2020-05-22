@@ -23,5 +23,7 @@ $(document).ready(function () {
   require('./fielUploadFields');
   require('./emails');
   require('./sondage');
+  require('./diagram');
+  require('./admin');
 
 })
