@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use App\Services\Statics\UniqueId;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CsvKeyValuesRepository")
@@ -19,6 +20,11 @@ class CsvKeyValues
     /**
      * @ORM\Column(type="string", length=255)
      */
+    private $eid;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
     private $name;
 
     /**
@@ -31,11 +37,19 @@ class CsvKeyValues
      */
     private $type;
 
-
+    public function __construct()
+    {
+        $this->eid = UniqueId::createId();
+    }
 
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getEid(): ?string
+    {
+        return $this->eid;
     }
 
     public function getName(): ?string

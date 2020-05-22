@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use App\Services\Statics\UniqueId;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
@@ -19,6 +20,11 @@ class User implements UserInterface
      * @ORM\Column(type="integer")
      */
     private $id;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $eid;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
@@ -73,12 +79,18 @@ class User implements UserInterface
 
     public function __construct()
     {
+        $this->eid = UniqueId::createId();
         $this->userResult = new ArrayCollection();
     }
 
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getEid(): ?string
+    {
+        return $this->eid;
     }
 
     public function getEmail(): ?string

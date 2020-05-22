@@ -5,7 +5,7 @@ namespace App\Entity;
 use App\Entity\User;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
-
+use App\Services\Statics\UniqueId;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ResultRepository")
  */
@@ -17,6 +17,11 @@ class Result
      * @ORM\Column(type="integer")
      */
     private $id;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $eid;
 
     /**
      * @ORM\Column(type="integer")
@@ -41,12 +46,18 @@ class Result
 
     public function __construct()
     {
+        $this->eid=UniqueId::createId();
         $this->user = new ArrayCollection();
     }
 
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getEid(): ?string
+    {
+        return $this->eid;
     }
 
     public function getChoice(): ?int

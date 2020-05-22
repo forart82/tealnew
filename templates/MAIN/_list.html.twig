@@ -30,7 +30,7 @@
 									{% if property|lower not in restrictetList  %}
 										<td class="{{property}}" contenteditable="true">{{ get_string(element,property,0)|raw }}</td>
 									{% endif %}
-									{% if property|lower == 'id' %}
+									{% if property|lower == 'eid' %}
 										<td class="{{property}} globalHidden">{{ get_string(element,property,0)|raw }}</td>
 									{% endif %}
 

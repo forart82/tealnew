@@ -10,6 +10,7 @@ twig:
         images: '@App\Services\TwigLoad\Svg'
         restrictetList:
             - id
+            - eid
             - salt
             - password
             - roles

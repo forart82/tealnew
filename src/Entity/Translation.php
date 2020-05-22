@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Services\Statics\UniqueId;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\TranslationRepository")
@@ -17,6 +18,11 @@ class Translation
      * @ORM\Column(type="integer")
      */
     private $id;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $eid;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Language", inversedBy="translations")
@@ -34,9 +40,19 @@ class Translation
      */
     private $keytext;
 
+    public function __construct()
+    {
+        $this->eid=UniqueId::createId();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getEid(): ?string
+    {
+        return $this->eid;
     }
 
     public function getLanguage(): ?Language
