@@ -80,15 +80,35 @@ class AdminController extends AbstractController
   public function ajaxChangeAdmin(): Response
   {
     if ($this->request->isXmlHttpRequest()) {
-      $role = substr($this->request->get('data'), 5);
-      dump($role);
-      switch ($role) {
+      $class = substr($this->request->get('class'),5);
+      $email = $this->request->get('email');
+      switch ($class) {
         case 'ROLE_SUPER_ADMIN':
-          
+          $user=$this->userRepository->findOneByEmail($email);
+          $user->setRoles(['ROLE_USER']);
+          $this->entityManagerInterface->persist($user);
+          $this->entityManagerInterface->flush();
+          return new JsonResponse([
+            'color'=>'#00aaaa',
+          ]);
           break;
         case 'ROLE_ADMIN':
+          $user=$this->userRepository->findOneByEmail($email);
+          $user->setRoles(['ROLE_SUPER_ADMIN']);
+          $this->entityManagerInterface->persist($user);
+          $this->entityManagerInterface->flush();
+          return new JsonResponse([
+            'color'=>'#ff0000',
+          ]);
           break;
         case 'ROLE_USER':
+          $user=$this->userRepository->findOneByEmail($email);
+          $user->setRoles(['ROLE_ADMIN']);
+          $this->entityManagerInterface->persist($user);
+          $this->entityManagerInterface->flush();
+          return new JsonResponse([
+            'color'=>'#ff6420',
+          ]);
           break;
         default:
           break;

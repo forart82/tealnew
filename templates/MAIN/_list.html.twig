@@ -28,7 +28,7 @@
 									</td>
 								{% else %}
 									{% if property|lower not in restrictetList  %}
-										<td>{{ get_string(element,property,0)|raw }}</td>
+										<td class="{{property}}">{{ get_string(element,property,0)|raw }}</td>
 									{% endif %}
 								{% endif %}
 							{% endfor %}
