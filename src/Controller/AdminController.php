@@ -90,6 +90,7 @@ class AdminController extends AbstractController
           $this->entityManagerInterface->flush();
           return new JsonResponse([
             'color'=>'#00aaaa',
+            'class'=>'adminROLE_USER',
           ]);
           break;
         case 'ROLE_ADMIN':
@@ -99,6 +100,7 @@ class AdminController extends AbstractController
           $this->entityManagerInterface->flush();
           return new JsonResponse([
             'color'=>'#ff0000',
+            'class'=>'adminROLE_SUPER_ADMIN',
           ]);
           break;
         case 'ROLE_USER':
@@ -108,6 +110,7 @@ class AdminController extends AbstractController
           $this->entityManagerInterface->flush();
           return new JsonResponse([
             'color'=>'#ff6420',
+            'class'=>'adminROLE_ADMIN',
           ]);
           break;
         default:

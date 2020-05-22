@@ -21,6 +21,8 @@ $.each(roles, function (key, value) {
             success: function (data, status, ) {
                 if (data && status == "success") {
                     current.children('svg').attr('fill',data['color'])
+                    current.removeClass();
+                    current.addClass(data['class']);
                     console.log(data,current.children('svg').attr('fill',data['color']));
                 }
             },
