@@ -9,6 +9,7 @@ twig:
         navigation: '@App\Services\TwigLoad\Navigation'
         images: '@App\Services\TwigLoad\Svg'
         restrictetList:
+            - id
             - salt
             - password
             - roles

@@ -31,5 +31,15 @@ $.each(roles, function (key, value) {
             },
         })
     })
-
 })
+
+$('td').on('keyup',function(){
+    let obj=$(this);
+    if(obj.attr('contenteditable'))
+    {
+            console.log(obj.parent().children('td.list-teal-actions'));
+
+        // $(this).css('width','890px');
+        // $(this).hide();
+    }
+});
