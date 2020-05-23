@@ -16,6 +16,6 @@ class CreateToken
     for ($i = 0; $i < $rand; $i++) {
       $token.= TOKENVALUES[mt_rand(0, 61)];
     }
-    return $token;
+    return $token;  	
   }
 }

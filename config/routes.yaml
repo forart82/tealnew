@@ -1,8 +1,8 @@
 introductioon:
-  path:        /
-  controller:  App\Controller\SecurityController::language
-  locale:      '%locale%'
-  format:      html
+  path: /
+  controller: App\Controller\SecurityController::language
+  locale: '%locale%'
+  format: html
   requirements:
       _locale: '%supported_locales%'
       _format: html|xml

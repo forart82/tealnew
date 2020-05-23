@@ -8,6 +8,9 @@ twig:
     globals:
         navigation: '@App\Services\TwigLoad\Navigation'
         images: '@App\Services\TwigLoad\Svg'
+        restrictetEditable:
+            - company
+            - svg
         restrictetList:
             - id
             - eid

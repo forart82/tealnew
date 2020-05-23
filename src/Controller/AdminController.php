@@ -3,10 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Services\GetRoles;
 use App\Services\SendMailer;
 use App\Services\CreateToken;
+use App\Interfaces\ChangeList;
 use App\Form\AdminCreateUserType;
 use App\Repository\UserRepository;
+use App\Services\ChangeListValues;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -18,7 +21,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 /**
  * @Route("/admin")
  */
-class AdminController extends AbstractController
+class AdminController extends AbstractController implements ChangeList
 {
   private $request;
   private $userRepository;
@@ -50,7 +53,7 @@ class AdminController extends AbstractController
     $form = $this->createForm(AdminCreateUserType::class, $user);
     $form->handleRequest($this->request);
     if ($form->isSubmitted() && $form->isValid()) {
-      $user->setRoles(['ROLE_USER']);
+      $user->setRoles(["ROLE_USER"]);
       $user->setIsNew(true);
       $user->setPassword(CreateToken::create());
       $user->setToken(CreateToken::create());
@@ -66,11 +69,11 @@ class AdminController extends AbstractController
       );
     }
 
-    $this->sessionInterface->set('last_route', 'admin');
+    $this->sessionInterface->set("last_route", "admin");
     $company = $this->userRepository->findByCompany($this->getUser()->getCompany());
-    return $this->render('admin/admin.html.twig', [
+    return $this->render("admin/admin.html.twig", [
       "element_teal" => $company,
-      'form' => $form->createView(),
+      "form" => $form->createView(),
     ]);
   }
 
@@ -80,42 +83,43 @@ class AdminController extends AbstractController
   public function ajaxChangeAdmin(): Response
   {
     if ($this->request->isXmlHttpRequest()) {
-      $class = substr($this->request->get('class'),5);
-      $email = $this->request->get('email');
-      switch ($class) {
-        case 'ROLE_SUPER_ADMIN':
-          $user=$this->userRepository->findOneByEmail($email);
-          $user->setRoles(['ROLE_USER']);
-          $this->entityManagerInterface->persist($user);
-          $this->entityManagerInterface->flush();
-          return new JsonResponse([
-            'color'=>'#00aaaa',
-            'class'=>'adminROLE_USER',
-          ]);
-          break;
-        case 'ROLE_ADMIN':
-          $user=$this->userRepository->findOneByEmail($email);
-          $user->setRoles(['ROLE_SUPER_ADMIN']);
-          $this->entityManagerInterface->persist($user);
-          $this->entityManagerInterface->flush();
-          return new JsonResponse([
-            'color'=>'#ff0000',
-            'class'=>'adminROLE_SUPER_ADMIN',
-          ]);
-          break;
-        case 'ROLE_USER':
-          $user=$this->userRepository->findOneByEmail($email);
-          $user->setRoles(['ROLE_ADMIN']);
-          $this->entityManagerInterface->persist($user);
-          $this->entityManagerInterface->flush();
-          return new JsonResponse([
-            'color'=>'#ff6420',
-            'class'=>'adminROLE_ADMIN',
-          ]);
-          break;
-        default:
-          break;
+      $data = $this->request->get('data');
+      $oldClass = substr($data["oldClass"], 15);
+      $eid = $data["eid"];
+      $roles = new GetRoles();
+      if ($selectedUser = $this->userRepository->findOneByEid($eid)) {
+        $roles = $roles->getRoles($this->getUser()->getRoles()[0], $this->getParameter("security.role_hierarchy.roles"));
+        $newClass = $roles[0];
+        foreach ($roles as $key => $role) {
+          if ($oldClass == $role && $key + 1 < count($roles)) {
+            $newClass = $roles[$key + 1];
+          }
+        }
+        $selectedUser->setRoles([$newClass]);
+        $this->entityManagerInterface->flush();
+        return new JsonResponse([
+          "color" => "#00aaaa",
+          "newClass" => "list-teal-admin{$newClass}",
+          "oldClass" => "list-teal-admin{$oldClass}",
+          "eid" => $eid,
+        ]);
       }
+    }
+    return new JsonResponse();
+  }
+
+  /**
+   * @Route("/changelist", name="admin_change_list")
+   */
+  public function changeList(): Response
+  {
+    dump($this->entityManagerInterface);
+
+    if ($this->request->isXmlHttpRequest()) {
+      $data = $this->request->get("data");
+      $obj = new ChangeListValues($this->entityManagerInterface);
+      $obj->changeValues($this->userRepository, $data);
+      return new JsonResponse($data);
     }
     return new JsonResponse();
   }

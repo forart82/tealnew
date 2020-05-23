@@ -74,9 +74,9 @@ class NavigationsFixtures extends Fixture implements OrderedFixtureInterface
         "introduction",
         "introduction",
         // Menu Paramèters
+        "introduction",
         "user_profil",
         "admin",
-        "introduction",
         "introduction",
         "subject",
         "translation",
