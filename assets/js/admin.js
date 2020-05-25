@@ -68,9 +68,7 @@ changeAdmin = function (data) {
 
 changeList=function(data)
 {
-
   $.each(data['values'], function (key, value) {
     $('#'+data['eid']).find('td.'+key).text(value);
   });
-  console.log(data);
 }

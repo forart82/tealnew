@@ -4,17 +4,48 @@ namespace App\Controller;
 
 use App\Entity\Translation;
 use App\Form\TranslationType;
+use App\Services\ChangeListValues;
+use App\Interfaces\ChangeList;
+use App\Repository\KeytextRepository;
 use App\Repository\TranslationRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Contracts\Translation\TranslatorInterface;
+use Doctrine\ORM\EntityManagerInterface;
+
+
+
 
 /**
  * @Route("/translation")
  */
-class TranslationController extends AbstractController
+class TranslationController extends AbstractController implements ChangeList
 {
+
+    private $request;
+    private $translator;
+    private $entityManagerInterface;
+    private $translationRepository;
+    private $keytextRepository;
+
+    public function __construct(
+        RequestStack $requestStack,
+        TranslatorInterface $translator,
+        EntityManagerInterface $entityManagerInterface,
+        TranslationRepository $translationRepository,
+        KeytextRepository $keytextRepository
+    ) {
+        $this->request = $requestStack->getCurrentRequest();
+        $this->translator = $translator;
+        $this->entityManagerInterface = $entityManagerInterface;
+        $this->translationRepository = $translationRepository;
+        $this->keytextRepository = $keytextRepository;
+    }
+
     /**
      * @Route("/", name="translation", methods={"GET"})
      */
@@ -83,12 +114,32 @@ class TranslationController extends AbstractController
      */
     public function delete(Request $request, Translation $translation): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$translation->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $translation->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($translation);
             $entityManager->flush();
         }
 
         return $this->redirectToRoute('translation');
+    }
+
+    /**
+     * @Route("/changelist", name="admin_change_list")
+     */
+    public function changeList(): Response
+    {
+        if ($this->request->isXmlHttpRequest()) {
+            $data = $this->request->get("data");
+            $obj = new ChangeListValues($this->entityManagerInterface);
+            $obj->changeValues(
+                [
+                    'Translation' => $this->translationRepository,
+                    'Keytext' => $this->keytextRepository,
+                ],
+                $data
+            );
+            return new JsonResponse($data);
+        }
+        return new JsonResponse();
     }
 }

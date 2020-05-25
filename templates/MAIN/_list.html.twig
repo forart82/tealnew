@@ -19,6 +19,8 @@
 			</thead>
 			<tbody>
 				{% if element_teal is iterable %}
+					{{dump(element_teal)}}
+
 					{% for element in element_teal %}
 						<tr id="{{element.eid}}">
 							{% for property in cast_to_array(element_teal) %}
@@ -29,9 +31,17 @@
 								{% else %}
 									{% if property|lower not in restrictetList  %}
 										{% if property|lower not in restrictetEditable  %}
-											<td class="{{property}}" contenteditable="true">{{ get_string(element,property,0)|raw }}</td>
+											{% if get_type(element_teal,property) ==  "object" %}
+												<td class="{{property}} inClass" contenteditable="true">{{ get_string(element,property,0)|raw }}</td>
+												{% else %}
+												<td class="{{property}}" contenteditable="true">{{ get_string(element,property,0)|raw }}</td>
+											{% endif %}
 										{% else %}
-											<td class="{{property}}">{{ get_string(element,property,0)|raw }}</td>
+											{% if get_type(element_teal,property) ==  "object" %}
+												<td class="{{property}}inClass">{{ get_string(element,property,0)|raw }}</td>
+											{% else %}
+												<td class="{{property}}">{{ get_string(element,property,0)|raw }}</td>
+											{% endif %}
 										{% endif %}
 									{% endif %}
 								{% endif %}

@@ -4,22 +4,38 @@ namespace App\Controller;
 
 use App\Entity\Svg;
 use App\Form\SvgType;
+use App\Services\ChangeListValues;
+use App\Interfaces\ChangeList;
 use App\Repository\SvgRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-
+use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * @Route("/svg")
  */
-class SvgController extends AbstractController
+class SvgController extends AbstractController implements ChangeList
 {
-    public function __construct(TranslatorInterface $translator)
-    {
+    private $request;
+    private $translator;
+    private $entityManagerInterface;
+    private $svgRepository;
+
+    public function __construct(
+        RequestStack $requestStack,
+        TranslatorInterface $translator,
+        EntityManagerInterface $entityManagerInterface,
+        SvgRepository $svgRepository
+    ) {
+        $this->request = $requestStack->getCurrentRequest();
         $this->translator = $translator;
+        $this->entityManagerInterface = $entityManagerInterface;
+        $this->svgRepository = $svgRepository;
     }
 
     /**
@@ -110,6 +126,26 @@ class SvgController extends AbstractController
             'element_teal' => $svg,
             'form' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @Route("/changelist", name="svg_change_list")
+     */
+    public function changeList(): Response
+    {
+
+        if ($this->request->isXmlHttpRequest()) {
+            $data = $this->request->get("data");
+            $obj = new ChangeListValues($this->entityManagerInterface);
+            $obj->changeValues(
+                [
+                    'Svg' => $this->svgRepository
+                ],
+                $data
+            );
+            return new JsonResponse($data);
+        }
+        return new JsonResponse();
     }
 
     /**

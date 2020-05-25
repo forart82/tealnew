@@ -113,12 +113,10 @@ class AdminController extends AbstractController implements ChangeList
    */
   public function changeList(): Response
   {
-    dump($this->entityManagerInterface);
-
     if ($this->request->isXmlHttpRequest()) {
       $data = $this->request->get("data");
       $obj = new ChangeListValues($this->entityManagerInterface);
-      $obj->changeValues($this->userRepository, $data);
+      $obj->changeValues(['User'=>$this->userRepository], $data);
       return new JsonResponse($data);
     }
     return new JsonResponse();

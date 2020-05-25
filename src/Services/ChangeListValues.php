@@ -21,14 +21,28 @@ class ChangeListValues
     $this->entityManagerInterface = $entityManagerInterface;
   }
 
-  public function changeValues($repository, array $data)
+  public function changeValues(array $repositorys, array $data)
   {
-    $obj = $repository->findOneByEid($data['eid']);
+
+    $obj = $repositorys[$data['entity']]->findOneByEid($data['eid']);
+
     foreach ($data['values'] as $key => $value) {
-      $set = 'set' . ucfirst($key);
-      $obj->$set($value);
+      if (preg_match('/inClass/', $key)) {
+        $entity = ucfirst(str_replace(' inClass', '', $key));
+        $method='get'.$entity;
+        $repository = $repositorys[$entity]->findOneById($obj->$method()->getId());
+        $dump="hallasdfsdfgqwerqwejkfhaöiksdjfhasodkjfhöoaweirujfwqöoafndvskfnbvglksdfjgnblioaewrjhföasdnfvksndfbgvöksdajföloaky";
+        $dump=gzcompress($dump);
+        dump($dump);
+        $dump=gzuncompress($dump);
+        dump($dump);
+      }
     }
-    $this->entityManagerInterface->persist($obj);
-    $this->entityManagerInterface->flush();
+    //   dump($entity,$data);
+    //   // $set = 'set' . ucfirst($key);
+    //   // $obj->$set($value);
+    // }
+    // $this->entityManagerInterface->persist($obj);
+    // $this->entityManagerInterface->flush();
   }
 }

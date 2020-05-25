@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains a class to get key values as array from an object
+ * Contains a class to get type of elmement
  */
 
 namespace App\Twig;
@@ -17,7 +17,7 @@ use Symfony\Bridge\Doctrine\PropertyInfo\DoctrineExtractor;
 use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
 use Symfony\Component\PropertyInfo\PropertyInfoExtractor;
 
-class CastToArray extends AbstractExtension
+class GetType extends AbstractExtension
 {
   private $entityManagerInterface;
 
@@ -29,14 +29,15 @@ class CastToArray extends AbstractExtension
   public function getFunctions(): array
   {
     return [
-      new TwigFunction('cast_to_array', [$this, 'castToArray']),
+      new TwigFunction('get_type', [$this, 'getType']),
     ];
   }
   /**
-   * @param mixed $object
+   * @param mixed $element
    */
-  public function castToArray($object): array
+  public function getType($object,$property)
   {
+
     $reflectionExtractor = new ReflectionExtractor();
     $doctrineExtractor = new DoctrineExtractor($this->entityManagerInterface);
 
@@ -51,11 +52,11 @@ class CastToArray extends AbstractExtension
       ]
     );
     if (gettype($object) == "array") {
-      $properties = $propertyInfo->getProperties("App\Entity\\" . (new ReflectionClass($object[0]))->getShortName());
+      $properties = $propertyInfo->getTypes("App\Entity\\" . (new ReflectionClass($object[0]))->getShortName(),$property);
 
     } else {
-      $properties = $propertyInfo->getProperties("App\Entity\\" . (new ReflectionClass($object))->getShortName());
+      $properties = $propertyInfo->getTypes("App\Entity\\" . (new ReflectionClass($object))->getShortName(),$property);
     }
-    return $properties;
+    return $properties[0]->getBuiltinType();
   }
 }
