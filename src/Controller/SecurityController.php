@@ -2,14 +2,14 @@
 
 namespace App\Controller;
 
-use App\Services\CheckLanguage;
 use App\Repository\LanguageRepository;
+use App\Services\CheckLanguage;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Config\Definition\Exception\Exception;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Config\Definition\Exception\Exception;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class SecurityController extends AbstractController
 {
@@ -29,9 +29,8 @@ class SecurityController extends AbstractController
     {
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
-        if($this->getUser())
-        {
-          return $this->redirectToRoute('introduction');
+        if ($this->getUser()) {
+            return $this->redirectToRoute('introduction');
         }
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
@@ -45,7 +44,7 @@ class SecurityController extends AbstractController
         throw new Exception('This method can be blank - it will be intercepted by the logout key on your firewall');
     }
     /**
-     * @Route("/", name="language")
+     * @Route("/", name="check_language")
      */
     public function language(): Response
     {

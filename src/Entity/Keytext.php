@@ -45,12 +45,12 @@ class Keytext
         $this->translation = new ArrayCollection();
     }
 
-    public function getId(): ?string
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getEid(): ?int
+    public function getEid(): ?string
     {
         return $this->eid;
     }

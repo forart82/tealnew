@@ -4,17 +4,36 @@ namespace App\Controller;
 
 use App\Entity\Language;
 use App\Form\LanguageType;
+use App\Interfaces\ChangeList;
+use App\Services\ChangeListValues;
 use App\Repository\LanguageRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * @Route("/language")
  */
-class LanguageController extends AbstractController
+class LanguageController extends AbstractController implements ChangeList
 {
+    private $languageRepository;
+    private $request;
+    private $entityManagerInterface;
+
+    public function __construct(
+        LanguageRepository $languageRepository,
+        RequestStack $requestStack,
+        EntityManagerInterface $entityManagerInterface
+    ) {
+        $this->languageRepository = $languageRepository;
+        $this->request = $requestStack->getCurrentRequest();
+        $this->entityManagerInterface = $entityManagerInterface;
+    }
+
     /**
      * @Route("/", name="language", methods={"GET"})
      */
@@ -28,7 +47,7 @@ class LanguageController extends AbstractController
     /**
      * @Route("/new", name="language_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    function new(Request $request): Response
     {
         $language = new Language();
         $form = $this->createForm(LanguageType::class, $language);
@@ -83,12 +102,32 @@ class LanguageController extends AbstractController
      */
     public function delete(Request $request, Language $language): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$language->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $language->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($language);
             $entityManager->flush();
         }
 
         return $this->redirectToRoute('language');
+    }
+
+    /**
+     * @Route("/changelist", name="language_change_list")
+     */
+    public function changeList(): Response
+    {
+        if ($this->request->isXmlHttpRequest()) {
+            $data = $this->request->get("data");
+            if (!empty($data['entity'])) {
+                $repository = strtolower($data['entity']) . 'Repository';
+                $obj = new ChangeListValues($this->entityManagerInterface);
+                $obj->changeValues(
+                    $this->$repository,
+                    $data
+                );
+                return new JsonResponse($data);
+            }
+        }
+        return new JsonResponse();
     }
 }

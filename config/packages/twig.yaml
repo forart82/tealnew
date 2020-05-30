@@ -11,7 +11,7 @@ twig:
         restrictetEditable:
             - company
             - svg
-        restrictetList:
+        restrictetListStandart:
             - id
             - eid
             - salt
@@ -24,3 +24,19 @@ twig:
             - language
             - subjectresult
             - navigations
+        restrictetListUser:
+            - matricule
+            - logo
+            - roles
+            - eid
+            - password
+            - id
+            - isnew
+            - token
+            - name
+            - language
+            - username
+        restrictetListTranslation:
+            - id
+            - eid
+            - active

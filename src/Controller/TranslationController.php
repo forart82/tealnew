@@ -4,21 +4,19 @@ namespace App\Controller;
 
 use App\Entity\Translation;
 use App\Form\TranslationType;
-use App\Services\ChangeListValues;
 use App\Interfaces\ChangeList;
 use App\Repository\KeytextRepository;
+use App\Repository\LanguageRepository;
 use App\Repository\TranslationRepository;
+use App\Services\ChangeListValues;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use Doctrine\ORM\EntityManagerInterface;
-
-
-
 
 /**
  * @Route("/translation")
@@ -31,19 +29,22 @@ class TranslationController extends AbstractController implements ChangeList
     private $entityManagerInterface;
     private $translationRepository;
     private $keytextRepository;
+    private $languageRepository;
 
     public function __construct(
         RequestStack $requestStack,
         TranslatorInterface $translator,
         EntityManagerInterface $entityManagerInterface,
         TranslationRepository $translationRepository,
-        KeytextRepository $keytextRepository
+        KeytextRepository $keytextRepository,
+        LanguageRepository $languageRepository
     ) {
         $this->request = $requestStack->getCurrentRequest();
         $this->translator = $translator;
         $this->entityManagerInterface = $entityManagerInterface;
         $this->translationRepository = $translationRepository;
         $this->keytextRepository = $keytextRepository;
+        $this->languageRepository = $languageRepository;
     }
 
     /**
@@ -59,7 +60,7 @@ class TranslationController extends AbstractController implements ChangeList
     /**
      * @Route("/new", name="translation_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    function new(Request $request): Response
     {
         $translation = new Translation();
         $form = $this->createForm(TranslationType::class, $translation);
@@ -96,7 +97,6 @@ class TranslationController extends AbstractController implements ChangeList
     {
         $form = $this->createForm(TranslationType::class, $translation);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
@@ -124,21 +124,21 @@ class TranslationController extends AbstractController implements ChangeList
     }
 
     /**
-     * @Route("/changelist", name="admin_change_list")
+     * @Route("/changelist", name="translation_change_list")
      */
     public function changeList(): Response
     {
         if ($this->request->isXmlHttpRequest()) {
             $data = $this->request->get("data");
-            $obj = new ChangeListValues($this->entityManagerInterface);
-            $obj->changeValues(
-                [
-                    'Translation' => $this->translationRepository,
-                    'Keytext' => $this->keytextRepository,
-                ],
-                $data
-            );
-            return new JsonResponse($data);
+            if (!empty($data['entity'])) {
+                $repository = strtolower($data['entity']) . 'Repository';
+                $obj = new ChangeListValues($this->entityManagerInterface);
+                $obj->changeValues(
+                    $this->$repository,
+                    $data
+                );
+                return new JsonResponse($data);
+            }
         }
         return new JsonResponse();
     }

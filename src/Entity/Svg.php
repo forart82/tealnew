@@ -45,14 +45,20 @@ class Svg
     private $navigations;
 
     /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Subject", mappedBy="svg")
+     */
+    private $subjects;
+
+    /**
      * @ORM\Column(type="string", length=255)
      */
     private $category;
 
     public function __construct()
     {
-        $this->eid=UniqueId::createId();
+        $this->eid = UniqueId::createId();
         $this->navigations = new ArrayCollection();
+        $this->subjects = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -126,6 +132,37 @@ class Svg
             // set the owning side to null (unless already changed)
             if ($navigation->getSvg() === $this) {
                 $navigation->setSvg(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Subject[]
+     */
+    public function getSubjects(): Collection
+    {
+        return $this->subjects;
+    }
+
+    public function addSubject(Subject $subject): self
+    {
+        if (!$this->subjects->contains($subject)) {
+            $this->subjects[] = $subject;
+            $subject->setSvg($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSubject(Subject $subject): self
+    {
+        if ($this->subjects->contains($subject)) {
+            $this->subjects->removeElement($subject);
+            // set the owning side to null (unless already changed)
+            if ($subject->getSvg() === $this) {
+                $subject->setSvg(null);
             }
         }
 

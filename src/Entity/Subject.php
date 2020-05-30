@@ -77,7 +77,7 @@ class Subject
     private $title;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Svg", inversedBy="subjects")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Svg", inversedBy="subjects",fetch="EAGER")
      * @ORM\JoinColumn(name="svg_id", referencedColumnName="id",  onDelete="SET NULL")
      */
     private $svg;
@@ -89,7 +89,7 @@ class Subject
 
     public function __construct()
     {
-        $this->eid=UniqueId::createId();
+        $this->eid = UniqueId::createId();
         $this->subjectResult = new ArrayCollection();
     }
 

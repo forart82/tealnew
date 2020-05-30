@@ -6,6 +6,7 @@ use App\Entity\User;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use App\Services\Statics\UniqueId;
+
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ResultRepository")
  */
@@ -46,7 +47,7 @@ class Result
 
     public function __construct()
     {
-        $this->eid=UniqueId::createId();
+        $this->eid = UniqueId::createId();
         $this->user = new ArrayCollection();
     }
 

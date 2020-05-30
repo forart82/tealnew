@@ -1,16 +1,27 @@
-<iframe src="https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:6661661563243515905" allowfullscreen="" title="Post intégré" width="504" height="415" frameborder="0"></iframe>
-
+{% set restrictetList = restrictetListStandart %}
+{% if className(element_teal)|lower == "user" %}
+	{% set restrictetList = restrictetListUser %}
+{% endif %}
+{% if className(element_teal)|lower == "translation" %}
+	{% set restrictetList = restrictetListTranslation %}
+{% endif %}
 <div class="list-teal">
+{{dump(element_teal)}}
+
 	<h1 class="h1 list-teal-title">{{className(element_teal)}}
 		index</h1>
 	<div class="list-teal-table">
 		<table class="table">
 			<thead>
 				<tr>
-					{% for property in cast_to_array(element_teal) %}
-						{% if property|lower not in restrictetList  %}
-							<th>{{('t'~property|capitalize)|trans}}</th>
-						{% endif %}
+					{% for entities in create_elements(element_teal.0,element_teal.0.id) %}
+						{% for properties in entities %}
+							{% for key, property in properties %}
+								{% if key|lower not in restrictetList  %}
+									<th>{{('t'~ key|capitalize)|trans}}</th>
+								{% endif %}
+							{% endfor %}
+						{% endfor %}
 					{% endfor %}
 					{% if className(element_teal)|lower == "user" %}
 						<th>{{ 'tUserAdmin'|trans }}</th>
@@ -20,85 +31,45 @@
 				</tr>
 			</thead>
 			<tbody>
-				{% if element_teal is iterable %}
-					{{create_elements(element_teal[0])}}
-
-					{% for element in element_teal %}
-						<tr id="{{element.eid}}">
-							{% for property in cast_to_array(element_teal) %}
-								{% if property == "logo" %}
-									<td>
-										<img class="list-teal-company-logo-table" alt="Company Logo" src="data:image/png;base64,{{ get_string(element,property) }}"/>
-									</td>
-								{% else %}
-									{% if property|lower not in restrictetList  %}
-										{% if property|lower not in restrictetEditable  %}
-											{% if get_type(element_teal,property) ==  "object" %}
-												<td class="{{property}} inClass" contenteditable="true">{{ get_string(element,property,0)|raw }}</td>
-												{% else %}
-												<td class="{{property}}" contenteditable="true">{{ get_string(element,property,0)|raw }}</td>
-											{% endif %}
+				{% for element in element_teal %}
+					{% set eid = "" %}
+					<tr>
+						{% for entities in create_elements(element,element.id) %}
+							{% for entity,properties in entities %}
+								{% for key, property in properties %}
+									{% if key == "eid" %}
+										{% set eid = property.value %}
+									{% endif %}
+									{% if key|lower not in restrictetList  %}
+										{% if key == "logo" %}
+											<td data-eid="{{eid}}" data-entity="{{entity|slice(11)}}" data-property="{{key}}"><img class="list-teal-company-logo-table" alt="Company Logo" src="data:image/png;base64,{{as_image(property.value)}}"/></td>
 										{% else %}
-											{% if get_type(element_teal,property) ==  "object" %}
-												<td class="{{property}}inClass">{{ get_string(element,property,0)|raw }}</td>
-											{% else %}
-												<td class="{{property}}">{{ get_string(element,property,0)|raw }}</td>
-											{% endif %}
+											<td data-eid="{{eid}}" data-entity="{{entity|slice(11)}}" data-property="{{key}}" contenteditable="true">{{property.value}}</td>
 										{% endif %}
 									{% endif %}
-								{% endif %}
+								{% endfor %}
 							{% endfor %}
-							{% if className(element_teal)|lower == "user" %}
-								<td class="list-teal-admin{{element.roles.0}}">{{change_svg_color(images.site.site_admin.svg,element,'admin')|raw}}</td>
-								<td>
-									{% set timeDifference = date().format('U') - element.isNew %}
-									{% if timeDifference < 86400 %}
-										<a href="{{path('user_reinvite',{'id':element.id})}}">{{change_svg_color(images.site.site_email_send.svg,element,'email')|raw}}</a>
-									{% else %}
-										<a href="{{path('user_reinvite',{'id':element.id})}}">{{change_svg_color(images.site.site_email.svg,element,'email')|raw}}</a>
-									{% endif %}
-
-								</td>
-							{% endif %}
-							<td
-								class="list-teal-actions">
-								{# <a class="btnGlobalSmall list-teal-show" href="{{ path(className(element_teal.0)|lower~'_show', {'id': element.id}) }}">{{'tShow'|trans}}</a> #}
-								<a class="btnGlobalSmall list-teal-edit" href="{{ path(className(element_teal.0)|lower~'_edit', {'id': element.id}) }}">{{'tEdit'|trans}}</a>
-								<a class="btnGlobalSmall list-teal-change" href="#">{{'tQuickChange'|trans}}</a>
-							</td>
-						</tr>
-					{% else %}
-						<tr>
-							<td colspan="6">{{ 'tNoRecordsFound'|trans }}</td>
-						</tr>
-					{% endfor %}
-				{% else %}
-					<tr>
-						{% for property in cast_to_array(element_teal) %}
-							{% if property == "logo" %}
-								<td>
-									<img class="list-teal-company-logo-table" alt="Company Logo" src="data:image/png;base64,{{ get_string(element_teal,property) }}"/>
-								</td>
-							{% else %}
-								{% if property|lower not in restrictetList  %}
-									<td>{{ get_string(element_teal,property,0)|raw }}</td>
-								{% endif %}
-							{% endif %}
 						{% endfor %}
 						{% if className(element_teal)|lower == "user" %}
-							<td>{{change_svg_color(images.site.site_admin.svg,element_teal,'admin')|raw}}</td>
-							<td>{{change_svg_color(images.site.stie_email.svg,element_teal,'email')|raw}}</td>
+							<td class="list-teal-admin{{element.roles.0}}" data-eid="{{element.eid}}">{{change_svg_color(images.site.site_admin.svg,element,'admin')|raw}}</td>
+							<td>
+								{% set timeDifference = date().format('U') - element.isNew %}
+								{% if timeDifference < 86400 %}
+									<a href="{{path('user_reinvite',{'id':element.id})}}">{{change_svg_color(images.site.site_email_send.svg,element,'email')|raw}}</a>
+								{% else %}
+									<a href="{{path('user_reinvite',{'id':element.id})}}">{{change_svg_color(images.site.site_email.svg,element,'email')|raw}}</a>
+								{% endif %}
+							</td>
 						{% endif %}
-						<td>
-							<a class="btnGlobalSmall" href="{{ path(className(element_teal)|lower~'_show', {'id': element_teal.id}) }}">{{'tShow'|trans}}</a>
-							<a class="btnGlobalSmall" href="{{ path(className(element_teal)|lower~'_edit', {'id': element_teal.id}) }}">{{'tEdit'|trans}}</a>
+						<td
+							class="list-teal-actions">
+							{# <a class="btnGlobalSmall list-teal-show" href="{{ path(className(element_teal.0)|lower~'_show', {'id': element.id}) }}">{{'tShow'|trans}}</a> #}
+							<a class="btnGlobalSmall list-teal-edit" href="{{ path(className(element_teal.0)|lower~'_edit', {'id': element.id}) }}">{{'tEdit'|trans}}</a>
+							<a class="btnGlobalSmall list-teal-change" href="#">{{'tQuickChange'|trans}}</a>
 						</td>
 					</tr>
-					<tr>
-						<td colspan="6">{{ 'tNoRecordsFound'|trans }}</td>
-					</tr>
-				{% endif %}
+				{% endfor %}
 			</tbody>
-		</table>
-	</div>
-</div>
+		</tbody>
+	</table>
+</div></div>

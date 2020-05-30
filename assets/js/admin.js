@@ -18,7 +18,7 @@ class Ajax {
       type: 'POST',
       dataType: 'json',
       async: true,
-      data: {data:this.data},
+      data: { data: this.data },
       success: function (data, status, ) {
         if (data && status == "success") {
           if (functionToCall != null) {
@@ -37,7 +37,7 @@ $.each(roles, function (key, value) {
   $('.list-teal-admin' + value).on('click', function () {
     let data = {
       oldClass: $(this).attr('class'),
-      eid: $(this).parent().attr('id'),
+      eid: $(this).attr('data-eid'),
     };
     let ajax = new Ajax('changeadmin', data, changeAdmin);
     ajax.doAjax();
@@ -46,29 +46,29 @@ $.each(roles, function (key, value) {
 
 $('.list-teal-change').on('click', function (e) {
   e.preventDefault();
-  let data = {};
   let obj = $(this).closest('tr');
-  data['entity'] = $('.list-teal-title').text().split(/\s/)[0];
-  data['eid'] = obj.attr('id');
-  data['values']={};
-  obj.children().each(function () {
-    if ($(this).attr('contenteditable')) {
-      data['values'][$(this).attr('class')] = $(this).text();
+  obj.children('td').each(function () {
+    let data = {};
+    if ($(this).attr('data-entity')) {
+      data['entity'] = $(this).attr('data-entity');
+      data['eid'] = $(this).attr('data-eid');
+      data['property'] = $(this).attr('data-property');
+      data['value'] = $(this).html();
+      console.log($(this).attr('data-entity'))
+      let ajax = new Ajax('changelist', data, changeList)
+      ajax.doAjax();
     }
-  });
-  let ajax = new Ajax('changelist', data,changeList)
-  ajax.doAjax();
+  })
 });
 
 changeAdmin = function (data) {
-  let obj = $('#' + data['eid']).children('td.' + data['oldClass']);
+  let obj = $('.' + data['oldClass'] + `[data-eid="${data['eid']}"]`);
   obj.removeClass();
   obj.addClass(data['newClass']);
 }
 
-changeList=function(data)
-{
+changeList = function (data) {
   $.each(data['values'], function (key, value) {
-    $('#'+data['eid']).find('td.'+key).text(value);
+    $('#' + data['eid']).find('td.' + key).text(value);
   });
 }
