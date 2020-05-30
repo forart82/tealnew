@@ -1,3 +1,5 @@
+<iframe src="https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:6661661563243515905" allowfullscreen="" title="Post intégré" width="504" height="415" frameborder="0"></iframe>
+
 <div class="list-teal">
 	<h1 class="h1 list-teal-title">{{className(element_teal)}}
 		index</h1>
@@ -19,7 +21,7 @@
 			</thead>
 			<tbody>
 				{% if element_teal is iterable %}
-					{{dump(element_teal)}}
+					{{create_elements(element_teal[0])}}
 
 					{% for element in element_teal %}
 						<tr id="{{element.eid}}">

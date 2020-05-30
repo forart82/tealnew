@@ -102,7 +102,7 @@ class GetString extends AbstractExtension
         //   $string = $translations->getId();
         // }
         break;
-      case 'getImage':
+      case 'getSvg':
         // TODO navigation has problem with Doctrine\ORM\PersistentCollection
         $svgs = $object->$property();
         if (gettype($svgs) == "array") {
