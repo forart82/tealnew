@@ -4,17 +4,41 @@ namespace App\Controller;
 
 use App\Entity\Subject;
 use App\Form\SubjectType;
+use App\Interfaces\ChangeList;
+use App\Services\ChangeListValues;
 use App\Repository\SubjectRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Repository\SvgRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * @Route("/subject")
  */
-class SubjectController extends AbstractController
+class SubjectController extends AbstractController implements ChangeList
 {
+    private $request;
+    private $entityManagerInterface;
+    private $subjectRepository;
+    private $svgRepository;
+
+    public function __construct(
+        RequestStack $requestStack,
+        EntityManagerInterface $entityManagerInterface,
+        SubjectRepository $subjectRepository,
+        SvgRepository $svgRepository
+    ) {
+        $this->request = $requestStack->getCurrentRequest();
+        $this->entityManagerInterface = $entityManagerInterface;
+        $this->subjectRepository = $subjectRepository;
+        $this->svgRepository = $svgRepository;
+    }
+
+
     /**
      * @Route("/", name="subject", methods={"GET"})
      */
@@ -83,12 +107,32 @@ class SubjectController extends AbstractController
      */
     public function delete(Request $request, Subject $subject): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$subject->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $subject->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($subject);
             $entityManager->flush();
         }
 
         return $this->redirectToRoute('subject');
+    }
+
+    /**
+     * @Route("/changelist", name="subject_change_list")
+     */
+    public function changeList(): Response
+    {
+        if ($this->request->isXmlHttpRequest()) {
+            $data = $this->request->get("data");
+            if (!empty($data['entity'])) {
+                $repository = strtolower($data['entity']) . 'Repository';
+                $obj = new ChangeListValues($this->entityManagerInterface);
+                $obj->changeValues(
+                    $this->$repository,
+                    $data
+                );
+                return new JsonResponse($data);
+            }
+        }
+        return new JsonResponse();
     }
 }

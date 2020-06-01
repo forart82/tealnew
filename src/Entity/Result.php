@@ -30,13 +30,12 @@ class Result
     private $choice;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Subject", inversedBy="subjectResult", fetch="EAGER")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\ManyToOne(targetEntity="App\Entity\Subject", inversedBy="subjectResult")
      */
     private $subject;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="userResult", fetch="EAGER")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="userResult")
      */
     private $user;
 

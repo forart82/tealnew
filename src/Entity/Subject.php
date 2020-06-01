@@ -77,8 +77,7 @@ class Subject
     private $title;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Svg", inversedBy="subjects",fetch="EAGER")
-     * @ORM\JoinColumn(name="svg_id", referencedColumnName="id",  onDelete="SET NULL")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Svg", inversedBy="subjects")
      */
     private $svg;
 

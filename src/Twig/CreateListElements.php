@@ -8,8 +8,7 @@
 namespace App\Twig;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Entities;
-
+use App\Services\Statics\Entities;
 use Psr\Container\ContainerInterface;
 use Symfony\Bridge\Doctrine\PropertyInfo\DoctrineExtractor;
 use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
@@ -58,13 +57,11 @@ class CreateListElements extends AbstractExtension
     public function createElements($object, $id)
     {
         $entity = get_class($object);
-        dump($object);
 
         $properties = $this->propertyInfo->getProperties($entity);
         $elements = [];
         $this->getType($entity, $properties, $elements, $id);
         $this->getValues($elements);
-        // dump($elements);
 
         return $elements;
     }
@@ -83,7 +80,6 @@ class CreateListElements extends AbstractExtension
                     $info[0]->getBuiltinType() != 'object' && in_array($entity, Entities::ENTITIES)
                 ) {
                     $elements[$id][$entity][$property] = ['type' => $info[0]->getBuiltinType()];
-                    dump($elements);
                 }
             }
         }

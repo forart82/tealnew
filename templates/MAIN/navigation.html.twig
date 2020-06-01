@@ -22,7 +22,7 @@
 			{% for nav in navigation.navigation %}
 				{% if nav.position|slice(0,1) == counter %}
 					{% if nav.position % 1000 != 0 %}
-						<a href="{{path(nav.link)}}" class="navSubButton navMainButton{{nav.position|slice(0,2)}}">{{nav.translation|trans|raw}}</a>
+						{# <a href="{{path(nav.link)}}" class="navSubButton navMainButton{{nav.position|slice(0,2)}}">{{nav.translation|trans|raw}}</a> #}
 						<hr>
 					{% endif %}
 				{% endif %}

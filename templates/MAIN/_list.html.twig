@@ -6,8 +6,6 @@
 	{% set restrictetList = restrictetListTranslation %}
 {% endif %}
 <div class="list-teal">
-{{dump(element_teal)}}
-
 	<h1 class="h1 list-teal-title">{{className(element_teal)}}
 		index</h1>
 	<div class="list-teal-table">
@@ -44,7 +42,7 @@
 										{% if key == "logo" %}
 											<td data-eid="{{eid}}" data-entity="{{entity|slice(11)}}" data-property="{{key}}"><img class="list-teal-company-logo-table" alt="Company Logo" src="data:image/png;base64,{{as_image(property.value)}}"/></td>
 										{% else %}
-											<td data-eid="{{eid}}" data-entity="{{entity|slice(11)}}" data-property="{{key}}" contenteditable="true">{{property.value}}</td>
+											<td data-eid="{{eid}}" data-entity="{{entity|slice(11)}}" data-property="{{key}}" contenteditable="true">{{property.value|raw}}</td>
 										{% endif %}
 									{% endif %}
 								{% endfor %}

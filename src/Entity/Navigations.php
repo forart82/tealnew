@@ -49,7 +49,6 @@ class Navigations
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Svg", inversedBy="navigations")
-     * @ORM\JoinColumn(nullable=false)
      */
     private $svg;
 
@@ -60,7 +59,7 @@ class Navigations
 
     public function __construct()
     {
-        $this->eid=UniqueId::createId();
+        $this->eid = UniqueId::createId();
     }
 
     public function getId(): ?int

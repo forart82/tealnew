@@ -5,6 +5,8 @@
  * Contains class with static const tu get all entities names.
  */
 
+namespace App\Services\Statics;
+
 class Entities
 {
     const ENTITIES = [

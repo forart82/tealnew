@@ -87,7 +87,7 @@ class NavigationsFixtures extends Fixture implements OrderedFixtureInterface
         "csvkeyvalues",
         "app_logout",
         // Menu Résultats
-        "introduction",
+        "result_diagram",
         "introduction",
         // Menu special
         "",

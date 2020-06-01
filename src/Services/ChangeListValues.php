@@ -24,7 +24,9 @@ class ChangeListValues
     {
         $entity = $repository->findOneByEid($data['eid']);
         $setProperty = 'set' . ucfirst($data['property']);
-        $entity->$setProperty($data['value']);
+        $getProperty = 'get' . ucfirst($data['property']);
+        $entity->$setProperty(preg_filter('/(<div>|</div>|<br>|</br>)/', '', $data['value']));
+        dump($entity->getProperty());
         $this->entityManagerInterface->persist($entity);
         $this->entityManagerInterface->flush();
     }

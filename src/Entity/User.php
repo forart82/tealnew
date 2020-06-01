@@ -68,12 +68,12 @@ class User implements UserInterface
     private $token;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Result", mappedBy="user", fetch="EAGER")
+     * @ORM\OneToMany(targetEntity="App\Entity\Result", mappedBy="user")
      */
     private $userResult;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Company", cascade={"persist"}, fetch="EAGER", inversedBy="users")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Company", cascade={"persist"}, inversedBy="users")
      */
     private $company;
 

@@ -4,17 +4,42 @@ namespace App\Controller;
 
 use App\Entity\Navigations;
 use App\Form\NavigationsType;
+use App\Interfaces\ChangeList;
+use App\Services\ChangeListValues;
+use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\NavigationsRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Repository\SubjectRepository;
+use App\Repository\SvgRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * @Route("/navigations")
  */
-class NavigationsController extends AbstractController
+class NavigationsController extends AbstractController implements ChangeList
 {
+
+  private $request;
+  private $entityManagerInterface;
+  private $navigationsRepository;
+  private $svgRepository;
+
+  public function __construct(
+    RequestStack $requestStack,
+    EntityManagerInterface $entityManagerInterface,
+    NavigationsRepository $navigationsRepository,
+    SvgRepository $svgRepository
+  ) {
+    $this->request = $requestStack->getCurrentRequest();
+    $this->entityManagerInterface = $entityManagerInterface;
+    $this->navigationsRepository = $navigationsRepository;
+    $this->svgRepository = $svgRepository;
+  }
+
   /**
    * @Route("/", name="navigations", methods={"GET"})
    */
@@ -90,5 +115,25 @@ class NavigationsController extends AbstractController
     }
 
     return $this->redirectToRoute('navigations');
+  }
+
+  /**
+   * @Route("/changelist", name="navigations_change_list")
+   */
+  public function changeList(): Response
+  {
+    if ($this->request->isXmlHttpRequest()) {
+      $data = $this->request->get("data");
+      if (!empty($data['entity'])) {
+        $repository = strtolower($data['entity']) . 'Repository';
+        $obj = new ChangeListValues($this->entityManagerInterface);
+        $obj->changeValues(
+          $this->$repository,
+          $data
+        );
+        return new JsonResponse($data);
+      }
+    }
+    return new JsonResponse();
   }
 }
