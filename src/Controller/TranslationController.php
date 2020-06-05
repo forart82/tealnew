@@ -25,26 +25,14 @@ class TranslationController extends AbstractController implements ChangeList
 {
 
     private $request;
-    private $translator;
     private $entityManagerInterface;
-    private $translationRepository;
-    private $keytextRepository;
-    private $languageRepository;
 
     public function __construct(
         RequestStack $requestStack,
-        TranslatorInterface $translator,
-        EntityManagerInterface $entityManagerInterface,
-        TranslationRepository $translationRepository,
-        KeytextRepository $keytextRepository,
-        LanguageRepository $languageRepository
+        EntityManagerInterface $entityManagerInterface
     ) {
         $this->request = $requestStack->getCurrentRequest();
-        $this->translator = $translator;
         $this->entityManagerInterface = $entityManagerInterface;
-        $this->translationRepository = $translationRepository;
-        $this->keytextRepository = $keytextRepository;
-        $this->languageRepository = $languageRepository;
     }
 
     /**
@@ -131,12 +119,8 @@ class TranslationController extends AbstractController implements ChangeList
         if ($this->request->isXmlHttpRequest()) {
             $data = $this->request->get("data");
             if (!empty($data['entity'])) {
-                $repository = strtolower($data['entity']) . 'Repository';
                 $obj = new ChangeListValues($this->entityManagerInterface);
-                $obj->changeValues(
-                    $this->$repository,
-                    $data
-                );
+                $obj->changeValues($data);
                 return new JsonResponse($data);
             }
         }

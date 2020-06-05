@@ -20,13 +20,13 @@ class ChangeListValues
         $this->entityManagerInterface = $entityManagerInterface;
     }
 
-    public function changeValues($repository, array $data)
+    public function changeValues(array $data)
     {
-        $entity = $repository->findOneByEid($data['eid']);
+        $class='\\App\\Entity\\'.$data['entity'];
+        $repository=$this->entityManagerInterface->getRepository($class);
+        $entity = $repository->findOneBy(['eid'=>$data['eid']]);
         $setProperty = 'set' . ucfirst($data['property']);
-        $getProperty = 'get' . ucfirst($data['property']);
-        $entity->$setProperty(preg_filter('/(<div>|</div>|<br>|</br>)/', '', $data['value']));
-        dump($entity->getProperty());
+        $entity->$setProperty(preg_replace('/(<div>|<\/div>|<br>|<\/br>)/', '', $data['value']));
         $this->entityManagerInterface->persist($entity);
         $this->entityManagerInterface->flush();
     }

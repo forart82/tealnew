@@ -5,6 +5,7 @@
 {% if className(element_teal)|lower == "translation" %}
 	{% set restrictetList = restrictetListTranslation %}
 {% endif %}
+
 <div class="list-teal">
 	<h1 class="h1 list-teal-title">{{className(element_teal)}}
 		index</h1>
@@ -41,6 +42,8 @@
 									{% if key|lower not in restrictetList  %}
 										{% if key == "logo" %}
 											<td data-eid="{{eid}}" data-entity="{{entity|slice(11)}}" data-property="{{key}}"><img class="list-teal-company-logo-table" alt="Company Logo" src="data:image/png;base64,{{as_image(property.value)}}"/></td>
+										{% elseif key|lower in restrictetEditable %}
+											<td data-eid="{{eid}}" data-entity="{{entity|slice(11)}}" data-property="{{key}}" contenteditable="false">{{property.value|raw}}</td>
 										{% else %}
 											<td data-eid="{{eid}}" data-entity="{{entity|slice(11)}}" data-property="{{key}}" contenteditable="true">{{property.value|raw}}</td>
 										{% endif %}

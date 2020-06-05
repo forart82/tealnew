@@ -22,20 +22,14 @@ use Symfony\Component\HttpFoundation\RequestStack;
 class SvgController extends AbstractController implements ChangeList
 {
     private $request;
-    private $translator;
     private $entityManagerInterface;
-    private $svgRepository;
 
     public function __construct(
         RequestStack $requestStack,
-        TranslatorInterface $translator,
-        EntityManagerInterface $entityManagerInterface,
-        SvgRepository $svgRepository
+        EntityManagerInterface $entityManagerInterface
     ) {
         $this->request = $requestStack->getCurrentRequest();
-        $this->translator = $translator;
         $this->entityManagerInterface = $entityManagerInterface;
-        $this->svgRepository = $svgRepository;
     }
 
     /**
@@ -136,14 +130,11 @@ class SvgController extends AbstractController implements ChangeList
 
         if ($this->request->isXmlHttpRequest()) {
             $data = $this->request->get("data");
-            $obj = new ChangeListValues($this->entityManagerInterface);
-            $obj->changeValues(
-                [
-                    'Svg' => $this->svgRepository
-                ],
-                $data
-            );
-            return new JsonResponse($data);
+            if (!empty($data['entity'])) {
+                $obj = new ChangeListValues($this->entityManagerInterface);
+                $obj->changeValues($data);
+                return new JsonResponse($data);
+            }
         }
         return new JsonResponse();
     }

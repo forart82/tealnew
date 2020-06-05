@@ -1,0 +1,10 @@
+{% extends "MAIN/BASE.html.twig" %}
+
+{% block body %}
+	<div id="adminMain">
+		{% include "MAIN/_form.html.twig" %}
+		<div id="adminButtonLine">
+			<button form="MAINFORM" class="btnGlobal">{{'tSave'|trans}}</button>
+		</div>
+	</div>
+{% endblock %}

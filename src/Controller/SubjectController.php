@@ -23,19 +23,13 @@ class SubjectController extends AbstractController implements ChangeList
 {
     private $request;
     private $entityManagerInterface;
-    private $subjectRepository;
-    private $svgRepository;
 
     public function __construct(
         RequestStack $requestStack,
-        EntityManagerInterface $entityManagerInterface,
-        SubjectRepository $subjectRepository,
-        SvgRepository $svgRepository
+        EntityManagerInterface $entityManagerInterface
     ) {
         $this->request = $requestStack->getCurrentRequest();
         $this->entityManagerInterface = $entityManagerInterface;
-        $this->subjectRepository = $subjectRepository;
-        $this->svgRepository = $svgRepository;
     }
 
 
@@ -124,12 +118,8 @@ class SubjectController extends AbstractController implements ChangeList
         if ($this->request->isXmlHttpRequest()) {
             $data = $this->request->get("data");
             if (!empty($data['entity'])) {
-                $repository = strtolower($data['entity']) . 'Repository';
                 $obj = new ChangeListValues($this->entityManagerInterface);
-                $obj->changeValues(
-                    $this->$repository,
-                    $data
-                );
+                $obj->changeValues($data);
                 return new JsonResponse($data);
             }
         }

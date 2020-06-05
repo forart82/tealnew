@@ -49,7 +49,7 @@ $('.list-teal-change').on('click', function (e) {
   let obj = $(this).closest('tr');
   obj.children('td').each(function () {
     let data = {};
-    if ($(this).attr('data-entity')) {
+    if ($(this).attr('data-entity') && $(this).attr("contenteditable") == "true") {
       data['entity'] = $(this).attr('data-entity');
       data['eid'] = $(this).attr('data-eid');
       data['property'] = $(this).attr('data-property');

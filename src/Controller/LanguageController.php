@@ -20,16 +20,13 @@ use Symfony\Component\HttpFoundation\RequestStack;
  */
 class LanguageController extends AbstractController implements ChangeList
 {
-    private $languageRepository;
     private $request;
     private $entityManagerInterface;
 
     public function __construct(
-        LanguageRepository $languageRepository,
         RequestStack $requestStack,
         EntityManagerInterface $entityManagerInterface
     ) {
-        $this->languageRepository = $languageRepository;
         $this->request = $requestStack->getCurrentRequest();
         $this->entityManagerInterface = $entityManagerInterface;
     }
@@ -119,12 +116,8 @@ class LanguageController extends AbstractController implements ChangeList
         if ($this->request->isXmlHttpRequest()) {
             $data = $this->request->get("data");
             if (!empty($data['entity'])) {
-                $repository = strtolower($data['entity']) . 'Repository';
                 $obj = new ChangeListValues($this->entityManagerInterface);
-                $obj->changeValues(
-                    $this->$repository,
-                    $data
-                );
+                $obj->changeValues($data);
                 return new JsonResponse($data);
             }
         }
