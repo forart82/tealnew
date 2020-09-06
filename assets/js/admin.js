@@ -72,3 +72,5 @@ changeList = function (data) {
     $('#' + data['eid']).find('td.' + key).text(value);
   });
 }
+
+

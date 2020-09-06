@@ -1,0 +1,16 @@
+{% extends "MAIN/BASE.html.twig" %}
+{% block body %}
+	{% set counter = 0 %}
+	{% set dateCompare = null %}
+	{% for i in 0..11 %}
+		{{"now"|date_modify('-'~ i ~' month')|date(('t-M-Y'))}}
+		{% set dateCompare = "now"|date_modify('-'~ i ~' month')|date(('t-M-Y')) %}
+		{% if mainRevenue[counter].date <= dateCompare|date('U') %}
+			{{mainRevenue[counter].amount}}
+		{% elseif mainRevenue|length > counter + 1 %}
+			{% set counter = counter + 1 %}
+			{{mainRevenue[counter].amount}}
+		{% endif %}
+		<br>
+	{% endfor %}
+{% endblock %}

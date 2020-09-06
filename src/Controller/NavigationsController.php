@@ -8,7 +8,6 @@ use App\Interfaces\ChangeList;
 use App\Services\ChangeListValues;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\NavigationsRepository;
-use App\Repository\SubjectRepository;
 use App\Repository\SvgRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,8 +24,7 @@ class NavigationsController extends AbstractController implements ChangeList
 
   private $request;
   private $entityManagerInterface;
-  private $navigationsRepository;
-  private $svgRepository;
+
 
   public function __construct(
     RequestStack $requestStack,
@@ -125,11 +123,11 @@ class NavigationsController extends AbstractController implements ChangeList
     if ($this->request->isXmlHttpRequest()) {
       $data = $this->request->get("data");
       if (!empty($data['entity'])) {
-          $obj = new ChangeListValues($this->entityManagerInterface);
-          $obj->changeValues($data);
-          return new JsonResponse($data);
+        $obj = new ChangeListValues($this->entityManagerInterface);
+        $obj->changeValues($data);
+        return new JsonResponse($data);
       }
-  }
+    }
     return new JsonResponse();
   }
 }

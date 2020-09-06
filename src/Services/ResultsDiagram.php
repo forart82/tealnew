@@ -40,7 +40,7 @@ class ResultsDiagram
     $this->alpha = 360;
     $this->next = -90;
     $this->results = [];
-    $this->offset = 250;
+    $this->offset = 250; 
   }
 
   public function doDiagram(): ?array

@@ -26,7 +26,7 @@ class ChangeListValues
         $repository=$this->entityManagerInterface->getRepository($class);
         $entity = $repository->findOneBy(['eid'=>$data['eid']]);
         $setProperty = 'set' . ucfirst($data['property']);
-        $entity->$setProperty(preg_replace('/(<div>|<\/div>|<br>|<\/br>)/', '', $data['value']));
+        $entity->$setProperty(preg_replace('/(<div>|<\/div>|<br>|<\/br>)/', '', $data[' ']));
         $this->entityManagerInterface->persist($entity);
         $this->entityManagerInterface->flush();
     }
