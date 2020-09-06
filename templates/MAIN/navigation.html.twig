@@ -22,8 +22,18 @@
 			{% for nav in navigation.navigation %}
 				{% if nav.position|slice(0,1) == counter %}
 					{% if nav.position % 1000 != 0 %}
-						<a href="{{path(nav.link)}}" class="navSubButton navMainButton{{nav.position|slice(0,2)}}">{{nav.translation|trans|raw}}</a>
-						<hr>
+						{% if app.user %}
+							{% if "ROLE_USER" in app.user.roles and "u" in nav.authorisation %}
+								<a href="{{path(nav.link)}}" class="navSubButton navMainButton{{nav.position|slice(0,2)}}">{{nav.translation|trans|raw}}</a>
+								<hr>
+							{% elseif "ROLE_ADMIN" in app.user.roles and "a" in nav.authorisation %}
+								<a href="{{path(nav.link)}}" class="navSubButton navMainButton{{nav.position|slice(0,2)}}">{{nav.translation|trans|raw}}</a>
+								<hr>
+							{% elseif "ROLE_SUPER_ADMIN" in app.user.roles and "s" in nav.authorisation %}
+								<a href="{{path(nav.link)}}" class="navSubButton navMainButton{{nav.position|slice(0,2)}}">{{nav.translation|trans|raw}}</a>
+								<hr>
+							{% endif %}
+						{% endif %}
 					{% endif %}
 				{% endif %}
 			{% endfor %}

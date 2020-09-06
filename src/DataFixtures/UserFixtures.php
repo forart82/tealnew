@@ -27,24 +27,24 @@ class UserFixtures extends Fixture implements OrderedFixtureInterface
         $person = [
             'email' => [
                 "carmelo.roberto.82@gmail.com",
-                "c.armeloroberto82@gmail.com",
-                "ca.rmeloroberto82@gmail.com",
-                "emmanuelle.buono@hotmail.fr",
-                "cyrille.stammler@gmail.com",
+                // "c.armeloroberto82@gmail.com",
+                // "ca.rmeloroberto82@gmail.com",
+                // "emmanuelle.buono@hotmail.fr",
+                // "cyrille.stammler@gmail.com",
             ],
             'prenom' => [
-                "Timothée",
-                "Timothée",
+                // "Timothée",
+                // "Timothée",
                 "Carmelo",
-                "Emmanuelle",
-                "Cyrille"
+                // "Emmanuelle",
+                // "Cyrille"
             ],
             'nom' => [
-                "Couchoud",
-                "Couchoud",
+                // "Couchoud",
+                // "Couchoud",
                 "Roberto",
-                "Bouno",
-                "Stammler"
+                // "Bouno",
+                // "Stammler"
             ]
         ];
         $count = count($person["email"]);

@@ -52,6 +52,10 @@ class CsvFileImport
    */
   private $sendMailer;
   /**
+   * @var CreateResults
+   */
+  private $createResults;
+  /**
    * @var TranslatorInterface
    */
   private $translatorInterface;
@@ -142,6 +146,7 @@ class CsvFileImport
     UserPasswordEncoderInterface $userPasswordEncoderInterface,
     EntityManagerInterface $entityManagerInterface,
     SendMailer $sendMailer,
+    CreateResults $createResults,
     TranslatorInterface $translatorInterface,
     RequestStack $requestStack
   ) {
@@ -150,6 +155,7 @@ class CsvFileImport
     $this->userPasswordEncoderInterface = $userPasswordEncoderInterface;
     $this->entityManagerInterface = $entityManagerInterface;
     $this->sendMailer = $sendMailer;
+    $this->createResults = $createResults;
     $this->translatorInterface = $translatorInterface;
     $this->request = $requestStack->getCurrentRequest();
     $this->csvKeyValues = $csvKeyValuesRepository->findAll();
@@ -167,6 +173,7 @@ class CsvFileImport
     // Must be in reverse order!
     $this->functionToCallArray = [
       'userSuccesInformation',
+      'createResults',
       'sendMail',
       'saveUser',
       'createErrorTable',
@@ -517,6 +524,16 @@ class CsvFileImport
     }
     return false;
   }
+  /**
+   * Create User results with 0 value.
+   * @return bool
+   */
+  public function createResults(): bool
+  {
+    $this->createResults->create($this->entityManagerInterface, $this->newUser);
+    return true;
+  }
+
   /**
    * Send invitation mail.
    * @return bool

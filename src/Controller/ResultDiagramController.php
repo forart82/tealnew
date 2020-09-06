@@ -40,7 +40,7 @@ class ResultDiagramController extends AbstractController
   public function diagram(): Response
   {
 
-    $user = $this->userRepository->findOneById(3);
+    $user = $this->userRepository->findOneById($this->getUser());
 
     $resultsDiagram = new ResultsDiagram(
       $this->resultRepository,
@@ -61,14 +61,13 @@ class ResultDiagramController extends AbstractController
   {
 
     if ($this->request->isXmlHttpRequest()) {
-      if($this->request->get('id'))
-      {
-        $values=explode('_',$this->request->get('id'));
+      if ($this->request->get('id')) {
+        $values = explode('_', $this->request->get('id'));
       }
       if ($subject = $this->subjectRepository->findOneById($values[0])) {
         return new JsonResponse([
-          'question'=>$subject->getQuestion(),
-          'choice'=>$values[1],
+          'question' => $subject->getQuestion(),
+          'choice' => $values[1],
         ]);
       }
     }

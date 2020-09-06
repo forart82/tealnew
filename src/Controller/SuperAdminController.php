@@ -5,6 +5,9 @@ namespace App\Controller;
 use App\Entity\Company;
 use App\Entity\User;
 use App\Form\CreateClientType;
+use App\Services\CreateResults;
+use App\Services\CreateToken;
+use App\Services\SendMailer;
 use App\Services\Statics\UniqueId;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,13 +22,19 @@ class SuperAdminController extends AbstractController
 {
     private $entityManagerInterface;
     private $request;
+    private $sendMailer;
+    private $createResults;
 
     public function __construct(
         EntityManagerInterface $entityManagerInterface,
-        RequestStack $requestStack
+        RequestStack $requestStack,
+        SendMailer $sendMailer,
+        CreateResults $createResults
     ) {
         $this->entityManagerInterface = $entityManagerInterface;
         $this->request = $requestStack->getCurrentRequest();
+        $this->sendMailer = $sendMailer;
+        $this->createResults = $createResults;
     }
 
     /**
@@ -53,12 +62,19 @@ class SuperAdminController extends AbstractController
             $this->entityManagerInterface->persist($company);
             $this->entityManagerInterface->persist($user);
             $this->entityManagerInterface->flush();
+
+            // Create Results
+            $this->createResults->create($this->entityManagerInterface, $user);
+
+            // Send Email
             $this->sendMailer->invitation(
                 $user,
                 $this->entityManagerInterface,
                 $this->request->getHttpHost()
             );
         }
+
+
 
         return $this->render('super_admin/createclient.html.twig', [
             "form" => $form->createView(),

@@ -77,7 +77,7 @@ class NavigationsFixtures extends Fixture implements OrderedFixtureInterface
         "introduction",
         "user_profil",
         "admin",
-        "introduction",
+        "super_admin_create_client",
         "subject",
         "translation",
         "company",

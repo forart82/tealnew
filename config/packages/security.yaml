@@ -46,6 +46,7 @@ security:
         - { path: ^/(%supported_locales%)/introduction, roles: ROLE_USER }
         - { path: ^/(%supported_locales%)/sondage, roles: ROLE_USER }
         - { path: ^/(%supported_locales%)/user/profil, roles: ROLE_USER }
+        - { path: ^/(%supported_locales%)/resultdiagram, roles: ROLE_USER }
 
         - { path: ^/(%supported_locales%)/company, roles: ROLE_ADMIN }
         - { path: ^/(%supported_locales%)/admin, roles: ROLE_ADMIN }
@@ -60,3 +61,4 @@ security:
         - { path: ^/(%supported_locales%)/subject, roles: ROLE_SUPER_ADMIN }
         - { path: ^/(%supported_locales%)/translation, roles: ROLE_SUPER_ADMIN }
         - { path: ^/(%supported_locales%)/user, roles: ROLE_SUPER_ADMIN }
+        - { path: ^/(%supported_locales%)/superadmin, roles: ROLE_SUPER_ADMIN }

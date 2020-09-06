@@ -22,11 +22,11 @@ class ChangeListValues
 
     public function changeValues(array $data)
     {
-        $class='\\App\\Entity\\'.$data['entity'];
-        $repository=$this->entityManagerInterface->getRepository($class);
-        $entity = $repository->findOneBy(['eid'=>$data['eid']]);
+        $class = '\\App\\Entity\\' . $data['entity'];
+        $repository = $this->entityManagerInterface->getRepository($class);
+        $entity = $repository->findOneBy(['eid' => $data['eid']]);
         $setProperty = 'set' . ucfirst($data['property']);
-        $entity->$setProperty(preg_replace('/(<div>|<\/div>|<br>|<\/br>)/', '', $data[' ']));
+        $entity->$setProperty(preg_replace('/(<div>|<\/div>|<br>|<\/br>)/', '', $data['value']));
         $this->entityManagerInterface->persist($entity);
         $this->entityManagerInterface->flush();
     }
