@@ -10,5 +10,5 @@ App\Entity\User:
                 message : Your last name can only contains a alphabetic values.
         password:
             - Regex:
-                pattern: '/^(?=.*\d)[a-zA-Z\d\S]{6,}$/'
+                pattern: '/^((?=.*\d)(?=.*[A-z]))[a-zA-Z\d\S]{6,}$/'
                 message : Your password must contain at least one number, at least one digit and must be minimum 6 character long.

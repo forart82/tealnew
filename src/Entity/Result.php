@@ -35,7 +35,7 @@ class Result
     private $subject;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="userResult")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", cascade={"persist"}, inversedBy="userResult")
      */
     private $user;
 

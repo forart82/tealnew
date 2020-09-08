@@ -68,7 +68,7 @@ class User implements UserInterface
     private $token;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Result", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="App\Entity\Result", cascade={"persist"}, mappedBy="user")
      */
     private $userResult;
 

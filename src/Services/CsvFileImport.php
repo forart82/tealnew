@@ -530,7 +530,9 @@ class CsvFileImport
    */
   public function createResults(): bool
   {
-    $this->createResults->create($this->entityManagerInterface, $this->newUser);
+    if (!in_array($this->fields, $this->errorTable['fields'])) {
+      $this->createResults->create($this->entityManagerInterface, $this->newUser);
+    }
     return true;
   }
 

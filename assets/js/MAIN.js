@@ -25,5 +25,4 @@ $(document).ready(function () {
   require('./sondage');
   require('./diagram');
   require('./admin');
-
 })
